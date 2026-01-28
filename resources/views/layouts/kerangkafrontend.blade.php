@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Sbidu - Bid And Auction HTML Template</title>
+    <title>LelangKu | Website Pelelangan Online</title>
 
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/all.min.css') }}">
@@ -40,7 +40,7 @@
     @yield('content')
 
     <!--============= Footer Section Starts Here =============-->
-    <footer class="bg_img padding-top oh" data-background="{{ asset('sbidu/assets/images/footer/footer-bg.jpg') }}" style="padding-top: 450px;">
+    <footer class="bg_img padding-top oh" data-background="{{ asset('sbidu/assets/images/footer/footer-bg.png') }}" style="padding-top: 450px;">
         <div class="footer-top-shape">
             <img src="{{ asset('sbidu/assets/css/img/footer-top-shape.png') }}" alt="css">
         </div>
@@ -67,7 +67,7 @@
         <div class="footer-top padding-bottom padding-top">
             <div class="container">
                 <div class="row mb--60">
-                    <div class="col-sm-6 col-lg-3" data-aos="fade-down" data-aos-duration="1000">
+                    <div class="col-sm-6 col-lg-6" data-aos="fade-down" data-aos-duration="1000">
                         <div class="footer-widget widget-links">
                             <h5 class="title">Kategori Lelang</h5>
                             <ul class="links-list">
@@ -79,85 +79,21 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-lg-3" data-aos="fade-down" data-aos-duration="1300">
-                        <div class="footer-widget widget-links">
-                            <h5 class="title">About Us</h5>
-                            <ul class="links-list">
-                                <li>
-                                    <a href="#0">About Sbidu</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Help</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Affiliates</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Jobs</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Press</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Our blog</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Collectors' portal</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3" data-aos="fade-down" data-aos-duration="1600">
-                        <div class="footer-widget widget-links">
-                            <h5 class="title">We're Here to Help</h5>
-                            <ul class="links-list">
-                                <li>
-                                    <a href="#0">Your Account</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Safe and Secure</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Shipping Information</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Contact Us</a>
-                                </li>
-                                <li>
-                                    <a href="#0">Help & FAQ</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-lg-3" data-aos="fade-down" data-aos-duration="1800">
+                    <div class="col-sm-6 col-lg-6" data-aos="fade-down" data-aos-duration="1800">
                         <div class="footer-widget widget-follow">
                             <h5 class="title">Follow Us</h5>
                             <ul class="links-list">
                                 <li>
-                                    <a href="#0"><i class="fas fa-phone-alt"></i>(646) 663-4575</a>
+                                    <a href="#0"><i class="fas fa-phone-alt"></i>+62 895-0998-3660</a>
                                 </li>
                                 <li>
-                                    <a href="#0"><i class="fas fa-blender-phone"></i>(646) 968-0608</a>
+                                    <a href="#0"><i class="fas fa-blender-phone"></i>+62 895-0998-3660</a>
                                 </li>
                                 <li>
-                                    <a href="#0"><i class="fas fa-envelope-open-text"></i>help@engotheme.com</a>
+                                    <a href="#0"><i class="fas fa-envelope-open-text"></i>LelangKu@sch.id</a>
                                 </li>
                                 <li>
                                     <a href="#0"><i class="fas fa-location-arrow"></i>1201 Broadway Suite</a>
-                                </li>
-                            </ul>
-                            <ul class="social-icons">
-                                <li>
-                                    <a href="#0" class="active"><i class="fab fa-facebook-f"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#0"><i class="fab fa-twitter"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#0"><i class="fab fa-instagram"></i></a>
-                                </li>
-                                <li>
-                                    <a href="#0"><i class="fab fa-linkedin-in"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -170,22 +106,8 @@
                 <div class="copyright-area">
                     <div class="footer-bottom-wrapper">
                         <div class="logo">
-                            <a href="index.html"><img src="{{ asset('sbidu/assets/images/logo/footer-logo.png') }}" alt="logo"></a>
+                            <a href="{{ url('/') }}"><img src="{{ asset('icon/iconL.png') }}" alt="logo" class="logo-img" style="padding: 10px 0;width:150px"></a>
                         </div>
-                        <ul class="gateway-area">
-                            <li>
-                                <a href="#0"><img src="{{ asset('sbidu/assets/images/footer/paypal.png') }}" alt="footer"></a>
-                            </li>
-                            <li>
-                                <a href="#0"><img src="{{ asset('sbidu/assets/images/footer/visa.png') }}" alt="footer"></a>
-                            </li>
-                            <li>
-                                <a href="#0"><img src="{{ asset('sbidu/assets/images/footer/discover.png') }}" alt="footer"></a>
-                            </li>
-                            <li>
-                                <a href="#0"><img src="{{ asset('sbidu/assets/images/footer/mastercard.png') }}" alt="footer"></a>
-                            </li>
-                        </ul>
                         <div class="copyright"><p>&copy; Copyright 2024 | <a href="#0">Sbidu</a> By <a href="#0">Uiaxis</a></p></div>
                     </div>
                 </div>
@@ -212,7 +134,103 @@
     <script src="{{ asset('sbidu/assets/js/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('sbidu/assets/js/main.js') }}"></script>
     @include('sweetalert::alert')
-    @stacks('scripts')
+    <style>
+        .news-slide-item {
+            padding: 0 10px;
+        }
+
+        .news-content {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-height: 250px;
+        }
+
+        .news-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        }
+
+        .news-content img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+            border-radius: 12px;
+        }
+
+        .news-slider .owl-nav {
+            display: none;
+        }
+
+        .news-slider .owl-dots {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .news-slider .owl-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            margin: 0 4px;
+            transition: all 0.3s ease;
+        }
+
+        .news-slider .owl-dot span {
+            display: none !important; 
+        }
+
+        .news-slider .owl-dot.active {
+            background: #ffc107;
+            width: 24px;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .news-content,
+            .news-content img {
+                max-height: 180px;
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .news-content,
+            .news-content img {
+                max-height: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+
+    <script>
+        $(document).ready(function(){
+            $('.news-slider').owlCarousel({
+                loop: true,
+                margin: 20,
+                nav: false,
+                dots: true,
+                dotsData: false,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: {
+                        items: 1
+                    },
+                    768: {
+                        items: 1
+                    },
+                    1024: {
+                        items: 1
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

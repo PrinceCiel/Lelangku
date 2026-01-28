@@ -56,10 +56,20 @@ class SingleController extends Controller
     {
         if(Auth::check()){
             if(Auth::user()->status == 'Terverifikasi'){
-                $request->validate([
-                    'bid' => 'required',
-                ]);
                 $lelang = Lelang::where('kode_lelang', $request->kode_lelang)->first();
+                $bidTertinggi = Bid::where('id_lelang', $lelang->id)->max('bid');
+                if($bidTertinggi){
+                    $minBid = $bidTertinggi + ($bidTertinggi * 0.1);
+                } else {
+                    $minBid = $lelang->barang->harga;
+                }
+                $request->validate([
+                    'bid' => ['required', 'numeric', 'min:' . $minBid]
+                ], [
+                    'bid.min' => 'Minimal bid harus lebih dari Rp' . number_format($minBid, 0, ',', '.'),
+                    'bid.required' => 'Bid tidak boleh kosong!',
+                    'bid.numeric' => 'Bid harus berupa angka!'
+                ]);
                 $bid = new Bid();
                 $bid->id_lelang = $lelang->id;
                 $bid->id_user = Auth::user()->id;
@@ -73,4 +83,47 @@ class SingleController extends Controller
             return redirect()->route('login');
         }
     }
+
+    public function poll(string $kode)
+    {
+        $lelang = Lelang::where('kode_lelang', $kode)->firstOrFail();
+
+        $bidtertinggi = Bid::where('id_lelang', $lelang->id)->max('bid');
+        if (! $bidtertinggi) {
+            $bidtertinggi = $lelang->barang->harga;
+        }
+
+        $countBid = Bid::where('id_lelang', $lelang->id)->count();
+
+        return response()->json([
+            'bidtertinggi' => $bidtertinggi,
+            'countBid' => $countBid,
+            'status' => $lelang->status,
+        ]);
+    }
+
+    public function bidHistory(string $kode)
+    {
+        $lelang = Lelang::where('kode_lelang', $kode)->firstOrFail();
+
+        $bids = Bid::with('users')
+            ->where('id_lelang', $lelang->id)
+            ->latest()
+            ->take(20)
+            ->get();
+
+        return response()->json(
+            $bids->map(function ($bid) {
+                return [
+                    'nama' => $bid->users->nama_lengkap,
+                    'foto' => Storage::url($bid->users->foto),
+                    'tanggal' => $bid->created_at->format('Y-m-d'),
+                    'jam' => $bid->created_at->format('H:i'),
+                    'bid' => number_format($bid->bid, 0, ',', '.'),
+                ];
+            })
+        );
+    }
+
+
 }

@@ -450,7 +450,7 @@ h3 a:hover,
 h4 a:hover,
 h5 a:hover,
 h6 a:hover {
-  color: #ee4730;
+  color: #d4af37;
 }
 h1 span,
 h2 span,
@@ -514,10 +514,10 @@ p:last-child {
   margin-bottom: -7px !important;
 }
 p a {
-  color: #ee4730;
+  color: #d4af37;
 }
 p a:hover {
-  color: #ee4730;
+  color: #d4af37;
 }
 @media (max-width: 575px) {
   p {
@@ -614,7 +614,7 @@ input {
   padding-left: 10px;
 }
 input:focus {
-  border: 1px solid #3f22b3;
+  border: 1px solid #0f1a11;
 }
 input[type=submit] {
   cursor: pointer;
@@ -952,7 +952,7 @@ input[type=submit] {
 
 /*Section-Header Starts Here*/
 .section-bg {
-  background: #f1f3fd;
+  background: #f5f2ed;
 }
 
 .body-bg {
@@ -960,15 +960,15 @@ input[type=submit] {
 }
 
 .theme-bg {
-  background: #ee4730;
+  background: #d4af37;
 }
 
 .theme-one {
-  background: #3f22b3;
+  background: #0f1a11;
 }
 
 .theme-two {
-  background: #43b055;
+  background: #e8dcc4;
 }
 
 .ash-bg {
@@ -1140,7 +1140,7 @@ input[type=submit] {
 }
 .section-header .cate {
   display: block;
-  color: #3f22b3;
+  color: #0f1a11;
   margin-bottom: 15px;
   font-family: "Roboto", sans-serif;
 }
@@ -1366,7 +1366,7 @@ input[type=submit] {
   height: 100%;
   position: fixed;
   z-index: 999999;
-  background: #3f22b3;
+  background: #0f1a11;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1555,7 +1555,7 @@ footer {
   }
 }
 .footer-widget .links-list li a:hover {
-  color: #ee4730;
+  color: #d4af37;
 }
 
 .copyright-area {
@@ -1649,7 +1649,7 @@ footer {
 }
 .social-icons li a:hover, .social-icons li a.active {
   color: #ffffff;
-  background: #ee4730;
+  background: #d4af37;
 }
 @media (max-width: 1199px) {
   .social-icons li a {
@@ -1820,7 +1820,7 @@ header {
     opacity: 0;
   }
   .search-form input {
-    background: #3f22b3;
+    background: #0f1a11;
     border: 1px solid #bccaea;
   }
   .search-form.active {
@@ -1899,7 +1899,7 @@ header {
   }
   .menu li .submenu li:hover > a {
     color: #ffffff;
-    background: #3f22b3;
+    background: #0f1a11;
     border-color: transparent;
   }
   .menu li:hover > .submenu {
@@ -1961,7 +1961,7 @@ header {
   margin-left: auto;
 }
 .search-bar a {
-  color: #ee4730;
+  color: #d4af37;
   color: #ffffff;
 }
 
@@ -2005,7 +2005,7 @@ header {
   transition: all ease 0.3s;
 }
 .header-bottom.active {
-  background: #693ff5;
+  background:  #0f302d;
   position: fixed;
   top: 0;
   left: 0;
@@ -2055,7 +2055,7 @@ header {
   top: 0px;
   display: inline-block;
   font-size: 16px;
-  color: #ee4730;
+  color: #d4af37;
   cursor: pointer;
 }
 .cart-sidebar-area .cart-products .title {
@@ -2106,7 +2106,7 @@ header {
   display: inline-block;
   font-size: 10px;
   color: #fff;
-  background-color: #ee4730;
+  background-color: #d4af37;
   padding: 2px 18px;
   border-radius: 5px;
   text-transform: uppercase;
@@ -2122,7 +2122,7 @@ header {
   text-transform: capitalize;
 }
 .cart-sidebar-area .custom-button:hover {
-  background: #ee4730;
+  background: #d4af37;
 }
 
 .overlay {
@@ -2668,7 +2668,7 @@ header {
   color: #ffffff;
 }
 .breadcrumb li a:hover {
-  color: #ee4730;
+  color: #d4af37;
 }
 .breadcrumb li span {
   color: #ffffff;
@@ -2957,7 +2957,7 @@ div[class*=auction] .custom-button {
   background: #ffffff;
 }
 .auction-item-1 .auction-thumb .bid i {
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-1 .auction-thumb .rating {
   color: #ff7800;
@@ -2994,14 +2994,14 @@ div[class*=auction] .custom-button {
 .auction-item-1 .auction-content .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-1 .auction-content .bid-amount .amount-content {
   padding-left: 15px;
 }
 .auction-item-1 .auction-content .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -3022,7 +3022,7 @@ div[class*=auction] .custom-button {
 .auction-item-1 .auction-content .countdown-area .total-bids {
   margin-top: 5px;
   width: 80px;
-  color: #43b055;
+  color: #e8dcc4;
   padding-left: 15px;
   text-shadow: 0px 6px 7px rgba(0, 0, 0, 0.19);
   border-left: 1px solid #d0cff0;
@@ -3159,7 +3159,7 @@ div[class*=auction] .custom-button {
 .auction-item-2 .auction-content .bid-area .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .auction-item-2 .auction-content .bid-area .bid-amount .icon {
@@ -3175,7 +3175,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-2 .auction-content .bid-area .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -3204,7 +3204,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-2 .auction-content .bid-area .bid-amount:nth-child(even) .icon i,
 .auction-item-2 .auction-content .bid-area .bid-amount:nth-child(even) .amount-content .current {
-  color: #ee4730;
+  color: #d4af37;
 }
 @media (max-width: 1199px) and (min-width: 992px) {
   .auction-item-2 .auction-content .bid-area .bid-amount {
@@ -3247,7 +3247,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-2 .auction-content .countdown-area .total-bids {
   margin-top: 5px;
-  color: #43b055;
+  color: #e8dcc4;
   padding-left: 15px;
   text-shadow: 0px 6px 7px rgba(0, 0, 0, 0.19);
   border-left: 1px solid #d0cff0;
@@ -3300,7 +3300,7 @@ div[class*=auction] .custom-button {
   margin-bottom: 30px;
 }
 .call-wrapper .custom-button {
-  color: #ee4730;
+  color: #d4af37;
   margin-bottom: 30px;
 }
 @media (max-width: 991px) {
@@ -3357,7 +3357,7 @@ div[class*=auction] .custom-button {
   background: #ffffff;
 }
 .auction-item-3 .auction-thumb .bid i {
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-3 .auction-thumb .rating {
   color: #ff7800;
@@ -3397,14 +3397,14 @@ div[class*=auction] .custom-button {
 .auction-item-3 .auction-content .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-3 .auction-content .bid-amount .amount-content {
   padding-left: 15px;
 }
 .auction-item-3 .auction-content .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -3418,7 +3418,7 @@ div[class*=auction] .custom-button {
   font-size: 16px;
 }
 .auction-item-3 .auction-content .bids-area .total-bids {
-  color: #43b055;
+  color: #e8dcc4;
 }
 @media screen and (max-width: 520px) {
   .auction-item-3 {
@@ -3520,7 +3520,7 @@ div[class*=auction] .custom-button {
   background: #ffffff;
 }
 .auction-item-4 .auction-thumb .bid i {
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-4 .auction-thumb .rating {
   color: #ff7800;
@@ -3569,7 +3569,7 @@ div[class*=auction] .custom-button {
 .auction-item-4 .auction-content .bid-area .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .auction-item-4 .auction-content .bid-area .bid-amount .icon {
@@ -3585,7 +3585,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-4 .auction-content .bid-area .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -3614,7 +3614,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-4 .auction-content .bid-area .bid-amount:nth-child(even) .icon i,
 .auction-item-4 .auction-content .bid-area .bid-amount:nth-child(even) .amount-content .current {
-  color: #ee4730;
+  color: #d4af37;
 }
 @media (max-width: 1199px) and (min-width: 992px) {
   .auction-item-4 .auction-content .bid-area .bid-amount {
@@ -3657,7 +3657,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-4 .auction-content .countdown-area .total-bids {
   margin-top: 5px;
-  color: #43b055;
+  color: #e8dcc4;
   padding-left: 15px;
   text-shadow: 0px 6px 7px rgba(0, 0, 0, 0.19);
   border-left: 1px solid #d0cff0;
@@ -3740,7 +3740,7 @@ div[class*=auction] .custom-button {
   color: #52606d;
 }
 .owl-dots .owl-dot.active::before {
-  color: #3f22b3;
+  color: #0f1a11;
   font-size: 24px;
 }
 .owl-dots .owl-dot:nth-of-type(n + 6) {
@@ -3784,7 +3784,7 @@ div[class*=auction] .custom-button {
   bottom: 0;
   left: 0;
   height: 2px;
-  background: #ee4730;
+  background: #d4af37;
   width: 0;
   transition: all ease 0.3s;
 }
@@ -3795,7 +3795,7 @@ div[class*=auction] .custom-button {
   }
 }
 .filter li.active {
-  color: #ee4730;
+  color: #d4af37;
 }
 .filter li.active span::before {
   width: 100%;
@@ -3918,7 +3918,7 @@ div[class*=auction] .custom-button {
 .auction-item-5 .auction-inner .auction-content .bid-area .bid-inner .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .auction-item-5 .auction-inner .auction-content .bid-area .bid-inner .bid-amount .icon {
@@ -3934,7 +3934,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-5 .auction-inner .auction-content .bid-area .bid-inner .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -3968,7 +3968,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-5 .auction-inner .auction-content .bid-area .bid-inner .bid-amount:nth-child(even) .icon i,
 .auction-item-5 .auction-inner .auction-content .bid-area .bid-inner .bid-amount:nth-child(even) .amount-content .current {
-  color: #ee4730;
+  color: #d4af37;
 }
 @media (max-width: 1199px) and (min-width: 992px) {
   .auction-item-5 .auction-inner .auction-content .bid-area .bid-inner .bid-amount {
@@ -4005,7 +4005,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-5 .auction-inner .auction-content .bid-count-area .item {
   padding: 5px 20px;
-  color: #43b055;
+  color: #e8dcc4;
   border-right: 1px solid #bfbee8;
   display: inline-block;
   line-height: 1;
@@ -4028,7 +4028,7 @@ div[class*=auction] .custom-button {
   text-align: center;
 }
 .auction-item-5 .auction-inner .auction-bidding .bid-title {
-  color: #3f22b3;
+  color: #0f1a11;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
 }
@@ -4280,7 +4280,7 @@ div[class*=auction] .custom-button {
 .auction-item-7 .auction-inner .auction-content .bid-area .bid-inner .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .auction-item-7 .auction-inner .auction-content .bid-area .bid-inner .bid-amount .icon {
@@ -4296,7 +4296,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-7 .auction-inner .auction-content .bid-area .bid-inner .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -4330,7 +4330,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-7 .auction-inner .auction-content .bid-area .bid-inner .bid-amount:nth-child(even) .icon i,
 .auction-item-7 .auction-inner .auction-content .bid-area .bid-inner .bid-amount:nth-child(even) .amount-content .current {
-  color: #ee4730;
+  color: #d4af37;
 }
 @media (max-width: 1199px) and (min-width: 992px) {
   .auction-item-7 .auction-inner .auction-content .bid-area .bid-inner .bid-amount {
@@ -4367,7 +4367,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-7 .auction-inner .auction-content .bid-count-area .item {
   padding: 5px 20px;
-  color: #43b055;
+  color: #e8dcc4;
   border-right: 1px solid #bfbee8;
   display: inline-block;
   line-height: 1;
@@ -4390,7 +4390,7 @@ div[class*=auction] .custom-button {
   text-align: center;
 }
 .auction-item-7 .auction-inner .auction-bidding .bid-title {
-  color: #3f22b3;
+  color: #0f1a11;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
 }
@@ -4504,7 +4504,7 @@ div[class*=auction] .custom-button {
 .upcoming-badge-2 {
   width: 34px;
   height: 60px;
-  background: #43b055;
+  background: #e8dcc4;
   color: #ffffff;
   line-height: 74px;
   text-align: center;
@@ -4569,7 +4569,7 @@ div[class*=auction] .custom-button {
   background: #ffffff;
 }
 .auction-item-6 .auction-inner .auction-thumb .bid i {
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-6 .auction-inner .auction-thumb img {
   width: 100%;
@@ -4622,7 +4622,7 @@ div[class*=auction] .custom-button {
   text-align: center;
 }
 .auction-item-6 .auction-inner .auction-bidding .bid-title {
-  color: #3f22b3;
+  color: #0f1a11;
   font-family: "Roboto", sans-serif;
   font-weight: 500;
 }
@@ -4639,14 +4639,14 @@ div[class*=auction] .custom-button {
 .auction-item-6 .auction-inner .auction-bidding .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-6 .auction-inner .auction-bidding .bid-amount .amount-content {
   padding-left: 15px;
 }
 .auction-item-6 .auction-inner .auction-bidding .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -4660,7 +4660,7 @@ div[class*=auction] .custom-button {
   font-size: 16px;
 }
 .auction-item-6 .auction-inner .auction-bidding .bids-area .total-bids {
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-6 .auction-inner .auction-bidding .custom-button {
   text-transform: capitalize;
@@ -4738,7 +4738,7 @@ div[class*=auction] .custom-button {
   background: #ffffff;
 }
 .auction-item-8 .bid i {
-  color: #43b055;
+  color: #e8dcc4;
 }
 .auction-item-8 .auction-thumb a {
   display: block;
@@ -4763,7 +4763,7 @@ div[class*=auction] .custom-button {
   background-clip: unset;
   -webkit-background-clip: unset;
   -webkit-text-fill-color: unset;
-  background: #43b055;
+  background: #e8dcc4;
 }
 .auction-item-8 .auction-thumb .countdown-area .countdown::after, .auction-item-8 .auction-thumb .countdown-area .countdown::before {
   position: absolute;
@@ -4791,7 +4791,7 @@ div[class*=auction] .custom-button {
   height: 34px;
   line-height: 34px;
   text-align: center;
-  color: #43b055;
+  color: #e8dcc4;
   box-shadow: 0px 7px 16px 0px rgba(31, 30, 72, 0.26);
   border-radius: 50%;
   display: block;
@@ -4874,7 +4874,7 @@ div[class*=auction] .custom-button {
 .auction-item-8 .auction-content .bid-area .bid-amount .icon i {
   line-height: 1;
   font-size: 36px;
-  color: #43b055;
+  color: #e8dcc4;
 }
 @media (min-width: 992px) and (max-width: 1199px) {
   .auction-item-8 .auction-content .bid-area .bid-amount .icon {
@@ -4890,7 +4890,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-8 .auction-content .bid-area .bid-amount .amount-content .current {
   font-size: 14px;
-  color: #43b055;
+  color: #e8dcc4;
   line-height: 20px;
   margin-bottom: 5px;
 }
@@ -4919,7 +4919,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-8 .auction-content .bid-area .bid-amount:nth-child(even) .icon i,
 .auction-item-8 .auction-content .bid-area .bid-amount:nth-child(even) .amount-content .current {
-  color: #ee4730;
+  color: #d4af37;
 }
 @media (max-width: 1199px) and (min-width: 992px) {
   .auction-item-8 .auction-content .bid-area .bid-amount {
@@ -4951,7 +4951,7 @@ div[class*=auction] .custom-button {
 }
 .auction-item-8 .auction-content .bid-count-area .item {
   padding: 5px 20px;
-  color: #43b055;
+  color: #e8dcc4;
   border-right: 1px solid #bfbee8;
   display: inline-block;
   line-height: 1;
@@ -5038,10 +5038,10 @@ div[class*=auction] .custom-button {
   line-height: 1;
 }
 .team-item .team-inner .team-content .social li a:hover {
-  color: #ee4730;
+  color: #d4af37;
 }
 .team-item .team-inner .team-content .social li:nth-child(even) a {
-  color: #ee4730;
+  color: #d4af37;
 }
 
 /*Overview Section Starts Here*/
@@ -5100,7 +5100,7 @@ div[class*=auction] .custom-button {
   margin-bottom: 19px;
 }
 .about-content .title span {
-  color: #ee4730;
+  color: #d4af37;
   margin-bottom: 10px;
 }
 .about-content p {
@@ -5210,7 +5210,7 @@ div[class*=auction] .custom-button {
   color: #dd4b39;
 }
 .login-with li a:hover {
-  background: #ee4730;
+  background: #d4af37;
   color: #ffffff;
 }
 .login-with li a:hover i {
@@ -5374,7 +5374,7 @@ div[class*=auction] .custom-button {
   border-radius: 0;
 }
 .contact-form .form-group input:focus {
-  border-bottom: 1px solid #3f22b3;
+  border-bottom: 1px solid #0f1a11;
 }
 .contact-form .form-group label {
   position: absolute;
@@ -5400,7 +5400,7 @@ div[class*=auction] .custom-button {
   border-radius: 0;
 }
 .contact-form .form-group textarea:focus {
-  border-bottom: 1px solid #3f22b3;
+  border-bottom: 1px solid #0f1a11;
 }
 .contact-form .form-group .custom-button {
   font-size: 16px;
@@ -5438,7 +5438,7 @@ div[class*=auction] .custom-button {
   color: #171d1c;
 }
 .error-wrapper .title a {
-  color: #ee4730;
+  color: #d4af37;
 }
 
 /*Faq Section Menu Starts Here*/
@@ -5509,8 +5509,8 @@ div[class*=auction] .custom-button {
   width: 100%;
 }
 .faq-video .video-area .video-button-2 i {
-  background: #3f22b3;
-  border-color: #3f22b3;
+  background: #0f1a11;
+  border-color: #0f1a11;
 }
 .faq-video .title {
   margin: 0;
@@ -5709,7 +5709,7 @@ div[class*=auction] .custom-button {
   display: block;
 }
 .faq-item.open .faq-title .title {
-  color: #ee4730;
+  color: #d4af37;
 }
 .faq-item.open .faq-title .right-icon::before {
   transform: translate(-50%, -50%) rotate(90deg);
@@ -5772,7 +5772,7 @@ div[class*=auction] .custom-button {
   font-size: 12px;
   box-shadow: 0px 6px 18px 0px rgba(16, 5, 54, 0.17);
   border-radius: 50%;
-  color: #43b055;
+  color: #e8dcc4;
 }
 .popular-article-item .title {
   margin-bottom: 20px;
@@ -5915,7 +5915,7 @@ div[class*=auction] .custom-button {
 .slide-top-item {
   margin: 15px;
   box-shadow: 0px 0px 15px rgba(22, 26, 57, 0.36);
-  background: #f1f3fd;
+  background: #f5f2ed;
   border-radius: 20px;
 }
 .slide-top-item .slide-inner {
@@ -6130,7 +6130,7 @@ div[class*=auction] .custom-button {
   margin-bottom: 20px;
 }
 .price-table li .price {
-  color: #43b055;
+  color: #e8dcc4;
 }
 .price-table li .info {
   color: #52606d;
@@ -6542,7 +6542,7 @@ div[class*=auction] .custom-button {
 }
 @media (max-width: 767px) {
   .history-table .content {
-    color: #ee4730;
+    color: #d4af37;
   }
 }
 @media (max-width: 767px) and (max-width: 575px) {
@@ -6663,7 +6663,7 @@ div[class*=auction] .custom-button {
 .dashboard-menu li a i {
   font-weight: 400;
   margin-right: 10px;
-  color: #ee4730;
+  color: #d4af37;
 }
 .dashboard-menu li a:hover, .dashboard-menu li a.active {
   background: #f7f6fc;
@@ -6707,7 +6707,7 @@ div[class*=auction] .custom-button {
   left: 0;
   right: 100%;
   top: calc(100% - 3px);
-  background: #ee4730;
+  background: #d4af37;
   position: absolute;
   content: "";
   transition: all ease 0.3s;
@@ -6835,7 +6835,7 @@ div[class*=auction] .custom-button {
     display: none;
   }
   .dash-pro-item .dash-pro-body li .info-name {
-    color: #ee4730;
+    color: #d4af37;
     margin-bottom: -3px;
   }
 }
@@ -7070,7 +7070,7 @@ div[class*=auction] .custom-button {
   color: #ffffff;
 }
 .cart-sidebar-area .single-product-item .content .title a:hover {
-  color: #ee4730;
+  color: #d4af37;
 }
 
 @keyframes plus-anime {
@@ -7169,10 +7169,10 @@ div[class*=auction] .custom-button {
 }
 .custom-button.white {
   background: #ffffff;
-  color: #3f22b3;
+  color: #0f1a11;
 }
 .custom-button.white:hover {
-  background: #3f22b3;
+  background: #0f1a11;
   color: #ffffff;
 }
 .custom-button.active {
@@ -7184,7 +7184,7 @@ div[class*=auction] .custom-button {
 .custom-button.active:hover {
   background: -webkit-linear-gradient(90deg, rgb(61, 169, 245) 0%, rgb(104, 61, 245) 100%);
   box-shadow: -1.04px 4.891px 20px 0px rgba(69, 49, 183, 0.5);
-  border-color: #ee4730;
+  border-color: #d4af37;
   color: #ffffff;
 }
 .custom-button.yellow {
@@ -7243,7 +7243,7 @@ button.custom-button {
 }
 .load-more:hover {
   color: #ffffff;
-  background: #ee4730;
+  background: #d4af37;
 }
 .load-more.small {
   padding: 3px 33px 0;
@@ -7268,7 +7268,7 @@ button.custom-button {
   height: 60px;
   z-index: 1;
   border-radius: 50%;
-  background: #3f22b3;
+  background: #0f1a11;
   position: relative;
 }
 .video-button a {
@@ -7292,7 +7292,7 @@ button.custom-button {
   left: 0;
   top: 0;
   border-radius: 74px;
-  background: #3f22b3;
+  background: #0f1a11;
   opacity: 0.15;
   z-index: -10;
 }
@@ -7307,7 +7307,7 @@ button.custom-button {
 .video-button span {
   width: 100%;
   height: 100%;
-  border: 0.3px solid #3f22b3;
+  border: 0.3px solid #0f1a11;
   border-radius: 50%;
   animation: 5s customZoom infinite;
   -webkit-animation: 5s customZoom infinite;
@@ -7319,7 +7319,7 @@ button.custom-button {
 .video-button span::after, .video-button span::before {
   width: 100%;
   height: 100%;
-  border: 0.3px solid #3f22b3;
+  border: 0.3px solid #0f1a11;
   border-radius: 50%;
   animation: 5s customZoom infinite;
   -webkit-animation: 5s customZoom infinite;

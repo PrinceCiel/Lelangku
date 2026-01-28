@@ -4,7 +4,7 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li>
-                    <a href="{{('')}}">Home</a>
+                    <a href="{{url('/')}}">Home</a>
                 </li>
                 <li>
                     <a href="#0">Kategori</a>

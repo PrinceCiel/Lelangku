@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use App\Models\Lelang;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 
 class LelangController extends Controller
 {

@@ -8,7 +8,6 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Str;
 
-
 class BarangController extends Controller
 {
     /**

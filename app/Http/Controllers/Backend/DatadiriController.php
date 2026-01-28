@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Datadiri;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DatadiriController extends Controller
@@ -12,54 +14,30 @@ class DatadiriController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::with('datadiri')->where("status", "diajukan")->get();
+        return view('verifikasi.index', compact('users'));
+        // dd($users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function approve($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->status = 'Terverifikasi'; // atau 'Verified' sesuai keinginanmu
+        $user->save();
+
+        toast('User berhasil diverifikasi', 'success');
+        return redirect()->back();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function reject($id)
     {
-        //
-    }
+        $user = User::findOrFail($id);
+        $user->status = 'Belum Verifikasi'; // Balikin biar bisa upload ulang
+        $user->save();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        Datadiri::where('id_user', $id)->delete();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        toast('Verifikasi ditolak', 'warning');
+        return redirect()->back();
     }
 }

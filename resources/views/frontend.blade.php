@@ -1,34 +1,54 @@
 @extends('layouts.kerangkafrontend')
 @section('content')
-
     <!--============= Banner Section Starts Here =============-->
     <section class="banner-section bg_img" data-background="{{ asset('sbidu/assets/images/banner/banner-bg-1.png') }}">
         <div class="container">
             <div class="row align-items-center justify-content-between">
-                <div class="col-lg-6 col-xl-6">
+                <div class="col-lg-6 col-xl-12">
                     <div class="banner-content cl-white">
-                        <h1 class="title" data-aos="zoom-out-up" data-aos-duration="1200"><span class="d-xl-block">Selamat Datang</span> di e-Lelang SMK Assalaam!</h1>
+                        <h1 class="title" data-aos="zoom-out-up" data-aos-duration="1200"><span class="d-xl-block">Selamat Datang</span> di LelangKu!</h1>
                         <p class="pras" data-aos="zoom-out-down" data-aos-duration="1300">
-                            Platform lelang online yang dirancang untuk siswa dan masyarakat agar bisa jual, beli, dan berbagi barang secara mudah, cepat, dan transparan.
+                            LelangKu adalah platform lelang digital yang menyajikan berbagai kategori aset mulai dari kendaraan, properti, hingga produk elektronik pilihan. Kami mengelola seluruh proses secara transparan dan akuntabel. Setiap unit yang kami tawarkan telah melewati tahap verifikasi ketat demi menjamin keamanan dan kepuasan Anda dalam bertransaksi.
                         </p>
                         <a href="#0" class="custom-button yellow btn-large" data-aos="zoom-out-up" data-aos-duration="1500">Get Started</a>
                     </div>
                 </div>
                 <div class="d-none d-lg-block col-lg-6" data-aos="fade-right" data-aos-duration="1200">
                     <div class="banner-thumb-2">
-                        <img src="{{ asset('sbidu/assets/images/banner/banner-1.png') }}" alt="banner">
+                        <!-- <img src="{{ asset('sbidu/assets/images/banner/banner-1.png') }}" alt="banner"> -->
                     </div>
                 </div>
             </div>
         </div>
-        <div class="banner-shape d-none d-lg-block">
-            <img src="{{ asset('sbidu/assets/css/img/banner-shape.png') }}" alt="css">
+        <div class="container" style="padding-top: 30px; margin-bottom: 60px;">
+            <div class="news-slider-wrapper">
+                <div class="owl-carousel owl-theme news-slider">
+                    <!-- Slide 1 -->
+                    <div class="news-slide-item">
+                        <div class="news-content">
+                            <img src="{{ asset('sbidu/assets/images/news/auction-banner-1.jpg') }}" alt="New Year Auction">
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="news-slide-item">
+                        <div class="news-content">
+                            <img src="{{ asset('sbidu/assets/images/news/auction-banner-1.jpg') }}" alt="Special Event">
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="news-slide-item">
+                        <div class="news-content">
+                            <img src="{{ asset('sbidu/assets/images/news/auction-banner-1.jpg') }}" alt="Hot Deals">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     <!--============= Banner Section Ends Here =============-->
 
 
-    <div class="browse-section ash-bg">
+    <div class="browse-section ash-bg" style="background-color: #0f302d;">
         <!--============= Hightlight Slider Section Starts Here =============-->
         <div class="browse-slider-section mt--140">
             <div class="container">
@@ -73,7 +93,7 @@
                         </div>
                         <div class="title-area">
                             <h2 class="title">{{$item->nama}}</h2>
-                            <p>Shop for men & women designer brand watches</p>
+                            <p></p>
                         </div>
                     </div>
                     <a href="{{ route('kategori.show', $item->slug) }}" class="normal-button">View All</a>
@@ -87,6 +107,8 @@
                         @foreach($lelangs as $lelang)
                             @php 
                                 $bidtertinggi = $lelang->bid->max('bid');
+                                if($bidtertinggi == 0)
+                                    $bidtertinggi = $lelang->barang->harga;
                             @endphp
                         <div class="col-sm-10 col-md-6 col-lg-4">
                             <div class="auction-item-2" data-aos="zoom-out-up" data-aos-duration="1600">

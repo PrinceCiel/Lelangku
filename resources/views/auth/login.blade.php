@@ -11,7 +11,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Demo: Login Basic - Pages | Sneat - Bootstrap Dashboard FREE</title>
+    <title>Login - Lelangku</title>
 
     <meta name="description" content="" />
 
@@ -62,17 +62,17 @@
           <div class="card px-sm-6 px-0">
             <div class="card-body">
               <!-- Logo -->
-              <div class="app-brand justify-content-center">
-                <a href="index.html" class="app-brand-link gap-2">
-                  <span class="app-brand-logo demo">
+              <div class="app-brand justify-content-center" style="background-color: #171d1c; border-radius: 10px;">
+                <a href="{{ route('home.user')}}" class="app-brand-link gap-2">
+                  <span class="app-brand-logo demo" >
                     <span class="text-primary">
-                      <img src="{{ asset('icon/logo.png') }}" alt="logo" class="logo-img" style="padding: 10px 0;max-width: 150px;">
+                      <img src="{{ asset('icon/iconL.png') }}" alt="logo" class="logo-img" style="padding: 10px 0;max-width: 150px;">
                     </span>
                   </span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-1">Selamat Datang di e-Lelang! 👋</h4>
+              <h4 class="mb-1">Selamat Datang di LelangKu!👋</h4>
               <p class="mb-6">login untuk mendapat akses lebih luas.</p>
               <form id="formAuthentication" class="mb-6" method="POST" action="{{ route('login') }}">
                   @csrf

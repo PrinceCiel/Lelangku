@@ -5,7 +5,7 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li>
-                    <a href="{{ route('home')}}">Home</a>
+                    <a href="{{ route('home.user')}}">Home</a>
                 </li>
                 <li>
                     <a href="#0">{{$lelang->barang->kategori->nama}}</a>
@@ -110,25 +110,42 @@
                         <ul class="price-table mb-30">
                             @if($lelang->status === 'selesai')
                             <li class="header">
-                                <h5 class="current">BID Akhir</h5>
+                                <h5 class="current">Tawaran Pemenang</h5>
                                 <h3 class="price">Rp{{ number_format($lelang->pemenang->bid, 0, ',', '.') }}</h3>
                             </li>
                             @else
                             <li class="header">
-                                <h5 class="current">Current Price</h5>
-                                <h3 class="price">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</h3>
+                                <h5 class="current">Tawaran Tertinggi Sementara</h5>
+                                <h3 class="price" id="currentBid">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</h3>
+                            </li>
+                            <li>
+                                <span class="details">Kenaikan Tawaran (IDR)</span>
+                                <h5 class="info">10%</h5>
                             </li>
                             @endif
                         </ul>
                         @if($lelang->status === 'dibuka')
+                        @php 
+                            $increment = $bidtertinggi * 0.10; 
+                            $min = $increment + $bidtertinggi;
+                        @endphp 
                         <div class="product-bid-area">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li> 
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
                             <form class="product-bid-form" action="{{ route('lelang.store') }}" method="post">
                                 @csrf
                                 <div class="search-icon">
                                     <img src="{{ asset('sbidu/assets/images/product/search-icon.png') }}" alt="product">
                                 </div>
                                 <input type="hidden" name="kode_lelang" value="{{$lelang->kode_lelang}}">
-                                <input type="integer" placeholder="Masukkan Tawaran anda" name="bid">
+                                <input type="integer" placeholder="Masukkan Tawaran anda" name="bid" min={{$min}} id="bidInput">
                                 <button type="submit" class="custom-button">Ajukan Tawaran</button>
                             </form>
                         </div>
@@ -215,23 +232,23 @@
                                             <th>Penawaran</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="bidHistoryBody">
                                         @foreach($bid as $item)
-                                        <tr>
-                                            <td data-history="bidder">
-                                                <div class="user-info">
-                                                    <div class="thumb">
-                                                        <img src="{{ Storage::url($item->users->foto) }}" alt="history">
+                                            <tr>
+                                                <td>
+                                                    <div class="user-info">
+                                                        <div class="thumb">
+                                                            <img src="{{ Storage::url($item->users->foto) }}">
+                                                        </div>
+                                                        <div class="content">
+                                                            {{ $item->users->nama_lengkap }}
+                                                        </div>
                                                     </div>
-                                                    <div class="content">
-                                                        {{$item->users->nama_lengkap}}
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td data-history="date">{{ $item->created_at->format('Y-m-d') }}</td>
-                                            <td data-history="time">{{ $item->created_at->format('h:i A') }}</td>
-                                            <td data-history="unit price">Rp{{ number_format($item->bid, 0, ',', '.') }}</td>
-                                        </tr>
+                                                </td>
+                                                <td>{{ $item->created_at->format('Y-m-d') }}</td>
+                                                <td>{{ $item->created_at->format('H:i') }}</td>
+                                                <td>Rp{{ number_format($item->bid, 0, ',', '.') }}</td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -263,6 +280,80 @@
             }
         }, 1000);
     </script>
+    <script>
+        const bidInput = document.getElementById('bidInput');
+        bidInput.addEventListener('input', function (e) {
+            // Remove semua selain angka
+            let value = this.value.replace(/[^,\d]/g, '').toString();
+
+            // Format angka jadi Rupiah
+            let split = value.split(',');
+            let sisa = split[0].length % 3;
+            let rupiah = split[0].substr(0, sisa);
+            let ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            if (ribuan) {
+                let separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+
+            this.value = 'Rp' + rupiah;
+        });
+
+        // Convert ke angka sebelum submit
+        document.querySelector('form.product-bid-form').addEventListener('submit', function (e) {
+            const cleaned = bidInput.value.replace(/[^\d]/g, '');
+            bidInput.value = cleaned;
+        });
+        setInterval(() => {
+            fetch('/lelang/{{ $lelang->kode_lelang }}/poll')
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById('currentBid').innerText =
+                        'Rp' + Number(data.bidtertinggi).toLocaleString('id-ID');
+
+                    document.getElementById('countBid').innerText =
+                        data.countBid;
+
+                    if (data.status === 'selesai') {
+                        alert('Lelang selesai');
+                    }
+                });
+        }, 5000);
+        function loadBidHistory() {
+            fetch('/lelang/{{ $lelang->kode_lelang }}/history')
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('bidHistoryBody');
+                    tbody.innerHTML = '';
+
+                    data.forEach(item => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="thumb">
+                                            <img src="${item.foto}">
+                                        </div>
+                                        <div class="content">
+                                            ${item.nama}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>${item.tanggal}</td>
+                                <td>${item.jam}</td>
+                                <td>Rp${item.bid}</td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+
+        setInterval(loadBidHistory, 5000);
+    </script>
+
 @endsection
 @section('scripts')
 

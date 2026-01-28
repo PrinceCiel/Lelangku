@@ -1,0 +1,346 @@
+/* sbidu-luxury-theme.css - Load AFTER semua CSS Sbidu */
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap");
+
+/* ==========================================
+   LUXURY THEME FOR SBIDU TEMPLATE
+   Soft override - won't break functionality
+   ========================================== */
+
+:root {
+  /* Luxury Color Palette */
+  --luxury-emerald: #0f1a11;
+  --luxury-gold: #d4af37;
+  --luxury-champagne: #e8dcc4;
+  --luxury-beige: #f5f2ed;
+  --luxury-cream: #fafaf8;
+}
+
+/* ===== SAFE TYPOGRAPHY CHANGES ===== */
+body {
+  font-family: "Montserrat", -apple-system, sans-serif;
+  background-color: var(--luxury-beige);
+}
+
+h1, h2, h3, h4, h5, h6,
+.section-header .title,
+.auction-content .title,
+.faq-item .faq-title .title {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+/* ===== COLOR SWAPS (Targeted) ===== */
+
+/* Purple (#3f22b3) → Emerald Green */
+.header-top,
+.theme-one {
+  background-color: var(--luxury-emerald) !important;
+}
+
+.section-header .cate {
+  color: var(--luxury-gold);
+}
+
+/* Red (#ee4730) → Gold */
+.theme-bg {
+  background-color: var(--luxury-gold) !important;
+}
+
+h1 a:hover, h2 a:hover, h3 a:hover,
+.menu li a:hover,
+.footer-widget .links-list li a:hover,
+.filter li.active,
+.faq-item.open .faq-title .title {
+  color: var(--luxury-gold) !important;
+}
+
+/* Green (#43b055) → Gold (untuk bid prices) */
+.bid-amount .icon i,
+.bid-amount .amount-content .current,
+.total-bids,
+.upcoming-badge {
+  color: var(--luxury-gold) !important;
+}
+
+.upcoming-badge {
+  background: linear-gradient(135deg, var(--luxury-gold) 0%, #c9a142 100%) !important;
+}
+
+/* ===== BUTTON REFINEMENT ===== */
+.custom-button {
+  background: var(--luxury-emerald);
+  border: 2px solid var(--luxury-emerald);
+  border-radius: 1px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(15, 26, 17, 0.2);
+  transition: all 0.3s ease;
+}
+
+.custom-button:hover {
+  background: transparent;
+  color: var(--luxury-emerald);
+  border-color: var(--luxury-emerald);
+}
+
+.custom-button.yellow,
+.custom-button.pink {
+  background: var(--luxury-gold);
+  border-color: var(--luxury-gold);
+  color: var(--luxury-emerald);
+}
+
+.custom-button.yellow:hover,
+.custom-button.pink:hover {
+  background: transparent;
+  color: var(--luxury-gold);
+}
+
+/* ===== CARD ELEVATION (Subtle) ===== */
+.auction-item-1,
+.auction-item-2,
+.auction-item-3,
+.auction-item-4,
+.auction-item-5 .auction-inner,
+.auction-item-6 .auction-inner,
+.auction-item-7 .auction-inner,
+.auction-item-8 {
+  border: 1px solid var(--luxury-champagne);
+  box-shadow: 0 1px 8px rgba(15, 26, 17, 0.06);
+  transition: all 0.3s ease;
+}
+
+.auction-item-1:hover,
+.auction-item-2:hover,
+.auction-item-3:hover,
+.auction-item-4:hover,
+.auction-item-5:hover,
+.auction-item-6:hover,
+.auction-item-7:hover,
+.auction-item-8:hover {
+  border-color: var(--luxury-gold);
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.12);
+  transform: translateY(-2px);
+}
+
+/* ===== BACKGROUND ADJUSTMENTS ===== */
+.section-bg,
+.ash-bg {
+  background-color: var(--luxury-beige);
+}
+
+.body-bg {
+  background-color: #ffffff;
+}
+
+.price-table,
+.history-table-area,
+.auction-item-5 .auction-inner .auction-bidding,
+.auction-item-7 .auction-inner .auction-bidding,
+.auction-item-6 .auction-inner .auction-bidding {
+  background-color: var(--luxury-cream);
+  border: 1px solid var(--luxury-champagne);
+}
+
+/* ===== HEADER REFINEMENT ===== */
+header {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(8px);
+}
+
+.menu li a {
+  color: var(--luxury-emerald);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.header-top-wrapper .customer-support a,
+.header-top-wrapper .customer-support li {
+  color: var(--luxury-champagne);
+}
+
+.header-top-wrapper .cart-button-area li .user-button {
+  background-color: var(--luxury-gold);
+  color: var(--luxury-emerald);
+}
+
+/* ===== FOOTER ELEGANCE ===== */
+footer {
+  background: var(--luxury-emerald);
+}
+
+.footer-widget .title {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.footer-widget .links-list li a {
+  color: var(--luxury-champagne);
+}
+
+.footer-widget .links-list li a:hover {
+  color: var(--luxury-gold);
+}
+
+.copyright-area {
+  border-top-color: rgba(232, 220, 196, 0.15);
+}
+
+/* ===== FORM ELEMENTS ===== */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  border-color: var(--luxury-champagne);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--luxury-gold);
+}
+
+/* ===== WIDGETS & SIDEBARS ===== */
+.widget,
+.dashboard-widget {
+  border: 1px solid var(--luxury-champagne);
+  box-shadow: 0 2px 12px rgba(15, 26, 17, 0.06);
+}
+
+.widget .title,
+.dashboard-widget .title {
+  color: var(--luxury-emerald);
+  border-bottom-color: var(--luxury-champagne);
+}
+
+/* ===== SOCIAL ICONS ===== */
+.social-icons li a {
+  border-radius: 2px;
+}
+
+.social-icons li a:hover,
+.social-icons li a.active {
+  background: var(--luxury-gold);
+  color: var(--luxury-emerald);
+}
+
+/* ===== RATINGS ===== */
+.ratings span,
+.auction-thumb .rating {
+  color: var(--luxury-gold);
+}
+
+/* ===== PAGINATION ===== */
+.pagination li a {
+  border-color: var(--luxury-champagne);
+}
+
+.pagination li a.active,
+.pagination li a:hover {
+  background: var(--luxury-gold);
+  border-color: var(--luxury-gold);
+  color: var(--luxury-emerald);
+}
+
+/* ===== COUNTDOWN STYLING ===== */
+.countdown {
+  background: linear-gradient(90deg, var(--luxury-gold) 0%, #b8941f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 600;
+}
+
+/* ===== REMOVE PURPLE/PINK GRADIENTS ===== */
+.slider-nav a.active,
+.slider-nav a:hover,
+.browse-item:hover,
+.browse-item.active {
+  background: var(--luxury-emerald) !important;
+  background-image: none !important;
+}
+
+/* ===== SCROLL TO TOP ===== */
+.scrollToTop {
+  background: var(--luxury-emerald);
+}
+
+.scrollToTop:hover {
+  background: var(--luxury-gold);
+}
+
+/* ===== FAQ STYLING ===== */
+.faq-item {
+  background-color: #ffffff;
+  border: 1px solid var(--luxury-champagne);
+}
+
+.faq-item .faq-title .right-icon {
+  background: var(--luxury-gold);
+}
+
+.faq-item .faq-content {
+  border-top-color: var(--luxury-champagne);
+}
+
+/* ===== BANNER SECTION ===== */
+.banner-section {
+  background: linear-gradient(135deg, var(--luxury-beige) 0%, #ffffff 100%);
+}
+
+.banner-content .cate {
+  color: var(--luxury-gold);
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: 2px;
+}
+
+/* ===== MINIMAL BORDER RADIUS (Premium Look) ===== */
+.custom-button,
+.pagination li a,
+.social-icons li a {
+  border-radius: 2px;
+}
+
+/* Keep functional elements slightly rounded */
+input,
+select,
+textarea {
+  border-radius: 3px;
+}
+
+/* ===== HOVER EFFECTS (Smooth) ===== */
+.c-thumb:hover img,
+.auction-thumb:hover img {
+  transform: scale(1.04);
+}
+
+/* ===== CLIENT ITEMS ===== */
+.client-item {
+  border: 1px solid var(--luxury-champagne);
+  box-shadow: 0 2px 8px rgba(15, 26, 17, 0.05);
+}
+
+.client-item .client-author {
+  border-top-color: var(--luxury-champagne);
+}
+
+/* ===== DASHBOARD MENU ===== */
+.dashboard-menu li a:hover,
+.dashboard-menu li a.active {
+  background-color: var(--luxury-cream);
+}
+
+.dashboard-menu li a i {
+  color: var(--luxury-gold);
+}
+
+/* ===== TABLE STYLING ===== */
+.history-table tr {
+  border-bottom-color: var(--luxury-champagne);
+}
+
+.product-info-table tbody tr:nth-of-type(4n + 3),
+.product-info-table tbody tr:nth-of-type(4n + 4) {
+  background-color: var(--luxury-cream);
+}

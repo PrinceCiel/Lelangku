@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('IsAdmin')->default(0);
-            $table->enum('status', ['Belum Verifikasi', 'Terverifikasi'])->default('Belum Verifikasi');
+            $table->enum('status', ['Belum Verifikasi', 'Terverifikasi', 'diajukan'])->default('Belum Verifikasi');
             $table->rememberToken();
             $table->timestamps();
         });

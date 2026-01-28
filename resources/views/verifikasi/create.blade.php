@@ -1,4 +1,3 @@
-@if(Auth::user()->status == 'Belum Verifikasi')
 <!doctype html>
 
 <html
@@ -116,12 +115,13 @@
                       </svg>
                     </span>
                   </span>
-                  <span class="app-brand-text demo text-heading fw-bold">e-Lelang</span>
+                  <span class="app-brand-text demo text-heading fw-bold">LelangKu</span>
                 </a>
               </div>
               <!-- /Logo -->
               <h4 class="mb-1">Verifikasi Data Diri</h4>
               <p class="mb-6">verifikasi untuk mendapat akses lebih luas.</p>
+              @if(Auth::user()->status == "Belum Verifikasi")
               <form id="formAuthentication" class="mb-6" method="POST" action="{{ route('verifikasi.store') }}" enctype="multipart/form-data">
                   @csrf
                 <div class="mb-6">
@@ -190,6 +190,39 @@
                   <button class="btn btn-primary d-grid w-100" type="submit">Verifikasi</button>
                 </div>
               </form>
+              @elseif(Auth::user()->status == "diajukan")
+                <div class="text-center">
+                    <div class="mb-4">
+                        <div class="avatar avatar-xl d-inline-block">
+                            <span class="avatar-initial rounded-circle bg-label-warning">
+                                <i class="bx bx-time-five bx-lg"></i>
+                            </span>
+                        </div>
+                    </div>
+
+                    <h4 class="mb-2">Verifikasi Sedang Diproses! ⏳</h4>
+                    <p class="mb-6">
+                        Terima kasih telah melakukan verifikasi. Data Anda sedang dalam antrean peninjauan oleh tim admin LelangKu.
+                    </p>
+
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        <span class="alert-icon text-warning me-2">
+                            <i class="bx bx-info-circle"></i>
+                        </span>
+                        Proses ini biasanya memakan waktu maksimal 1x24 jam.
+                    </div>
+
+                    <div class="mt-6">
+                        <p class="text-muted">Mau cek status lagi nanti?</p>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-outline-danger w-100">
+                                <i class="bx bx-log-out me-1"></i> Keluar / Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @endif
             </div>
           </div>
           <!-- /Register -->
@@ -223,4 +256,3 @@
     <script async defer src="https://buttons.github.io/buttons.js') }}"></script>
   </body>
 </html>
-@endif

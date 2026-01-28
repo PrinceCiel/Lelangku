@@ -72,7 +72,7 @@ class LelangCekPemenang extends ServiceProvider
                     while (Struk::where('kode_struk', $kodeStruk)->exists()) {
                         $kodeStruk = 'STRL-' . Str::upper(Str::random(10));
                     }
-                    $total = $pemenang->bid + $lelang->barang->harga;
+                    $total = $pemenang->bid;
                     $adminfee = $total * 0.05;
                     $grandtotal = $total + $adminfee;
                     Struk::create([

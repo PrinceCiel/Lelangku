@@ -16,7 +16,11 @@ class VerifikasiController extends Controller
     public function index()
     {
         if(Auth::check()){
-            return view('verifikasi.create');
+            if(Auth::user()->status == "Terverifikasi"){
+                return redirect()->back();
+            } else {
+                return view('verifikasi.create');
+            }
         } else {
             return redirect()->route('login');
         }
@@ -56,10 +60,10 @@ class VerifikasiController extends Controller
         if($verif){
             $user_id = Auth::user()->id;
             $user = User::findOrFail($user_id);
-            $user->status = 'Terverifikasi';
+            $user->status = 'diajukan';
             $user->save();
         }
-        toast('Berhasil Verifikasi Diri', 'success');
+        toast('Berhasil mengajukan verifikasi diri', 'success');
         return redirect()->route('home');
     }
 

@@ -4,8 +4,8 @@
                 <div class="container">
                     <div class="header-wrapper">
                         <div class="logo">
-                            <a href="./index.html">
-                                <img src="{{ asset('icon/icon1.png') }}" alt="logo" class="logo-img" style="padding: 10px 0;">
+                            <a href="{{ url('/')}}">
+                                <img src="{{ asset('icon/iconL.png') }}" alt="logo" class="logo-img" style="padding: 10px 0;">
                             </a>
                         </div>
                         <ul class="menu ml-auto">

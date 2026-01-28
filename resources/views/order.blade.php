@@ -4,7 +4,7 @@
         <div class="container">
             <ul class="breadcrumb">
                 <li>
-                    <a href="./index.html">Home</a>
+                    <a href="{{ url('/') }}">Home</a>
                 </li>
                 <li>
                     <a href="#0">My Account</a>
@@ -34,7 +34,7 @@
                             <div class="row mb-30-none justify-content-center">
                                 @foreach($lelang as $item)
                                 @php 
-                                $bid = $item->barang->harga + $item->pemenang->bid;
+                                $bid = $item->pemenang->bid;
                                 $total = $item->bid->count();
                                 @endphp
                                 <div class="col-sm-10 col-md-6">
