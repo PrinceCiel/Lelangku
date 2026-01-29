@@ -57,7 +57,7 @@ class User extends Authenticatable
 
     public function datadiri()
     {
-        return $this->hasMany(Datadiri::class, 'id_user');
+        return $this->hasOne(Datadiri::class, 'id_user');
     }
 
     public function bid()

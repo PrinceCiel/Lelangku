@@ -27,6 +27,9 @@
                                         <a href="#0">Profile</a>
                                         <ul class="submenu">
                                             <li>
+                                                <a href="{{ route('dashboard.user')}}">Dashboard</a>
+                                            </li>
+                                            <li>
                                                 <a href="{{ route('struk.index')}}">Lelang yang Dimenangkan</a>
                                             </li>
                                         </ul>
