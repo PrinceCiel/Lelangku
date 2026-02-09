@@ -11,7 +11,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call(function () {
             app(\App\Services\LelangService::class)->handle();
-        })->everyMinute();
+        })->everyMinute()->withoutOverlapping()->onOneServer();
     }
 
     protected function commands(): void
