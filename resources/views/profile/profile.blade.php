@@ -79,11 +79,11 @@
                                 </li>
                                 <li>
                                     <div class="info-name">Date of Birth</div>
-                                    <div class="info-value">{{ $userdata->datadiri->tanggal_lahir }}</div>
+                                    <div class="info-value">{{ $userdata->datadiri->tanggal_lahir ?? 'Not set' }}</div>
                                 </li>
                                 <li>
                                     <div class="info-name">Address</div>
-                                    <div class="info-value">{{ $userdata->datadiri->alamat }}</div>
+                                    <div class="info-value">{{ $userdata->datadiri->alamat ?? 'Not set' }}</div>
                                 </li>
                             </ul>
                         </div>
@@ -119,8 +119,37 @@
                             <ul class="dash-pro-body">
                                 <li>
                                     <div class="info-name">Email</div>
-                                    <div class="info-value">{{ $userdata->email }}</div>
+                                    <div class="info-value d-flex align-items-center justify-content-between">
+                                        <span>{{ $userdata->email }}</span>
+                                        @if(is_null($userdata->email_verified_at))
+                                            <span class="status-badge unverified">
+                                                <i class="flaticon-close"></i> Unverified
+                                            </span>
+                                        @else
+                                            <span class="status-badge verified">
+                                                <i class="flaticon-check"></i> Verified
+                                            </span>
+                                        @endif
+                                    </div>
                                 </li>
+                                @if(is_null($userdata->email_verified_at))
+                                <li class="verification-warning">
+                                    <div class="warning-content">
+                                        <div class="warning-icon">
+                                            <i class="flaticon-alarm"></i>
+                                        </div>
+                                        <div class="warning-text">
+                                            <h6>Email Verification Required</h6>
+                                            <p>Please verify your email address to unlock all features and ensure account security.</p>
+                                        </div>
+                                        <div class="warning-action">
+                                            <a href="{{ route('verification.notice') }}" class="verify-btn">
+                                                <i class="flaticon-right-arrow"></i> Verify Email
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                @endif
                             </ul>
                         </div>
                     </div>
@@ -133,7 +162,7 @@
                             <ul class="dash-pro-body">
                                 <li>
                                     <div class="info-name">Mobile</div>
-                                    <div class="info-value">{{ $userdata->datadiri->no_telp }}</div>
+                                    <div class="info-value">{{ $userdata->datadiri->no_telp ?? 'Not set' }}</div>
                                 </li>
                             </ul>
                         </div>
@@ -157,5 +186,124 @@
         </div>
     </div>
 </section>
+<style>
+    /* Status Badge */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .status-badge.verified {
+        background-color: rgba(40, 167, 69, 0.1);
+        color: #28a745;
+        border: 1px solid rgba(40, 167, 69, 0.3);
+    }
+
+    .status-badge.unverified {
+        background-color: rgba(255, 193, 7, 0.1);
+        color: #ff9800;
+        border: 1px solid rgba(255, 193, 7, 0.3);
+    }
+
+    /* Verification Warning */
+    .verification-warning {
+        padding: 0 !important;
+        border: none !important;
+    }
+
+    .warning-content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+        border-left: 4px solid #ff9800;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 15px;
+    }
+
+    .warning-icon {
+        flex-shrink: 0;
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #ff9800;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 20px;
+    }
+
+    .warning-text {
+        flex: 1;
+    }
+
+    .warning-text h6 {
+        margin: 0 0 5px 0;
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .warning-text p {
+        margin: 0;
+        font-size: 13px;
+        color: #666;
+        line-height: 1.5;
+    }
+
+    .warning-action {
+        flex-shrink: 0;
+    }
+
+    .verify-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 24px;
+        background-color: #ff9800;
+        color: #fff;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 152, 0, 0.2);
+    }
+
+    .verify-btn:hover {
+        background-color: #f57c00;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 152, 0, 0.3);
+        color: #fff;
+    }
+
+    .verify-btn i {
+        font-size: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .warning-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 15px;
+        }
+
+        .info-value {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 10px;
+        }
+    }
+</style>
 <!--============= Dashboard Section Ends Here =============-->
 @endsection

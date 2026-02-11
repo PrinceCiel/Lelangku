@@ -105,6 +105,9 @@
                       <input class="form-check-input" type="checkbox" id="remember-me" name="remember"/>
                       <label class="form-check-label" for="remember-me"> Remember Me </label>
                     </div>
+                    <a href="{{ route('password.request') }}">
+                      <span>Forgot Password?</span>
+                    </a>
                   </div>
                 </div>
                 <div class="mb-6">
@@ -125,7 +128,7 @@
       </div>
     </div>
 
-    <!-- / Content 
+    <!-- / Content
     <!-- Core JS -->
 
     <script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>

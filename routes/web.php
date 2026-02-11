@@ -27,6 +27,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [FrontController::class, 'index'])->name('awal');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.user');
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 // Search
 Route::get('/search', [FrontController::class, 'search'])->name('search');
 
@@ -44,7 +48,7 @@ Route::get('/profile/dashboard', [FrontController::class, 'dashboard'])->name('d
 Route::get('/profile/personal', [FrontController::class, 'personal'])->name('personal.user');
 // ============================================
 // STRUK & PAYMENT ROUTES
-// ============================================
+// =========4===================================
 
 // Struk Detail (Frontend)
 Route::get('struk/{kodestruk}', [StrukController::class, 'struk'])
@@ -126,3 +130,5 @@ Route::group([
     // Pemenang
     Route::get('pemenang', [PemenangController::class, 'index'])->name('pemenang');
 });
+
+require __DIR__.'/auth.php';
