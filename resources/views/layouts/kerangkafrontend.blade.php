@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>LelangKu | Website Pelelangan Online</title>
-
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/animate.css') }}">
@@ -18,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/main.css') }}">
+    @yield('style')
 
     <link rel="shortcut icon" href="{{ asset('sbidu/assets/images/favicon.png') }}" type="image/x-icon">
 </head>
@@ -180,7 +180,7 @@
         }
 
         .news-slider .owl-dot span {
-            display: none !important; 
+            display: none !important;
         }
 
         .news-slider .owl-dot.active {
@@ -205,7 +205,7 @@
             }
         }
     </style>
-
+    
     <script>
         $(document).ready(function(){
             $('.news-slider').owlCarousel({

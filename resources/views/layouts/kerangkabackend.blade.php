@@ -54,6 +54,11 @@
   </head>
 
   <body>
+    <div class="overlayer" id="overlayer">
+        <div class="loader">
+            <div class="loader-inner"></div>
+        </div>
+    </div>
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
       <div class="layout-container">
@@ -97,7 +102,7 @@
     <!-- Main JS -->
 
     <script src="{{asset ('assets/js/main.js') }}"></script>
-
+    <script src="{{ asset('sbidu/assets/js/main.js') }}"></script>
     <!-- Page JS -->
     <script src="{{asset ('assets/js/dashboards-analytics.js') }}"></script>
 

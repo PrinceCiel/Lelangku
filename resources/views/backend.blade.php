@@ -119,7 +119,7 @@
                             </div>
                           </div>
                           <p class="mb-1">Barang</p>
-                          <h4 class="card-title mb-3">{{$totalbarang}}</h4>
+                          <h4 class="card-title mb-3">{{$totalbarangready}}</h4>
                         </div>
                       </div>
                     </div>
@@ -165,9 +165,255 @@
                   </div>
                 </div>
               </div>
+              {{-- @php
+                $totalaset = 0;
+                foreach ($barangready as $item) {
+                    $totalaset += $item->harga * $item->jumlah;
+                    $totalbarangaset = count($barangready);
+                    dd($totalaset);
+                }
+              @endphp --}}
+              <div class="row">
+                <!-- Order Statistics -->
+                <div class="col-md-6 order-0 mb-6">
+                  <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between">
+                      <div class="card-title mb-0">
+                        <h5 class="mb-1 me-2">Akumulasi Aset</h5>
+                        <p class="card-subtitle">Total Nilai Aset dari {{ $totalbarangready }} Barang</p>
+                      </div>
+                      <div class="dropdown">
+                        <button
+                          class="btn text-body-secondary p-0"
+                          type="button"
+                          id="orederStatistics"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false">
+                          <i class="icon-base bx bx-dots-vertical-rounded icon-lg"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                          <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center mb-6">
+                        <div class="d-flex flex-column align-items-center gap-1">
+                          <h3 class="mb-1" style="font-size: 1.7em">Rp. {{ number_format($totalaset, 0, ',', '.') }}</h3>
+                          <small>Total Nilai</small>
+                        </div>
+                        <div id="akumulasiaset"></div>
+                      </div>
+                      <ul class="p-0 m-0">
+                        @foreach ($kategori as $group)
+                        <li class="d-flex align-items-center mb-5">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-primary">
+                                <img src="{{ Storage::url($group->foto) }}" alt="" style="object-fit: cover; border-radius: 50%; width: 24px; height: 24px;">
+                            </span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">{{ $group->nama }}</h6>
+                              <small>{{ $group->kategori->nama }}</small>
+                            </div>
+                            <div class="user-progress">
+                              <h6 class="mb-0">Rp. {{ number_format($group->harga * $group->jumlah, 0, ',', '.') }}</h6>
+                            </div>
+                          </div>
+                        </li>
+                        @endforeach
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 order-0 mb-6">
+                  <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between">
+                      <div class="card-title mb-0">
+                        <h5 class="mb-1 me-2">Akumulasi Aset</h5>
+                        <p class="card-subtitle">Total Nilai Aset</p>
+                      </div>
+                      <div class="dropdown">
+                        <button
+                          class="btn text-body-secondary p-0"
+                          type="button"
+                          id="orederStatistics"
+                          data-bs-toggle="dropdown"
+                          aria-haspopup="true"
+                          aria-expanded="false">
+                          <i class="icon-base bx bx-dots-vertical-rounded icon-lg"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="orederStatistics">
+                          <a class="dropdown-item" href="javascript:void(0);">Select All</a>
+                          <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
+                          <a class="dropdown-item" href="javascript:void(0);">Share</a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-center mb-6">
+                        <div class="d-flex flex-column align-items-center gap-1">
+                          <h3 class="mb-1" style="font-size: 1.7em">Rp. {{ number_format($totalaset, 0, ',', '.') }}</h3>
+                          <small>Total Orders</small>
+                        </div>
+                        <div id="orderStatisticsChart"></div>
+                      </div>
+                      <ul class="p-0 m-0">
+                        <li class="d-flex align-items-center mb-5">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-primary"
+                              ><i class="icon-base bx bx-mobile-alt"></i
+                            ></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Electronic</h6>
+                              <small>Mobile, Earbuds, TV</small>
+                            </div>
+                            <div class="user-progress">
+                              <h6 class="mb-0">82.5k</h6>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="d-flex align-items-center mb-5">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-success"
+                              ><i class="icon-base bx bx-closet"></i
+                            ></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Fashion</h6>
+                              <small>T-shirt, Jeans, Shoes</small>
+                            </div>
+                            <div class="user-progress">
+                              <h6 class="mb-0">23.8k</h6>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="d-flex align-items-center mb-5">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-info"
+                              ><i class="icon-base bx bx-home-alt"></i
+                            ></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Decor</h6>
+                              <small>Fine Art, Dining</small>
+                            </div>
+                            <div class="user-progress">
+                              <h6 class="mb-0">849k</h6>
+                            </div>
+                          </div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                          <div class="avatar flex-shrink-0 me-3">
+                            <span class="avatar-initial rounded bg-label-secondary"
+                              ><i class="icon-base bx bx-football"></i
+                            ></span>
+                          </div>
+                          <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                            <div class="me-2">
+                              <h6 class="mb-0">Sports</h6>
+                              <small>Football, Cricket Kit</small>
+                            </div>
+                            <div class="user-progress">
+                              <h6 class="mb-0">99</h6>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <!--/ Order Statistics -->
             </div>
             <!-- / Content -->
 
             <div class="content-backdrop fade"></div>
           </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', function (e) {
+                let cardColor, headingColor, legendColor, labelColor, shadeColor, borderColor, fontFamily;
+                cardColor = config.colors.cardColor;
+                headingColor = config.colors.headingColor;
+                legendColor = config.colors.bodyColor;
+                labelColor = config.colors.textMuted;
+                borderColor = config.colors.borderColor;
+                fontFamily = config.fontFamily;
+                const chartOrderStatistics = document.querySelector('#akumulasiaset'),
+                    orderChartConfig = {
+                        chart: {
+                            height: 165,
+                            width: 136,
+                            type: 'donut',
+                            offsetX: 15
+                        },
+                        // Ambil Key (Nama Kategori) dari PHP
+                        labels: {!! json_encode($chartData->keys()) !!},
+                        // Ambil Value (Total Harga) dari PHP
+                        series: {!! json_encode($chartData->values()) !!},
+                        colors: [config.colors.success, config.colors.primary, config.colors.secondary, config.colors.info, config.colors.warning],
+                        stroke: {
+                            width: 5,
+                            colors: [cardColor]
+                        },
+                        dataLabels: {
+                            enabled: false,
+                            formatter: function (val, opt) {
+                                return parseInt(val) + '%';
+                            }
+                        },
+                        legend: {
+                            show: false
+                        },
+                        plotOptions: {
+                            pie: {
+                                donut: {
+                                    size: '75%',
+                                    labels: {
+                                        show: true,
+                                        value: {
+                                            fontSize: '1.125rem', // Kecilin dikit biar muat
+                                            fontFamily: fontFamily,
+                                            fontWeight: 500,
+                                            color: headingColor,
+                                            offsetY: -17,
+                                            formatter: function (val) {
+                                                // Format angka ke ribuan (K) atau jutaan (M) biar gak kepanjangan di tengah donut
+                                                if (val >= 1000000000) return (val / 1000000000).toFixed(1) + ' M';
+                                                if (val >= 1000000) return (val / 1000000).toFixed(1) + ' JT';
+                                                if (val >= 1000) return (val / 1000).toFixed(1) + ' K';
+                                                return val;
+                                            }
+                                        },
+                                        name: {
+                                            offsetY: 17,
+                                            fontFamily: fontFamily
+                                        },
+                                        total: {
+                                            show: true,
+                                            fontSize: '10px',
+                                            color: legendColor,
+                                            label: 'Aset',
+                                            formatter: function (w) {
+                                                return 'Total';
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    };
+                if (typeof chartOrderStatistics !== undefined && chartOrderStatistics !== null) {
+                    const statisticsChart = new ApexCharts(chartOrderStatistics, orderChartConfig);
+                    statisticsChart.render();
+                }
+            });
+          </script>
 @endsection

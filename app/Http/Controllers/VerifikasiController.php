@@ -64,7 +64,7 @@ class VerifikasiController extends Controller
             $user->save();
         }
         toast('Berhasil mengajukan verifikasi diri', 'success');
-        return redirect()->route('home');
+        return redirect()->route('home.user');
     }
 
     /**

@@ -14,7 +14,7 @@ use App\Services\MidtransService;
 
 class SingleController extends Controller
 {
-    
+
     protected $midtrans;
 
     public function __construct(MidtransService $midtrans)

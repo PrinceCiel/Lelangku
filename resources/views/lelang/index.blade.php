@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.dataTables.min.css">
 <style>
     /* Filter Section Styling */
-    
+
     .filter-section {
         background: #1b4849;
         padding: 25px;
@@ -12,27 +12,27 @@
         margin-bottom: 25px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
-    
+
     .filter-section .form-label {
         color: white;
         font-weight: 600;
         margin-bottom: 8px;
         font-size: 14px;
     }
-    
+
     .filter-section .form-control {
         border-radius: 8px;
         border: 2px solid rgba(255, 255, 255, 0.3);
         padding: 10px 15px;
         transition: all 0.3s ease;
     }
-    
+
     .filter-section .form-control:focus {
         border-color: white;
         box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.25);
         background-color: rgba(255, 255, 255, 0.95);
     }
-    
+
     .filter-section .form-control[type="date"] {
         border-radius: 8px;
         border: 2px solid rgba(255, 255, 255, 0.3);
@@ -64,7 +64,7 @@
         transition: all 0.3s ease;
         height: 46px;
     }
-    
+
     .filter-section .btn-reset:hover {
         background: white;
         color: #667eea;
@@ -80,14 +80,14 @@
         margin-bottom: 20px;
         border: 1px solid #e3e6f0;
     }
-    
+
     .export-buttons-wrapper h6 {
         margin: 0 0 12px 0;
         color: #5a5c69;
         font-weight: 600;
         font-size: 14px;
     }
-    
+
     #exportButtons .dt-button {
         margin-right: 8px !important;
         margin-bottom: 8px !important;
@@ -98,7 +98,7 @@
         transition: all 0.3s ease !important;
         border: none !important;
     }
-    
+
     #exportButtons .dt-button:hover {
         transform: translateY(-2px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
@@ -108,12 +108,12 @@
     .table-responsive {
         border-radius: 8px;
     }
-    
+
     #myTable {
         border-collapse: separate;
         border-spacing: 0;
     }
-    
+
     #myTable thead th {
         background: #1b4849;
         color: white;
@@ -125,25 +125,25 @@
         border: none;
         white-space: nowrap;
     }
-    
+
     #myTable thead th:first-child {
         border-top-left-radius: 8px;
     }
-    
+
     #myTable thead th:last-child {
         border-top-right-radius: 8px;
     }
-    
+
     #myTable tbody tr {
         transition: all 0.3s ease;
     }
-    
+
     #myTable tbody tr:hover {
         background-color: #f8f9fa;
         transform: scale(1.01);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
-    
+
     #myTable tbody td {
         padding: 14px 12px;
         vertical-align: middle;
@@ -160,19 +160,19 @@
         font-size: 11px;
         letter-spacing: 0.3px;
     }
-    
+
     .bg-label-success {
         background-color: #d4edda !important;
         color: #155724 !important;
         border: 1px solid #c3e6cb;
     }
-    
+
     .bg-label-danger {
         background-color: #f8d7da !important;
         color: #721c24 !important;
         border: 1px solid #f5c6cb;
     }
-    
+
     .bg-label-warning {
         background-color: #fff3cd !important;
         color: #856404 !important;
@@ -189,30 +189,32 @@
     .btn-primary2 {
         background: #1b4849;
         border: none;
+        color: white;
         border-radius: 8px;
         padding: 10px 20px;
         font-weight: 600;
         transition: all 0.3s ease;
     }
-    
+
     .btn-primary2:hover {
         transform: translateY(-2px);
         box-shadow: #1b4849;
         background: #171d1c;
+        color: white
     }
 
     .btn-primary2:active {
         transform: scale(0.95);
         background-color: #1b4849;
     }
-    
+
     /* Modal Styling */
     .modal-content {
         border-radius: 12px;
         border: none;
         box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
     }
-    
+
     .modal-header {
         background: #1b4849;
         color: white;
@@ -221,17 +223,17 @@
         padding: 20px 25px;
         border-bottom: none;
     }
-    
+
     .modal-title {
         color: white;
         font-weight: 700;
         font-size: 20px;
     }
-    
+
     .modal-body {
         padding: 30px 25px;
     }
-    
+
     .modal-body .form-label {
         font-weight: 600;
         color: #495057;
@@ -240,18 +242,18 @@
         text-transform: uppercase;
         letter-spacing: 0.5px;
     }
-    
+
     .modal-body .form-control:disabled {
         background-color: #f8f9fa;
         border-color: #e3e6f0;
         color: #495057;
     }
-    
+
     .modal-footer {
         padding: 15px 25px;
         border-top: 1px solid #e3e6f0;
     }
-    
+
     .modal-body .img-fluid {
         border: 3px solid #e3e6f0;
         padding: 5px;
@@ -265,12 +267,12 @@
         border: 1px solid #d1d3e2;
         padding: 6px 12px;
     }
-    
+
     .dataTables_wrapper .dataTables_paginate .paginate_button {
         border-radius: 6px !important;
         margin: 0 3px;
     }
-    
+
     .dataTables_wrapper .dataTables_paginate .paginate_button.current {
         background: #1b4849;
         border-color: #667eea !important;
@@ -282,17 +284,17 @@
         .filter-section {
             padding: 20px 15px;
         }
-        
+
         .card-title {
             font-size: 18px;
         }
-        
+
         #myTable thead th,
         #myTable tbody td {
             font-size: 12px;
             padding: 10px 8px;
         }
-        
+
         .action-buttons {
             flex-direction: column;
         }
@@ -414,7 +416,7 @@
         <div class="container-xxl">
             <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
                 <div class="mb-2 mb-md-0">
-                    © <script>document.write(new Date().getFullYear());</script>, made with ❤️ by 
+                    © <script>document.write(new Date().getFullYear());</script>, made with ❤️ by
                     <a href="https://themeselection.com" target="_blank" class="footer-link fw-bold">ThemeSelection</a>
                 </div>
             </div>
@@ -438,13 +440,13 @@
             <div class="modal-body">
                 <div class="row mb-4">
                     <div class="col-12 text-center">
-                        <img src="{{ Storage::url($data->barang->foto) }}" 
-                             alt="Foto {{ $data->barang->nama }}" 
-                             class="img-fluid" 
+                        <img src="{{ Storage::url($data->barang->foto) }}"
+                             alt="Foto {{ $data->barang->nama }}"
+                             class="img-fluid"
                              style="max-width: 250px; height: 250px; object-fit: cover; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.15);">
                     </div>
                 </div>
-                
+
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">
@@ -510,43 +512,43 @@ $(document).ready(function() {
     $.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
         let min = $('#minDate').val();
         let max = $('#maxDate').val();
-        
+
         // Ambil tanggal MULAI dari kolom index 2
         let tanggalMulaiStr = data[2] || '';
         // Ambil tanggal BERAKHIR dari kolom index 3
         let tanggalBerakhirStr = data[3] || '';
-        
+
         // Parse tanggal MULAI
         let mulaiMatch = tanggalMulaiStr.match(/(\d{2})\s+(\w+)\s+(\d{4})/);
         // Parse tanggal BERAKHIR
         let berakhirMatch = tanggalBerakhirStr.match(/(\d{2})\s+(\w+)\s+(\d{4})/);
-        
+
         if (!mulaiMatch || !berakhirMatch) return true;
-        
+
         // Konversi bulan dari nama ke angka
         const monthMap = {
             'Jan': 0, 'Feb': 1, 'Mar': 2, 'Apr': 3, 'May': 4, 'Jun': 5,
             'Jul': 6, 'Aug': 7, 'Sep': 8, 'Oct': 9, 'Nov': 10, 'Dec': 11,
             'Agu': 7, 'Okt': 9, 'Des': 11, 'Mei': 4
         };
-        
+
         // Format tanggal MULAI ke YYYY-MM-DD
         let mulaiDay = parseInt(mulaiMatch[1]);
         let mulaiMonth = monthMap[mulaiMatch[2]];
         let mulaiYear = parseInt(mulaiMatch[3]);
         let tanggalMulai = mulaiYear + '-' + String(mulaiMonth + 1).padStart(2, '0') + '-' + String(mulaiDay).padStart(2, '0');
-        
+
         // Format tanggal BERAKHIR ke YYYY-MM-DD
         let berakhirDay = parseInt(berakhirMatch[1]);
         let berakhirMonth = monthMap[berakhirMatch[2]];
         let berakhirYear = parseInt(berakhirMatch[3]);
         let tanggalBerakhir = berakhirYear + '-' + String(berakhirMonth + 1).padStart(2, '0') + '-' + String(berakhirDay).padStart(2, '0');
-        
+
         // LOGIC FILTER YANG BENAR:
         // 1. Kalau cuma min yang diisi -> filter EXACT tanggal MULAI = min
         // 2. Kalau cuma max yang diisi -> filter EXACT tanggal BERAKHIR = max
         // 3. Kalau keduanya diisi -> filter RANGE (mulai >= min DAN berakhir <= max)
-        
+
         if (!min && !max) {
             // Tidak ada filter
             return true;
@@ -648,7 +650,7 @@ $(document).ready(function() {
         $('#minDate').val('');
         $('#maxDate').val('');
         table.search('').draw();
-        
+
         // Animasi feedback
         $(this).html('<i class="bx bx-check me-2"></i>Berhasil!');
         setTimeout(() => {
