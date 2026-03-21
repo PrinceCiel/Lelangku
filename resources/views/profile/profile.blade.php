@@ -29,7 +29,7 @@
                     <div class="user">
                         <div class="thumb-area">
                             <div class="thumb">
-                                <img src="{{ Storage::url($userdata->foto) }}" alt="user">
+                                <img src="{{ Str::startsWith($userdata->foto, 'http') ? $userdata->foto : Storage::url($userdata->foto) }}" alt="user">
                             </div>
                             <label for="profile-pic" class="profile-pic-edit"><i class="flaticon-pencil"></i></label>
                             <input type="file" id="profile-pic" class="d-none">

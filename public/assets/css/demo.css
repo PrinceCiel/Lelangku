@@ -5,31 +5,26 @@
 
 .menu .app-brand.demo {
   height: 64px;
-  margin-top: 12px;
 }
 
 .app-brand-logo.demo svg {
-  width: 22px;
-  height: 38px;
+  width: 38px;
+  height: 20px;
 }
 
 .app-brand-text.demo {
-  font-size: 1.75rem;
-  letter-spacing: -0.5px;
+  font-size: 1.25rem;
+  letter-spacing: 0.15px;
+}
+
+.authentication-wrapper .app-brand-text.demo {
+  text-transform: capitalize;
 }
 
 /* ! For .layout-navbar-fixed added fix padding top to .layout-page */
-/* Detached navbar */
-.layout-navbar-fixed .layout-wrapper:not(.layout-horizontal):not(.layout-without-menu) .layout-page {
-  padding-top: 74px !important;
-}
 /* Default navbar */
 .layout-navbar-fixed .layout-wrapper:not(.layout-without-menu) .layout-page {
   padding-top: 64px !important;
-}
-.docs-page .layout-navbar-fixed.layout-wrapper:not(.layout-without-menu) .layout-page,
-.docs-page .layout-menu-fixed.layout-wrapper:not(.layout-without-menu) .layout-page {
-  padding-top: 62px !important;
 }
 
 /* Navbar page z-index issue solution */
@@ -51,7 +46,7 @@
 
 /* ? .demo-vertical-spacing class is used to have vertical margins between elements. To remove margin-top from the first-child, use .demo-only-element class with .demo-vertical-spacing class. For example, we have used this class in forms-input-groups.html file. */
 .demo-vertical-spacing > * {
-  margin-top: 1rem !important;
+  margin-top: 1.25rem !important;
   margin-bottom: 0 !important;
 }
 .demo-vertical-spacing.demo-only-element > :first-child {
@@ -77,7 +72,7 @@
 /* Dropdown buttons going out of small screens */
 @media (max-width: 576px) {
   #dropdown-variation-demo .btn-group .text-truncate {
-    width: 231px;
+    width: 300px;
     position: relative;
   }
   #dropdown-variation-demo .btn-group .text-truncate::after {
@@ -86,93 +81,453 @@
     right: 0.65rem;
   }
 }
-
 /*
 * Layout demo
 ******************************************************************************/
 
 .layout-demo-wrapper {
-  display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
 }
 .layout-demo-placeholder img {
   width: 900px;
 }
 .layout-demo-info {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.25rem;
 }
-
-
 #overlayer {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 999999;
-  background: #0f1a11;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 999999;
+    background: #0f1a11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #overlayer .loader {
-  display: inline-block;
-  width: 45px;
-  height: 45px;
-  position: absolute;
-  z-index: 3;
-  border: 4px solid white;
-  top: 50%;
-  animation: loader 2.5s infinite ease;
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    z-index: 3;
+    border: 4px solid white;
+    top: 50%;
+    animation: loader 2.5s infinite ease;
 }
 
 #overlayer .loader .loader-inner {
-  vertical-align: top;
-  display: inline-block;
-  width: 100%;
-  background-color: white;
-  animation: loader-inner 2.5s infinite ease-in;
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: white;
+    animation: loader-inner 2.5s infinite ease-in;
 }
+
 @keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(180deg);
-  }
-  50% {
-    transform: rotate(180deg);
-  }
-  75% {
-    transform: rotate(360deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(180deg);
+    }
+
+    50% {
+        transform: rotate(180deg);
+    }
+
+    75% {
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
+
 @keyframes loader-inner {
-  0% {
-    height: 0%;
-  }
-  25% {
-    height: 0%;
-  }
-  50% {
-    height: 100%;
-  }
-  75% {
-    height: 100%;
-  }
-  100% {
-    height: 0%;
-  }
+    0% {
+        height: 0%;
+    }
+
+    25% {
+        height: 0%;
+    }
+
+    50% {
+        height: 100%;
+    }
+
+    75% {
+        height: 100%;
+    }
+
+    100% {
+        height: 0%;
+    }
+}
+
+/* ============================================
+   MODAL SMOOTH ANIMATION — Global
+   ============================================ */
+
+/* Backdrop */
+.modal-backdrop.fade {
+    backdrop-filter: blur(4px);
+    background-color: rgba(15, 26, 17, 0.5);
+    transition: all .4s cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Base state — hidden */
+.modal.fade .modal-dialog {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px) !important;
+    filter: blur(6px);
+    will-change: transform, opacity, filter;
+    transition:
+        opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 0.35s ease;
+}
+
+/* Open state */
+.modal.fade.show .modal-dialog {
+    opacity: 1;
+    transform: scale(1) translateY(0) !important;
+    filter: blur(0);
+}
+
+/* Close state */
+.modal.fade:not(.show) .modal-dialog {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px) !important;
+    filter: blur(4px);
+    transition:
+        opacity 0.22s ease-out,
+        transform 0.22s ease-out,
+        filter 0.22s ease-out;
+}
+
+/* Modal Content shadow */
+.modal-content {
+    border: none !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.22), 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ── FIELD POP-IN ── */
+/* Reset dulu biar gak conflict */
+.modal.fade.show .modal-body .row>[class*="col"] {
+    animation: fieldPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Stagger delay */
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(1) {
+    animation-delay: .10s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(3) {
+    animation-delay: .20s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(4) {
+    animation-delay: .25s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(5) {
+    animation-delay: .30s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(6) {
+    animation-delay: .35s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(n+7) {
+    animation-delay: .38s;
+}
+
+@keyframes fieldPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.88) translateY(12px);
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ── MICRO-INTERACTIONS ── */
+.modal .form-control,
+.modal .form-select {
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.modal .kondisi-opt {
+    transition: border-color .15s ease, background-color .15s ease;
+}
+
+.modal .btn-primary {
+    transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.modal .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(var(--bs-primary-rgb), .35);
+}
+
+.modal .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* ── LOADER OVERLAY ── */
+.modal-loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal-loader-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-loader-overlay .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.25rem;
+}
+
+/* ── TABLE LOADER ── */
+.table-loader-wrapper {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 26, 17, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    border-radius: 0.5rem;
+    opacity: 0;
+}
+
+.table-loader-wrapper .loader {
+    display: inline-block;
+    width: 45px;
+    height: 45px;
+    border: 4px solid white;
+    animation: loader 2.5s infinite ease;
+}
+
+.table-loader-wrapper .loader .loader-inner {
+    vertical-align: top;
+    display: inline-block;
+    width: 100%;
+    background-color: white;
+    animation: loader-inner 2.5s infinite ease-in;
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+
+    .modal.fade .modal-dialog,
+    .modal.fade.show .modal-body .row>[class*="col"],
+    .modal .form-control,
+    .modal .form-select,
+    .modal .kondisi-opt,
+    .modal .btn-primary {
+        animation: none !important;
+        transition: none !important;
+        filter: none !important;
+    }
+}
+
+/* ============================================
+   MODAL ANIMATION FIX
+   Tambahin di bagian PALING BAWAH demo.css
+   ============================================ */
+
+/* Override core.css transition yang cuma set transform 0.15s */
+.modal.fade .modal-dialog {
+    transition: none !important;
+    opacity: 0;
+    transform: scale(0.4) translateY(24px) !important;
+    filter: blur(6px);
+}
+
+.modal.fade.show .modal-dialog {
+    opacity: 1;
+    transform: scale(1) translateY(0) !important;
+    filter: blur(0);
+    transition:
+        opacity 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 0.4s ease !important;
+}
+
+.modal.fade:not(.show) .modal-dialog {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px) !important;
+    transition:
+        opacity 0.22s ease-out,
+        transform 0.22s ease-out,
+        filter 0.22s ease-out !important;
+}
+/* ── CARD TOAST ── */
+.card-toast-wrapper {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    pointer-events: none;
+    min-width: 280px;
+}
+
+.card-toast {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: .875rem;
+    font-weight: 500;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, .15), 0 2px 8px rgba(0, 0, 0, .08);
+    pointer-events: all;
+    overflow: hidden;
+    position: relative;
+    animation: toastSlideIn .4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.card-toast-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-toast-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.card-toast-progress {
+    height: 3px;
+    border-radius: 999px;
+    width: 100%;
+    transform-origin: left;
+    animation: toastProgress 3s linear forwards;
+}
+
+.card-toast.toast-success {
+    background: #fff;
+    border: 1px solid #e8f5e9;
+    color: #1b5e20;
+}
+
+.card-toast.toast-success .card-toast-icon {
+    background: #e8f5e9;
+    color: #28c76f;
+}
+
+.card-toast.toast-success .card-toast-progress {
+    background: #28c76f;
+}
+
+.card-toast.toast-error {
+    background: #fff;
+    border: 1px solid #fce4ec;
+    color: #b71c1c;
+}
+
+.card-toast.toast-error .card-toast-icon {
+    background: #fce4ec;
+    color: #ea5455;
+}
+
+.card-toast.toast-error .card-toast-progress {
+    background: #ea5455;
+}
+
+/* Dark mode */
+[data-bs-theme="dark"] .card-toast.toast-success {
+    background: #1a2a1e;
+    border-color: #2d4a32;
+    color: #a5d6a7;
+}
+
+[data-bs-theme="dark"] .card-toast.toast-error {
+    background: #2a1a1a;
+    border-color: #4a2d2d;
+    color: #ef9a9a;
+}
+
+[data-bs-theme="dark"] .card-toast .card-toast-icon {
+    opacity: .9;
+}
+
+.card-toast.toast-hide {
+    opacity: 0;
+    transform: translateX(20px) scale(.95);
+}
+
+@keyframes toastSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(40px) scale(.9);
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes toastProgress {
+    from {
+        transform: scaleX(1);
+    }
+
+    to {
+        transform: scaleX(0);
+    }
+}
+
+.flatpickr-calendar {
+    z-index: 99999 !important;
 }

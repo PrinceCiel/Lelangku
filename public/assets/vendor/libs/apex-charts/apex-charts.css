@@ -679,9 +679,8 @@ rect.legend-mouseover-inactive,
   box-shadow: var(--bs-box-shadow);
 }
 .apexcharts-canvas .apexcharts-tooltip.apexcharts-theme-light {
-  border-color: var(--bs-border-color);
+  border-width: 0;
   background: var(--bs-paper-bg);
-  color: var(--bs-heading-color);
 }
 .apexcharts-canvas .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
   background: var(--bs-paper-bg);
@@ -743,22 +742,9 @@ rect.legend-mouseover-inactive,
 }
 .apexcharts-canvas .apexcharts-legend-marker,
 .apexcharts-canvas .apexcharts-tooltip-marker {
-  margin-inline: 0 0.5rem;
+  margin-inline: 0 0.1875rem;
 }
 
-/* total-revenue card styles */
-@media (min-width: 1400px) and (max-width: 1550px) {
-  .total-revenue {
-    inline-size: 100% !important;
-  }
-  .profile-report {
-    inline-size: 100% !important;
-  }
-  .profile-report .payments,
-  .profile-report .transactions {
-    inline-size: 25% !important;
-  }
-  .profile-report .profile-report {
-    inline-size: 50% !important;
-  }
+:dir(rtl) .apexcharts-canvas .apexcharts-legend {
+  direction: rtl !important;
 }

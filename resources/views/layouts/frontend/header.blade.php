@@ -25,7 +25,8 @@
                         <a href="#0" class="nav-link-modern user-nav-link">
                             @if(Auth::check())
                                 <div class="user-avatar-modern">
-                                    <img src="{{ Storage::url(Auth::user()->foto ?? 'images/default-avatar.png') }}" alt="Avatar">
+                                    @php $user = Auth::user(); @endphp
+                                    <img src="{{ Str::startsWith($user->foto, 'http') ? $user->foto : asset('storage/' . $user->foto) }}" alt="Avatar" style="object-fit: cover">
                                 </div>
                                 <span>{{Auth::user()->nama_lengkap}}</span>
                             @else

@@ -9,10 +9,11 @@
         "php": "^8.2",
         "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
+        "laravel/socialite": "^5.25",
         "laravel/tinker": "^2.10.1",
-        "laravel/ui": "^4.6",
         "midtrans/midtrans-php": "^2.6",
-        "realrashid/sweet-alert": "^7.3"
+        "realrashid/sweet-alert": "^7.3",
+        "yajra/laravel-datatables-oracle": "^12.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

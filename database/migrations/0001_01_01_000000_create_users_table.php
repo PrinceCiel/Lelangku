@@ -13,13 +13,18 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('foto');
+            $table->string('foto')->nullable()->change();
             $table->string('nama_lengkap');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable()->change();
             $table->boolean('IsAdmin')->default(0);
             $table->enum('status', ['Belum Verifikasi', 'Terverifikasi', 'diajukan'])->default('Belum Verifikasi');
+            $table->string('google_id')->nullable()->unique();
+            $table->boolean('is_banned')->default(false)->after('foto');
+            $table->boolean('is_suspicious')->default(false)->after('is_banned');
+            $table->timestamp('banned_at')->nullable()->after('is_suspicious');
+            $table->string('banned_reason')->nullable()->after('banned_at');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -46,7 +46,7 @@ class LoginRequest extends FormRequest
 
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
-            ]);
+            ])->redirectTo(route('login', ['toast' => 'acc_mismatch']));
         }
 
         RateLimiter::clear($this->throttleKey());

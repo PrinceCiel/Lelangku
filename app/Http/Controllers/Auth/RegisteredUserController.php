@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Validation\ValidationException;
 
 class RegisteredUserController extends Controller
 {
@@ -29,12 +30,24 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        try {
+            $request->validate([
+                'name'     => ['required', 'string', 'max:255'],
+                'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ]);
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors();
 
+            $toast = 'error';
+            if ($errors->has('email')) {
+                $toast = 'acc_email_exists';
+            }
+
+            return redirect()->route('register', ['toast' => $toast])
+                ->withErrors($e->validator)
+                ->withInput();
+        }
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,

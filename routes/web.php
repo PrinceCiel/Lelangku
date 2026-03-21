@@ -15,6 +15,7 @@ use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SingleController;
 use App\Http\Controllers\VerifikasiController;
+use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -76,7 +77,8 @@ Route::get('/midtrans/finish', [MidtransController::class, 'handleRedirect'])
 // ============================================
 // AUTHENTICATION ROUTES
 // ============================================
-Auth::routes();
+Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
 // Registration & Verification
 Route::resource('verifikasi', VerifikasiController::class);
@@ -116,7 +118,15 @@ Route::group([
     Route::resource('lelang', LelangController::class);
 
     // Bid Review
-    Route::resource('bid', ReviewBidController::class);
+    Route::prefix('bid')->name('bid.')->group(function () {
+        Route::get('/',                                   [ReviewBidController::class, 'index'])->name('index');
+        Route::get('/user-detail/{userId}/{lelangId}',    [ReviewBidController::class, 'userDetail'])->name('user.detail');
+        Route::post('/ban/{userId}',                      [ReviewBidController::class, 'banUser'])->name('ban');
+        Route::post('/unban/{userId}',                    [ReviewBidController::class, 'unbanUser'])->name('unban');
+        Route::post('/suspicious/{userId}',               [ReviewBidController::class, 'markSuspicious'])->name('suspicious');
+        Route::post('/remove/{userId}/{lelangId}',        [ReviewBidController::class, 'removeFromLelang'])->name('remove');
+        Route::post('/cancel-bid/{bidId}',                [ReviewBidController::class, 'cancelBid'])->name('cancel.bid');
+    });
 
     // Struk Management
     Route::resource('struk', BackendStrukController::class);
@@ -129,6 +139,9 @@ Route::group([
 
     // Pemenang
     Route::get('pemenang', [PemenangController::class, 'index'])->name('pemenang');
+
+    // Route untuk AJAX DataTables
+    Route::get('/barang/data', [BarangController::class, 'getData'])->name('barang.data');
 });
 
 require __DIR__.'/auth.php';

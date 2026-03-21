@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Barang;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 
 class BarangController extends Controller
 {
@@ -45,7 +45,7 @@ class BarangController extends Controller
             'jumlah' => 'required',
             'deskripsi' => 'required',
             'kondisi' => 'required',
-            'foto' => 'required'
+            'foto' => 'required|image|max:2048',
         ]);
         $barang = new Barang();
         $barang->nama = $request->nama;
@@ -65,9 +65,8 @@ class BarangController extends Controller
             $barang->foto = $path;
         }
         $barang->save();
-        toast('Data berhasil disimpan', 'success');
         return redirect()->route('backend.barang.index');
-        
+
     }
 
     /**
@@ -120,9 +119,8 @@ class BarangController extends Controller
             $barang->foto = $path;
         }
         $barang->save();
-        toast('Data berhasil diubah', 'success');
         return redirect()->route('backend.barang.index');
-        
+
     }
 
     /**
@@ -132,7 +130,6 @@ class BarangController extends Controller
     {
         $barang = Barang::findOrFail($id);
         $barang->delete();
-        toast('Data berhasil dihapus', 'success');
-        return redirect()->route('backend.barang.index');
+        return redirect()->route('backend.barang.index', ['toast' => 'deleted']);
     }
 }

@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
-use Str;
-use Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class KategoriController extends Controller
 {
@@ -50,10 +50,9 @@ class KategoriController extends Controller
             $kategori->foto = $path;
         }
         $kategori->save();
-        toast('Data berhasil disimpan', 'success');
         return redirect()->route('backend.kategori.index');
     }
-    
+
     /**
      * Display the specified resource.
      */
@@ -62,7 +61,7 @@ class KategoriController extends Controller
         $kategori = Kategori::where('slug', $slug)->first();
         return view('kategori.show', compact('kategori'));
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -71,7 +70,7 @@ class KategoriController extends Controller
         $kategori = Kategori::where('slug', $slug)->first();
         return view('kategori.edit', compact('kategori'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      */
@@ -93,10 +92,9 @@ class KategoriController extends Controller
             $kategori->foto = $path;
         }
         $kategori->save();
-        toast('Data berhasil diubah', 'success');
         return redirect()->route('backend.kategori.index');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */
@@ -105,6 +103,6 @@ class KategoriController extends Controller
         $kategori = Kategori::findOrFail($id);
         $kategori->delete();
         toast('Data berhasil dihapus', 'success');
-        return redirect()->route('backend.kategori.index');
+        return redirect()->route('backend.kategori.index', ['toast' => 'deleted']);
     }
 }

@@ -16,11 +16,12 @@ class LelangController extends Controller
     public function index()
     {
         $lelangs = Lelang::latest()->get();
+        $barangs = Barang::all();
 
         $title = 'Hapus Data!';
         $text = "Apakah anda yakin?";
         confirmDelete($title, $text);
-        return view('lelang.index', compact('lelangs'));
+        return view('lelang.index', compact('lelangs', 'barangs'));
     }
 
     /**
@@ -118,7 +119,7 @@ class LelangController extends Controller
         toast('Data berhasil disimpan', 'success');
         return redirect()->route('backend.lelang.index');
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */

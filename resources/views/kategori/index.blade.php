@@ -1,138 +1,315 @@
 @extends('layouts.kerangkabackend')
-@section('style')
-<link rel="stylesheet" href="https://cdn.datatables.net/2.3.2/css/dataTables.dataTables.min.css">
-@endsection
 @section('content')
-<div class="content-wrapper">
-            <!-- Content -->
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <!-- Basic Bootstrap Table -->
-              <div class="card">
-                <div class="card-datatable text-nonwrap">
-                    <div id="DataTables_Table_0_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
-                        <div class="row card-header flex-column flex-md-row pb-0">
-                          <div class="d-md-flex justify-content-between align-items-center dt-layout-start col-md-auto me-auto mt-0">
-                            <h5 class="card-title mb-0 text-md-start text-center">Kategori Barang</h5>
-                          </div>
-                          <div class="d-md-flex justify-content-between align-items-center dt-layout-end col-md-auto ms-auto mt-0">
-                            <div class="dt-buttons btn-group flex-wrap mb-0">
-                              <a class="btn create-new btn-primary" tabindex="0" aria-controls="DataTables_Table_0" type="button" fdprocessedid="kb7gug" href="{{ route('backend.kategori.create')}}">
-                                <span>
-                                  <span class="d-flex align-items-center gap-2">
-                                    <i class="icon-base bx bx-plus icon-sm"></i>
-                                    <span class="d-none d-sm-inline-block">Add New Record</span>
-                                  </span>
-                                </span>
-                              </a>
+    @push('style')
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/select2/select2.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/typography.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/katex.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/quill/editor.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/dropzone/dropzone.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/flatpickr/flatpickr.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/vendor/libs/tagify/tagify.css') }}" />
+    @endpush
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <!-- Kategori Table -->
+            <div class="card position-relative">
+                <div class="card-toast-wrapper" id="cardToastWrapper"></div>
+                <div id="table-loader" class="table-loader-wrapper">
+                    <div class="loader"><span class="loader-inner"></span></div>
+                </div>
+                <div class="card-datatable table-responsive">
+                    <table class="datatables-kategori table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Nama Kategori</th>
+                                <th>Slug</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <!-- / Content -->
+        <div class="content-backdrop fade"></div>
+    </div>
+
+    {{-- ===== MODAL SHOW ===== --}}
+    @foreach ($kategori as $data)
+        <div class="modal fade" id="modalShow-{{ $data->slug }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-simple">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+
+                        {{-- Header --}}
+                        <div class="d-flex align-items-center justify-content-between px-5 pt-5 pb-4 border-bottom">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="avatar flex-shrink-0">
+                                    <span class="avatar-initial rounded bg-label-info">
+                                        <i class="icon-base ri ri-eye-line icon-28px"></i>
+                                    </span>
+                                </div>
+                                <div>
+                                    <h5 class="mb-0 fw-semibold">Detail Kategori</h5>
+                                    <small class="text-muted">Informasi lengkap kategori barang.</small>
+                                </div>
                             </div>
-                          </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                    </div>
-                <div class="table-responsive text-nowrap m-3">
-                  <table class="table" id="myTable">
-                    <thead class="table-light">
-                      <tr>
-                        <th>No</th>
-                        <th>Nama Kategori</th>
-                        <th>slug</th>
-                        <th>Aksi</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                        @foreach($kategori as $data)
-                      <tr>
-                        <td>
-                            {{$loop->iteration}}
-                        </td>
-                        <td>{{$data->nama}}</td>
-                        <td>{{$data->slug}}</td>
-                        <td>
-                          <form action="">
-                            <button
-                              type="button"
-                              class="btn btn-primary"
-                              data-bs-toggle="modal"
-                              data-bs-target="#modalCenter-{{ $data->slug }}">
-                              Show
+
+                        <div class="px-5 py-4">
+
+                            {{-- Foto --}}
+                            <div class="d-flex justify-content-center mb-4">
+                                <img src="{{ Storage::url($data->foto) }}" alt="Foto {{ $data->nama }}"
+                                    class="rounded-3 shadow-sm" style="width:120px; height:120px; object-fit:cover;">
+                            </div>
+
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-medium text-muted">Nama Kategori</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text">
+                                            <i class="icon-base ri ri-price-tag-3-line"></i>
+                                        </span>
+                                        <input type="text" class="form-control" value="{{ $data->nama }}" disabled />
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-medium text-muted">Slug</label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text">
+                                            <i class="icon-base ri ri-link-m"></i>
+                                        </span>
+                                        <input type="text" class="form-control" value="{{ $data->slug }}" disabled />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {{-- Footer --}}
+                        <div class="d-flex justify-content-end gap-2 px-5 py-4 border-top">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x me-1"></i> Tutup
                             </button>
-                            <a class="btn btn-warning" href="{{ route('backend.kategori.edit', $data->slug) }}"
-                              ><i class="icon-base bx bx-edit-alt me-1"></i></a
-                              >
-                              <a class="btn btn-danger" href="{{ route('backend.kategori.destroy', $data->id) }}" data-confirm-delete="true"
-                                ><i class="icon-base bx bx-trash me-1"></i></a
-                              >
-                          </form>
-                        </td>
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                        </div>
+
+                    </div>
                 </div>
-                </div>
-              </div>
-              <!--/ Nested table -->
             </div>
-            <!-- / Content -->
-            <div class="content-backdrop fade"></div>
-          </div>
-          @foreach($kategori as $data)
-          <div class="modal fade" id="modalCenter-{{ $data->slug }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="modalCenterTitle">Kategori</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <div class="row mb-4">
-                    <div class="col text-center">
-                      <img src="{{ Storage::url($data->foto) }}"
-                          alt="Foto Barang"
-                          style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px;">
+        </div>
+    @endforeach
+
+    {{-- ===== MODAL ADD ===== --}}
+    <div class="modal fade" id="addKategori" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-simple">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+
+                    {{-- Header --}}
+                    <div class="d-flex align-items-center justify-content-between px-5 pt-5 pb-4 border-bottom">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar flex-shrink-0">
+                                <span class="avatar-initial rounded bg-label-primary">
+                                    <i class="icon-base ri ri-folder-add-line icon-28px"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 fw-semibold">Tambah Kategori</h5>
+                                <small class="text-muted">Isi formulir untuk menambahkan kategori baru.</small>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Nama Kategori</label>
-                      <input
-                        type="text"
-                        id="nameWithTitle"
-                        class="form-control"
-                        placeholder=""
-                        value="{{ $data->nama }}"
-                        disabled />
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col mb-6">
-                      <label for="nameWithTitle" class="form-label">Slug Kategori</label>
-                      <input
-                        type="text"
-                        id="nameWithTitle"
-                        class="form-control"
-                        placeholder=""
-                        value="{{ $data->slug }}"
-                        disabled />
-                    </div>
-                  </div>
+
+                    {{-- Form --}}
+                    <form id="formAddKategori" action="{{ route('backend.kategori.store') }}" method="POST"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <div class="px-5 py-4">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-medium" for="addNamaKategori">
+                                        Nama Kategori <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text">
+                                            <i class="bx bx-purchase-tag"></i>
+                                        </span>
+                                        <input type="text" id="addNamaKategori" name="nama" class="form-control"
+                                            placeholder="Contoh: Elektronik" required />
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label fw-medium">Foto Kategori</label>
+                                    <div class="dropzone needsclick" id="dropzone-add-kategori">
+                                        <div class="dz-message needsclick">
+                                            <div class="d-flex justify-content-center mb-2">
+                                                <div class="avatar">
+                                                    <span class="avatar-initial rounded-3 bg-label-primary">
+                                                        <i class="icon-base ri ri-upload-2-line icon-24px"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <p class="h6 needsclick mb-1">Drag and drop foto di sini</p>
+                                            <small class="text-muted d-block mb-2">atau</small>
+                                            <span class="btn btn-sm btn-outline-primary needsclick">Browse Foto</span>
+                                            <small class="text-muted d-block mt-2">
+                                                <i class="bx bx-info-circle me-1"></i> JPG, PNG, WEBP. Maks. 2MB.
+                                            </small>
+                                        </div>
+                                        <div class="fallback">
+                                            <input name="foto" type="file" accept="image/*" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 px-5 py-4 border-top">
+                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x me-1"></i> Batal
+                            </button>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bx bx-save me-1"></i> Simpan
+                            </button>
+                        </div>
+                    </form>
+
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
-                    Close
-                  </button>
-                </div>
-              </div>
             </div>
-          </div>
-          @endforeach
+        </div>
+    </div>
+
+    {{-- ===== MODAL EDIT ===== --}}
+    <div class="modal fade" id="editKategori" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-simple">
+            <div class="modal-content">
+                <div class="modal-body p-0">
+
+                    {{-- Header --}}
+                    <div class="d-flex align-items-center justify-content-between px-5 pt-5 pb-4 border-bottom">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="avatar flex-shrink-0">
+                                <span class="avatar-initial rounded bg-label-warning">
+                                    <i class="icon-base ri ri-edit-box-line icon-28px"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <h5 class="mb-0 fw-semibold">Edit Kategori</h5>
+                                <small class="text-muted">Ubah informasi kategori yang sudah ada.</small>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    {{-- Form --}}
+                    <form id="formEditKategori" action="" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="px-5 py-4">
+                            <div class="row g-4">
+                                <div class="col-12">
+                                    <label class="form-label fw-medium" for="editNamaKategori">
+                                        Nama Kategori <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="input-group input-group-merge">
+                                        <span class="input-group-text">
+                                            <i class="bx bx-purchase-tag"></i>
+                                        </span>
+                                        <input type="text" id="editNamaKategori" name="nama" class="form-control"
+                                            placeholder="Contoh: Elektronik" required />
+                                    </div>
+                                </div>
+
+                                <div class="col-12" id="editFotoPreviewWrapper" style="display:none;">
+                                    <label class="form-label fw-medium">Foto Saat Ini</label>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <img id="editFotoPreview" src="" alt="Foto Kategori" class="rounded"
+                                            style="width:64px;height:64px;object-fit:cover;">
+                                        <small class="text-muted">Upload foto baru untuk mengganti foto ini.</small>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label class="form-label fw-medium">Ganti Foto (opsional)</label>
+                                    <div class="dropzone needsclick" id="dropzone-edit-kategori">
+                                        <div class="dz-message needsclick">
+                                            <div class="d-flex justify-content-center mb-2">
+                                                <div class="avatar">
+                                                    <span class="avatar-initial rounded-3 bg-label-primary">
+                                                        <i class="icon-base ri ri-upload-2-line icon-24px"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <p class="h6 needsclick mb-1">Drag and drop foto di sini</p>
+                                            <small class="text-muted d-block mb-2">atau</small>
+                                            <span class="btn btn-sm btn-outline-primary needsclick">Browse Foto</span>
+                                            <small class="text-muted d-block mt-2">
+                                                <i class="bx bx-info-circle me-1"></i> JPG, PNG, WEBP. Maks. 2MB.
+                                            </small>
+                                        </div>
+                                        <div class="fallback">
+                                            <input name="foto" type="file" accept="image/*" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 px-5 py-4 border-top">
+                            <button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                <i class="bx bx-x me-1"></i> Batal
+                            </button>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="bx bx-save me-1"></i> Simpan Perubahan
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
-@section('script')
-<script src="https://cdn.datatables.net/2.3.2/js/dataTables.min.js"></script>
-<script>
-  let table = new DataTable('#myTable');
-</script>
-@endsection
+
+@push('script')
+    <script src="{{ asset('assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js') }}"></script>
+
+    <script>
+        // Pass data Laravel ke JS
+        const kategoriData = @json($kategori);
+    </script>
+    <script src="{{ asset('assets/js/custom/toast.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/quill/katex.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/quill/quill.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/select2/select2.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/dropzone/dropzone.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/jquery-repeater/jquery-repeater.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/flatpickr/flatpickr.js') }}"></script>
+    <script src="{{ asset('assets/vendor/libs/tagify/tagify.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/toast.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/dropzone.js') }}"></script>
+    <script src="{{ asset('assets/js/custom/kategori.js') }}"></script>
+@endpush
