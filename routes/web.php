@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SubmissionAdminController;
 use App\Http\Controllers\Backend\BarangController;
 use App\Http\Controllers\Backend\DatadiriController;
 use App\Http\Controllers\Backend\KategoriController;
@@ -14,8 +15,10 @@ use App\Http\Controllers\FrontController;
 use App\Http\Controllers\MidtransController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SingleController;
+use App\Http\Controllers\AjuanController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\ItemSubmissionController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +34,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// Ajuan
+Route::middleware('auth')->prefix('ajukan-barang')->name('submissions.')->group(function () {
+    Route::get('/',        [ItemSubmissionController::class, 'index'])->name('index');   // Pengajuan Saya
+    Route::get('/buat',    [ItemSubmissionController::class, 'create'])->name('create'); // Form ajukan
+    Route::post('/',       [ItemSubmissionController::class, 'store'])->name('store');   // Simpan
+    Route::get('/{submission}', [ItemSubmissionController::class, 'show'])->name('show'); // Detail
+});
 
 // Search
 Route::get('/search', [FrontController::class, 'search'])->name('search');
@@ -89,12 +100,17 @@ Route::resource('daftar', RegisterController::class);
 // ============================================
 Route::middleware(['auth'])->group(function () {
     // Deposit
-    Route::post('/deposit', [DepositController::class, 'store'])->name('deposit.store');
+    Route::post('/deposit/create', [DepositController::class, 'create'])->name('deposit.create');
+    Route::get('/deposit/{kodeDeposit}', [DepositController::class, 'show'])->name('deposit.show');
+
+    // Midtrans webhook deposit (tanpa auth, Midtrans yang hit ini)
 
     // Struk Resource
     Route::resource('struk', SingleController::class);
 });
 
+Route::post('/midtrans/deposit/notification', [DepositController::class, 'notificationHandler'])
+    ->name('midtrans.deposit.notification');
 // ============================================
 // ADMIN ROUTES
 // ============================================
@@ -106,7 +122,12 @@ Route::group([
 
     // Dashboard
     Route::get('/', [BackendController::class, 'index'])->name('home');
-
+    Route::prefix('submissions')->name('submissions.')->group(function () {
+        Route::get('/',                             [SubmissionAdminController::class, 'index'])->name('index');
+        Route::get('/{submission}',                 [SubmissionAdminController::class, 'show'])->name('show');
+        Route::post('/{submission}/status',         [SubmissionAdminController::class, 'updateStatus'])->name('updateStatus');
+        Route::post('/{submission}/mark-purchased', [SubmissionAdminController::class, 'markAsPurchased'])->name('markAsPurchased');
+    });
     // Verifikasi User
     Route::get('verifikasi', [DatadiriController::class, 'index'])->name('verifikasi.index');
     Route::post('verifikasi/{id}/approve', [DatadiriController::class, 'approve'])->name('verifikasi.approve');

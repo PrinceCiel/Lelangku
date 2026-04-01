@@ -5,7 +5,7 @@ Template URI: http://pixner.net/sbidu/
 Author: uiaxis
 Author URI: https://themeforest.net/user/uiaxis
 Version: 1.0.0
-Text Domain: 
+Text Domain:
 */
 /*
 ///// CSS Index \\
@@ -7458,4 +7458,197 @@ button.custom-button {
   font-size: 16px;
 }
 
+/* ============================================
+   MODAL SMOOTH ANIMATION — Global
+   ============================================ */
+
+/* Backdrop */
+.modal-backdrop.fade {
+    backdrop-filter: blur(4px);
+    background-color: rgba(15, 26, 17, 0.5);
+    transition: all .4s cubic-bezier(.16, 1, .3, 1);
+}
+
+/* Base state — hidden */
+.modal.fade .modal-dialog {
+    opacity: 0;
+    transform: scale(0.85) translateY(20px) !important;
+    filter: blur(6px);
+    will-change: transform, opacity, filter;
+    transition:
+        opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 0.35s ease;
+}
+
+/* Open state */
+.modal.fade.show .modal-dialog {
+    opacity: 1;
+    transform: scale(1) translateY(0) !important;
+    filter: blur(0);
+}
+
+/* Close state */
+.modal.fade:not(.show) .modal-dialog {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px) !important;
+    filter: blur(4px);
+    transition:
+        opacity 0.22s ease-out,
+        transform 0.22s ease-out,
+        filter 0.22s ease-out;
+}
+
+/* Modal Content shadow */
+.modal-content {
+    border: none !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.22), 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ── FIELD POP-IN ── */
+/* Reset dulu biar gak conflict */
+.modal.fade.show .modal-body .row>[class*="col"] {
+    animation: fieldPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Stagger delay */
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(1) {
+    animation-delay: .10s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(3) {
+    animation-delay: .20s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(4) {
+    animation-delay: .25s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(5) {
+    animation-delay: .30s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(6) {
+    animation-delay: .35s;
+}
+
+.modal.fade.show .modal-body .row>[class*="col"]:nth-child(n+7) {
+    animation-delay: .38s;
+}
+
+@keyframes fieldPop {
+    0% {
+        opacity: 0;
+        transform: scale(0.88) translateY(12px);
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* ── MICRO-INTERACTIONS ── */
+.modal .form-control,
+.modal .form-select {
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.modal .kondisi-opt {
+    transition: border-color .15s ease, background-color .15s ease;
+}
+
+.modal .btn-primary {
+    transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.modal .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(var(--bs-primary-rgb), .35);
+}
+
+.modal .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* ── LOADER OVERLAY ── */
+.modal-loader-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.modal-loader-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-loader-overlay .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.25rem;
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+
+    .modal.fade .modal-dialog,
+    .modal.fade.show .modal-body .row>[class*="col"],
+    .modal .form-control,
+    .modal .form-select,
+    .modal .kondisi-opt,
+    .modal .btn-primary {
+        animation: none !important;
+        transition: none !important;
+        filter: none !important;
+    }
+}
+
+/* ============================================
+   MODAL ANIMATION FIX
+   Tambahin di bagian PALING BAWAH demo.css
+   ============================================ */
+
+/* Override core.css transition yang cuma set transform 0.15s */
+.modal.fade .modal-dialog {
+    transition: none !important;
+    opacity: 0;
+    transform: scale(0.4) translateY(24px) !important;
+    filter: blur(6px);
+}
+
+.modal.fade.show .modal-dialog {
+    opacity: 1;
+    transform: scale(1) translateY(0) !important;
+    filter: blur(0);
+    transition:
+        opacity 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+        filter 0.4s ease !important;
+}
+
+.modal.fade:not(.show) .modal-dialog {
+    opacity: 0;
+    transform: scale(0.92) translateY(10px) !important;
+    transition:
+        opacity 0.22s ease-out,
+        transform 0.22s ease-out,
+        filter 0.22s ease-out !important;
+}
 /*All Animation Ends Here*//*# sourceMappingURL=main.css.map */

@@ -8,6 +8,7 @@ use App\Models\Pemenang;
 use App\Models\Struk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\Services\MidtransService;
 
@@ -49,7 +50,16 @@ class SingleController extends Controller
         $title = 'Membeli Item?';
         $text = "Apakah anda yakin?";
         confirmDelete($title, $text);
-        return view('single', compact('bidtertinggi','lelang', 'bid', 'countBid'));
+        $sudahDeposit = false;
+        $nominalDeposit = $lelang->barang->harga * 0.10;
+
+        if (Auth::check()) {
+            $sudahDeposit = \App\Models\Deposit::where('id_lelang', $lelang->id)
+                                ->where('id_user', Auth::id())
+                                ->where('status', 'berhasil')
+                                ->exists();
+        }
+        return view('single', compact('bidtertinggi','lelang', 'bid', 'countBid','sudahDeposit', 'nominalDeposit'));
     }
 
     public function store(Request $request)

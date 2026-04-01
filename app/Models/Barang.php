@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Barang extends Model
 {
-    public $fillable = ['nama','jenis_barang','harga','deskripsi','kondisi','foto','id_kategori','jumlah'];
+    public $fillable = ['nama','jenis_barang','harga','deskripsi','kondisi','foto','id_kategori','jumlah', 'slug'];
 
     public function lelang()
     {
@@ -22,5 +22,5 @@ class Barang extends Model
     {
         return $this->belongsTo(Kategori::class, 'id_kategori');
     }
-    
+
 }

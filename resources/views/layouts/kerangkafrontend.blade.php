@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/main.css') }}">
-    @yield('style')
+    @stack('style')
 
     <link rel="shortcut icon" href="{{ asset('sbidu/assets/images/favicon.png') }}" type="image/x-icon">
 </head>
@@ -205,7 +205,7 @@
             }
         }
     </style>
-    
+
     <script>
         $(document).ready(function(){
             $('.news-slider').owlCarousel({
@@ -231,6 +231,7 @@
             });
         });
     </script>
+    @stack('script')
 </body>
 
 </html>

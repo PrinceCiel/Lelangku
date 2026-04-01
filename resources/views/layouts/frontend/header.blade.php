@@ -48,6 +48,17 @@
                                 </ul>
                             </li>
                             <li class="dropdown-item-modern">
+                                <a href="{{ route('submissions.index') }}" class="dropdown-link-modern">Tawarkan Barang</a>
+                                {{-- <ul class="dropdown-modern dropdown-nested">
+                                    <li class="dropdown-item-modern">
+                                        <a href="{{ route('dashboard.user')}}" class="dropdown-link-modern">Dashboard</a>
+                                    </li>
+                                    <li class="dropdown-item-modern">
+                                        <a href="{{ route('struk.index')}}" class="dropdown-link-modern">Lelang yang Dimenangkan</a>
+                                    </li>
+                                </ul> --}}
+                            </li>
+                            <li class="dropdown-item-modern">
                                 <a class="dropdown-link-modern" href="{{ route('logout')}}"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Logout

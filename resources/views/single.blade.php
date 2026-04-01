@@ -125,30 +125,91 @@
                             @endif
                         </ul>
                         @if($lelang->status === 'dibuka')
-                        @php 
-                            $increment = $bidtertinggi * 0.10; 
-                            $min = $increment + $bidtertinggi;
-                        @endphp 
-                        <div class="product-bid-area">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul class="mb-0">
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li> 
-                                        @endforeach
-                                    </ul>
+                            @php
+                                $increment = $bidtertinggi * 0.10;
+                                $min = $increment + $bidtertinggi;
+                            @endphp
+                            <div class="product-bid-area">
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @if($sudahDeposit)
+                                    {{-- Sudah deposit, bisa bid --}}
+                                    <div class="alert alert-success mb-3">
+                                        ✅ Anda sudah melakukan deposit untuk lelang ini.
+                                    </div>
+                                    <form class="product-bid-form" action="{{ route('lelang.store') }}" method="post">
+                                        @csrf
+                                        <div class="search-icon">
+                                            <img src="{{ asset('sbidu/assets/images/product/search-icon.png') }}" alt="product">
+                                        </div>
+                                        <input type="hidden" name="kode_lelang" value="{{$lelang->kode_lelang}}">
+                                        <input type="integer" placeholder="Masukkan Tawaran anda" name="bid" min={{$min}} id="bidInput">
+                                        <button type="submit" class="custom-button">Ajukan Tawaran</button>
+                                    </form>
+
+                                @else
+                                    {{-- Belum deposit --}}
+                                    <div class="alert alert-warning mb-3">
+                                        ⚠️ Anda harus melakukan deposit terlebih dahulu untuk bisa mengajukan tawaran.
+                                    </div>
+                                    <button class="custom-button" data-toggle="modal" data-target="#modalDeposit">
+                                        Bayar Deposit
+                                    </button>
+                                @endif
+                            </div>
+
+                            {{-- Modal Deposit --}}
+                            @if(!$sudahDeposit)
+                            <div class="modal fade" id="modalDeposit" tabindex="-1" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Detail Deposit</h5>
+                                            <button type="button" class="close" data-dismiss="modal">
+                                                <span>&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-borderless">
+                                                <tr>
+                                                    <td>Lelang</td>
+                                                    <td><strong>{{ $lelang->kode_lelang }} - {{ $lelang->barang->nama }}</strong></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Harga Awal</td>
+                                                    <td>Rp{{ number_format($lelang->harga_awal, 0, ',', '.') }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Deposit (10%)</td>
+                                                    <td><strong>Rp{{ number_format($nominalDeposit, 0, ',', '.') }}</strong></td>
+                                                </tr>
+                                            </table>
+                                            <p class="text-muted" style="font-size: 13px;">
+                                                * Deposit akan dikembalikan jika Anda tidak memenangkan lelang ini.
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                                            <form action="{{ route('deposit.create') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="kode_lelang" value="{{ $lelang->kode_lelang }}">
+                                                <button type="submit" class="btn btn-success" id="btn-deposit">
+                                                    Bayar Sekarang via Midtrans
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
                             @endif
-                            <form class="product-bid-form" action="{{ route('lelang.store') }}" method="post">
-                                @csrf
-                                <div class="search-icon">
-                                    <img src="{{ asset('sbidu/assets/images/product/search-icon.png') }}" alt="product">
-                                </div>
-                                <input type="hidden" name="kode_lelang" value="{{$lelang->kode_lelang}}">
-                                <input type="integer" placeholder="Masukkan Tawaran anda" name="bid" min={{$min}} id="bidInput">
-                                <button type="submit" class="custom-button">Ajukan Tawaran</button>
-                            </form>
-                        </div>
                         @endif
                     </div>
                 </div>

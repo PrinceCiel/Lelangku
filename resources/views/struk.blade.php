@@ -216,22 +216,22 @@
     </div>
 
     {{-- Midtrans Snap Script --}}
-    <script src="https://app.sandbox.midtrans.com/snap/snap.js" 
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"
             data-client-key="Mid-client-9VUnrPJpEEUKQZXG"></script>
-    
+
     <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', function() {
         const payButton = document.getElementById('pay-button');
         const buttonText = document.getElementById('button-text');
         const loadingOverlay = document.getElementById('loading-overlay');
-        
+
         if (payButton) {
             payButton.addEventListener('click', function () {
                 // Disable button dan ubah text
                 payButton.disabled = true;
                 buttonText.textContent = 'Memproses...';
                 loadingOverlay.classList.remove('hidden');
-                
+
                 // Panggil Midtrans Snap dengan callbacks
                 snap.pay('{{$struk->snap_token}}', {
                     onSuccess: function(result) {
@@ -264,7 +264,7 @@
                 });
             });
         }
-        
+
         function showSuccessAnimation() {
             const loadingContent = document.querySelector('.loading-content');
             loadingContent.innerHTML = `
@@ -279,7 +279,7 @@
                 </div>
             `;
         }
-        
+
         function showPendingAnimation() {
             const loadingContent = document.querySelector('.loading-content');
             loadingContent.innerHTML = `
@@ -294,7 +294,7 @@
                 </div>
             `;
         }
-        
+
         function showErrorAlert() {
             // Buat alert element
             const alert = document.createElement('div');
@@ -314,7 +314,7 @@
                 </div>
             `;
             document.body.appendChild(alert);
-            
+
             // Auto remove after 5 seconds
             setTimeout(() => {
                 if (alert.parentElement) {

@@ -92,6 +92,12 @@
                 <div data-i18n="Kategori Barang">Kategori Barang</div>
             </a>
         </li>
+        <li class="menu-item {{ request()->routeIs('backend.submissions.index', 'backend.submissions.show') ? 'active' : '' }}">
+            <a href="{{ route('backend.submissions.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ri ri-box-3-line"></i>
+                <div data-i18n="Pengajuan Barang">Pengajuan Barang</div>
+            </a>
+        </li>
         <li class="menu-item {{ request()->routeIs('backend.barang.index') ? 'active' : '' }}">
             <a href="{{ route('backend.barang.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ri ri-archive-line"></i>
@@ -109,7 +115,7 @@
                 <div data-i18n="Lelang">Lelang</div>
             </a>
         </li>
-        <li class="menu-item {{ request()->routeIs('backend.bid.index') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->routeIs('backend.bid.index') ? 'active' : '' }} ">
             <a href="{{ route('backend.bid.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ri ri-history-line"></i>
                 <div data-i18n="Log Penawaran">Log Penawaran</div>
