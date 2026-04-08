@@ -354,6 +354,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const inputFile  = document.getElementById('foto_barang');
     const preview    = document.getElementById('foto-preview');
     const dropzone   = document.getElementById('foto-dropzone');
+    const form       = document.getElementById('submission_form');
     const MAX_PHOTOS = 5;
     let selectedFiles = [];
 
@@ -388,7 +389,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         renderPreviews();
-        syncFilesToInput();
     }
 
     function renderPreviews() {
@@ -420,14 +420,48 @@ document.addEventListener('DOMContentLoaded', function () {
         const idx = parseInt(btn.dataset.idx);
         selectedFiles.splice(idx, 1);
         renderPreviews();
-        syncFilesToInput();
     });
 
-    function syncFilesToInput() {
-        const dt = new DataTransfer();
-        selectedFiles.forEach(f => dt.items.add(f));
-        inputFile.files = dt.files;
-    }
+    // ✅ Intercept submit — bangun FormData manual biar foto pasti ke-attach
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+
+        // Hapus entry foto_barang[] dari FormData bawaan (kalau ada)
+        formData.delete('foto_barang[]');
+
+        // Append selectedFiles satu-satu
+        selectedFiles.forEach(file => {
+            formData.append('foto_barang[]', file);
+        });
+
+        // Submit manual via fetch / XMLHttpRequest, atau bisa pakai trick hidden submit
+        // Pakai cara paling kompatibel: temporary form submit via fetch
+        fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            }
+        }).then(response => {
+            // Kalau server redirect (302), ikuti redirect-nya
+            if (response.redirected) {
+                window.location.href = response.url;
+            } else {
+                // Kalau ada response HTML (error validasi), replace halaman
+                return response.text().then(html => {
+                    document.open();
+                    document.write(html);
+                    document.close();
+                    window.history.replaceState({}, '', form.action);
+                });
+            }
+        }).catch(err => {
+            console.error('Submit error:', err);
+            alert('Terjadi kesalahan, coba lagi.');
+        });
+    });
 
     const hargaInput = document.getElementById('harga_ditawarkan');
     hargaInput.addEventListener('input', function () {

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Midtrans\Config;
 use Midtrans\Snap;
+use Illuminate\Support\Facades\Log;
 
 class DepositController extends Controller
 {
@@ -97,55 +98,4 @@ class DepositController extends Controller
         return view('deposit.show', compact('deposit'));
     }
 
-    // Dipanggil Midtrans via webhook
-    public function notificationHandler(Request $request)
-    {
-        \Log::info('Midtrans webhook:', $request->all());
-
-        // Ambil langsung dari request, skip verify ke Midtrans API
-        $orderId           = $request->input('order_id');
-        $transactionStatus = $request->input('transaction_status');
-        $fraudStatus       = $request->input('fraud_status');
-
-        // Verifikasi signature manual (opsional tapi recommended)
-        $serverKey      = config('midtrans.server_key');
-        $statusCode     = $request->input('status_code');
-        $grossAmount    = $request->input('gross_amount');
-        $expectedSig    = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
-
-        $expectedSig = hash('sha512', $orderId . $statusCode . $grossAmount . $serverKey);
-
-        \Log::info('Signature check', [
-            'order_id'      => $orderId,
-            'status_code'   => $statusCode,
-            'gross_amount'  => $grossAmount,
-            'server_key'    => substr($serverKey, 0, 5) . '...',  // jangan log full
-            'received_sig'  => $request->input('signature_key'),
-            'expected_sig'  => $expectedSig,
-        ]);
-
-        // if ($request->input('signature_key') !== $expectedSig) {
-        //     return response()->json(['message' => 'invalid signature'], 403);
-        // }
-
-        if (!str_starts_with($orderId, 'DEP-')) {
-            return response()->json(['message' => 'bukan deposit'], 200);
-        }
-
-        $deposit = Deposit::where('order_id', $orderId)->first();
-        if (!$deposit) {
-            return response()->json(['message' => 'deposit not found'], 404);
-        }
-
-        if ($transactionStatus === 'settlement' ||
-        ($transactionStatus === 'capture' && $fraudStatus === 'accept')) {
-            $deposit->update(['status' => 'berhasil', 'paid_at' => now()]);
-        } elseif ($transactionStatus === 'pending') {
-            $deposit->update(['status' => 'pending']);
-        } elseif (in_array($transactionStatus, ['deny', 'expire', 'cancel'])) {
-            $deposit->update(['status' => 'gagal']);
-        }
-
-        return response()->json(['message' => 'ok'], 200);
-    }
 }
