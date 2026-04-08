@@ -126,8 +126,8 @@
         <li class="menu-header small mt-5">
             <span class="menu-header-text" data-i18n="Status Transaksi">Status Transaksi</span>
         </li>
-        <li class="menu-item">
-            <a href="icons-ri.html" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('backend.struk.belum-bayar') ? 'active' : '' }}">
+            <a href="{{ route('backend.struk.belum-bayar') }}" class="menu-link">
                 <i class="menu-icon icon-base ri ri-money-dollar-circle-line"></i>
                 <div data-i18n="Menunggu Bayar">Menunggu Bayar</div>
             </a>

@@ -19,6 +19,7 @@ use App\Http\Controllers\AjuanController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\ItemSubmissionController;
+use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -58,28 +59,16 @@ Route::resource('lelang', SingleController::class);
 // Profile
 Route::get('/profile/dashboard', [FrontController::class, 'dashboard'])->name('dashboard.user');
 Route::get('/profile/personal', [FrontController::class, 'personal'])->name('personal.user');
-// ============================================
-// STRUK & PAYMENT ROUTES
-// =========4===================================
-
-// Struk Detail (Frontend)
-Route::get('struk/{kodestruk}', [StrukController::class, 'struk'])
-    ->name('struk.detail'); // Ubah name agar konsisten
-
-// Check Status Pembayaran Manual
-Route::post('/struk/check-status/{kode}', [StrukController::class, 'checkStatus'])
-    ->name('check.status'); // Pindahkan ke StrukController
 
 // ============================================
 // MIDTRANS ROUTES
 // ============================================
 
-// Midtrans Notification Handler (Webhook)
-Route::post('/midtrans/notification', [MidtransController::class, 'notificationHandler'])
+Route::post('/midtrans/notification', [MidtransCallbackController::class, 'notificationHandler'])
     ->name('midtrans.notification');
 
 // Midtrans Redirect Handler (After Payment)
-Route::get('/midtrans/finish', [MidtransController::class, 'handleRedirect'])
+Route::get('/midtrans/finish', [MidtransCallbackController::class, 'handleRedirect'])
     ->name('midtrans.finish');
 
 // Hapus route duplikat
@@ -106,11 +95,21 @@ Route::middleware(['auth'])->group(function () {
     // Midtrans webhook deposit (tanpa auth, Midtrans yang hit ini)
 
     // Struk Resource
-    Route::resource('struk', SingleController::class);
-});
+    Route::get('struk', [SingleController::class, 'index'])
+        ->name('struk.index'); // Ubah name agar konsisten
+    // ============================================
+    // STRUK & PAYMENT ROUTES
+    // =========4===================================
 
-Route::post('/midtrans/deposit/notification', [DepositController::class, 'notificationHandler'])
-    ->name('midtrans.deposit.notification');
+    // Struk Detail (Frontend)
+    Route::get('struk/{kodestruk}', [StrukController::class, 'struk'])
+        ->name('struk.detail'); // Ubah name agar konsisten
+
+    // Check Status Pembayaran Manual
+    Route::post('/struk/check-status/{kode}', [StrukController::class, 'checkStatus'])
+        ->name('check.status'); // Pindahkan ke StrukController
+
+});
 // ============================================
 // ADMIN ROUTES
 // ============================================
@@ -157,7 +156,12 @@ Route::group([
         ->name('struk.bayar');
     Route::get('struk/status-paid/{kode}', [BackendStrukController::class, 'setPaid'])
         ->name('struk.setPaid');
+    Route::get('pembayaran/belum-bayar', [StrukController::class, 'belumBayar'])->name('struk.belum-bayar');
+    Route::patch('pembayaran/{kode}/konfirmasi', [StrukController::class, 'konfirmasi'])
+        ->name('struk.konfirmasi');
 
+    Route::patch('pembayaran/{kode}/batal', [StrukController::class, 'batal'])
+        ->name('struk.batal');
     // Pemenang
     Route::get('pemenang', [PemenangController::class, 'index'])->name('pemenang');
 

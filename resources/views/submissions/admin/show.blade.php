@@ -532,7 +532,6 @@
     flex-shrink: 0;
     font-size: 16px;
 }
-
 /* ── Action Radio ──────────────────────────────────────────────────────────── */
 .action-radio input[type="radio"] { display: none; }
 .action-radio__box {
@@ -542,13 +541,61 @@
     border: 2px solid #e0e0e0;
     border-radius: 10px;
     cursor: pointer;
-    transition: background 0.2s, border-color 0.2s;
+    transition: background 0.25s ease, border-color 0.25s ease,
+                box-shadow 0.25s ease, transform 0.15s ease;
+    user-select: none;
 }
-.action-radio input:checked + .action-radio__box { background: rgba(0, 0, 0, 0.03); }
-.action-radio input:checked + .border-info    { border-color: var(--bs-info)    !important; }
-.action-radio input:checked + .border-success { border-color: var(--bs-success) !important; }
-.action-radio input:checked + .border-danger  { border-color: var(--bs-danger)  !important; }
+.action-radio__box:hover {
+    background: rgba(128, 128, 128, 0.08);
+    transform: translateX(2px);
+}
 
+/* ── Checked states ── */
+.action-radio input:checked + .action-radio__box {
+    transform: translateX(3px);
+}
+.action-radio input:checked + .action-radio__box.border-info {
+    border-color: var(--bs-info) !important;
+    background: rgba(13, 202, 240, 0.08);
+    box-shadow: 0 0 0 3px rgba(13, 202, 240, 0.15), inset 3px 0 0 var(--bs-info);
+}
+.action-radio input:checked + .action-radio__box.border-success {
+    border-color: var(--bs-success) !important;
+    background: rgba(25, 135, 84, 0.08);
+    box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.15), inset 3px 0 0 var(--bs-success);
+}
+.action-radio input:checked + .action-radio__box.border-danger {
+    border-color: var(--bs-danger) !important;
+    background: rgba(220, 53, 69, 0.08);
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.15), inset 3px 0 0 var(--bs-danger);
+}
+
+/* Dot indicator di kanan */
+.action-radio__box::after {
+    content: '';
+    margin-left: auto;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    flex-shrink: 0;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+.action-radio input:checked + .action-radio__box.border-info::after {
+    background: var(--bs-info);
+    border-color: var(--bs-info);
+    transform: scale(1.1);
+}
+.action-radio input:checked + .action-radio__box.border-success::after {
+    background: var(--bs-success);
+    border-color: var(--bs-success);
+    transform: scale(1.1);
+}
+.action-radio input:checked + .action-radio__box.border-danger::after {
+    background: var(--bs-danger);
+    border-color: var(--bs-danger);
+    transform: scale(1.1);
+}
 </style>
 @endpush
 

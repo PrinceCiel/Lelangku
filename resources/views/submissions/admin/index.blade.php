@@ -63,109 +63,109 @@
                     </select>
                 </div>
                 <div class="col-auto">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary button-submit">
                         <i class="fas fa-search me-1"></i> Filter
                     </button>
-                    <a href="{{ route('backend.submissions.index') }}" class="btn btn-outline-secondary ms-1">Reset</a>
+                    <a href="{{ route('backend.submissions.index') }}" class="btn btn-outline-secondary ms-1 button-submit">Reset</a>
                 </div>
             </form>
         </div>
-    </div>
-
-    {{-- Alert --}}
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    @endif
-
-    {{-- Table --}}
-    <div class="card border-0 shadow-sm">
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="table-light">
-                        <tr>
-                            <th>#</th>
-                            <th>Barang</th>
-                            <th>User</th>
-                            <th>Harga Ditawarkan</th>
-                            <th>Harga Deal</th>
-                            <th>Status</th>
-                            <th>Tanggal</th>
-                            <th class="text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($submissions as $sub)
-                        <tr>
-                            <td class="text-muted small">{{ $sub->id }}</td>
-                            <td>
-                                <div class="d-flex align-items-center gap-2">
-                                    @if(!empty($sub->foto_barang[0]))
-                                        <img src="{{ Storage::url($sub->foto_barang[0]) }}"
-                                             class="rounded" width="45" height="45"
-                                             style="object-fit:cover;">
-                                    @else
-                                        <div class="bg-light rounded d-flex align-items-center justify-content-center"
-                                             style="width:45px;height:45px;">
-                                            <i class="fas fa-image text-muted"></i>
-                                        </div>
-                                    @endif
-                                    <div>
-                                        <div class="fw-semibold">{{ Str::limit($sub->nama_barang, 30) }}</div>
-                                        <small class="text-muted">{{ count($sub->foto_barang ?? []) }} foto</small>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="fw-semibold">{{ $sub->user->name }}</div>
-                                <small class="text-muted">{{ $sub->user->email }}</small>
-                            </td>
-                            <td>Rp {{ number_format($sub->harga_ditawarkan, 0, ',', '.') }}</td>
-                            <td>
-                                @if($sub->harga_deal)
-                                    <span class="text-success fw-semibold">
-                                        Rp {{ number_format($sub->harga_deal, 0, ',', '.') }}
-                                    </span>
-                                @else
-                                    <span class="text-muted">—</span>
-                                @endif
-                            </td>
-                            <td>
-                                <span class="badge bg-{{ $sub->status_badge }}">
-                                    {{ $sub->status_label }}
-                                </span>
-                            </td>
-                            <td>
-                                <small class="text-muted">{{ $sub->created_at->format('d M Y') }}</small>
-                            </td>
-                            <td class="text-center">
-                                <a href="{{ route('backend.submissions.show', $sub) }}"
-                                   class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye me-1"></i> Review
-                                </a>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="8" class="text-center py-5 text-muted">
-                                <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
-                                Tidak ada pengajuan yang ditemukan.
-                            </td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        {{-- Alert --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show">
+                <i class="fas fa-check-circle me-2"></i> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-        </div>
-        @if($submissions->hasPages())
-        <div class="card-footer border-0 bg-transparent">
-            {{ $submissions->links() }}
-        </div>
         @endif
+
+        {{-- Table --}}
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Barang</th>
+                                <th>User</th>
+                                <th>Harga Ditawarkan</th>
+                                <th>Harga Deal</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th class="text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($submissions as $sub)
+                            <tr>
+                                <td class="text-muted small">{{ $sub->id }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        @if(!empty($sub->foto_barang[0]))
+                                            <img src="{{ Storage::url($sub->foto_barang[0]) }}"
+                                                 class="rounded" width="45" height="45"
+                                                 style="object-fit:cover;">
+                                        @else
+                                            <div class="bg-light rounded d-flex align-items-center justify-content-center"
+                                                 style="width:45px;height:45px;">
+                                                <i class="fas fa-image text-muted"></i>
+                                            </div>
+                                        @endif
+                                        <div>
+                                            <div class="fw-semibold">{{ Str::limit($sub->nama_barang, 30) }}</div>
+                                            <small class="text-muted">{{ count($sub->foto_barang ?? []) }} foto</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="fw-semibold">{{ $sub->user->name }}</div>
+                                    <small class="text-muted">{{ $sub->user->email }}</small>
+                                </td>
+                                <td>Rp {{ number_format($sub->harga_ditawarkan, 0, ',', '.') }}</td>
+                                <td>
+                                    @if($sub->harga_deal)
+                                        <span class="text-success fw-semibold">
+                                            Rp {{ number_format($sub->harga_deal, 0, ',', '.') }}
+                                        </span>
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <span class="badge bg-{{ $sub->status_badge }}">
+                                        {{ $sub->status_label }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <small class="text-muted">{{ $sub->created_at->format('d M Y') }}</small>
+                                </td>
+                                <td class="text-center">
+                                    <a href="{{ route('backend.submissions.show', $sub) }}"
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-eye me-1"></i> Review
+                                    </a>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="8" class="text-center py-5 text-muted">
+                                    <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+                                    Tidak ada pengajuan yang ditemukan.
+                                </td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            @if($submissions->hasPages())
+            <div class="card-footer border-0 bg-transparent">
+                {{ $submissions->links() }}
+            </div>
+            @endif
+        </div>
     </div>
+
 </div>
 
 <style>
@@ -182,6 +182,10 @@
     justify-content: center;
     flex-shrink: 0;
     font-size: 16px;
+}
+.button-submit {
+    width: 100px;
+    height: 50px;
 }
 </style>
 @endsection

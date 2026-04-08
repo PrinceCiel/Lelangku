@@ -8,6 +8,7 @@ use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ItemSubmissionController extends Controller
 {
@@ -30,6 +31,7 @@ class ItemSubmissionController extends Controller
      */
     public function store(Request $request)
     {
+        Log::info('store() called', ['time' => now()]);
         $request->validate([
             'nama_barang'      => 'required|string|max:255',
             'deskripsi'        => 'required|string|min:20',

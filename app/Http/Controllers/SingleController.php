@@ -31,6 +31,7 @@ class SingleController extends Controller
               ->from('pemenangs')
               ->where('id_user', $user_id);
         })->with(['barang', 'struk', 'pemenang'])->get();
+        // dd($lelang);
         // $struk = Struk::where('id_user', $pemenang->id_user);
         return view('order', compact('lelang'));
     }
@@ -38,6 +39,7 @@ class SingleController extends Controller
     public function show(string $kode)
     {
         $lelang = Lelang::where('kode_lelang', $kode)->first();
+        // dd($lelang);
         $bid = Bid::where('id_lelang', $lelang->id)->latest()->get();
         $bidtertinggi = Bid::where('id_lelang', $lelang->id)->max('bid');
         if(! $bidtertinggi){
