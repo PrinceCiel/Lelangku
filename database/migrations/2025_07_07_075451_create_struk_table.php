@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('kode_unik')->nullable()->unique();
             $table->dateTime('tgl_trx');
             $table->string('kode_struk')->unique();
+            $table->string('order_id')->unique();
             $table->string('snap_token')->nullable();
             $table->foreign('id_lelang')->references('id')->on('lelangs');
             $table->foreign('id_barang')->references('id')->on('barangs');

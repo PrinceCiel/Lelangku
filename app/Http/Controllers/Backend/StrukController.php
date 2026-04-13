@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Pemenang;
 use App\Models\Struk;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
+
 class StrukController extends Controller
 {
     /**
@@ -59,7 +60,7 @@ class StrukController extends Controller
         $struk = Struk::where('kode_struk', $kode)->first();
         $struk->status = $request->status;
         $kodeUnik = 'RCPT-' . Str::upper(Str::random(4)) . '-' .Str::upper(Str::random(4)) . '-' . Str::upper(Str::random(4));
-        
+
         while (Struk::where('kode_unik', $kodeUnik)->exists()) {
             $kodeUnik = 'L' . Str::upper(Str::random(10));
         }

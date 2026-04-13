@@ -20,8 +20,12 @@ return new class extends Migration
             $table->string('kode_deposit')->unique();
             $table->string('snap_token')->nullable();
             $table->string('order_id')->unique()->nullable(); // format: DEP-{kode_deposit}
+            $table->string('payment_type')->nullable();    // 'gopay', 'bca_va', 'shopeepay'
+            $table->string('masked_account')->nullable(); // nomor VA / akun
+            $table->string('bank')->nullable();
             $table->dateTime('tgl_trx');
             $table->dateTime('paid_at')->nullable();
+            $table->timestamp('refunded_at')->nullable();
             $table->timestamps();
 
             $table->foreign('id_lelang')->references('id')->on('lelangs');

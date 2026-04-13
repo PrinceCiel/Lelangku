@@ -29,6 +29,12 @@ class User extends Authenticatable implements MustVerifyEmail
         'status',
         'google_id',
         'email_verified_at',
+        'is_banned',
+        'banned_at',
+        'banned_reason',
+        'strike_count',
+        'last_login_at',
+        'is_suspicious',
     ];
 
     /**
@@ -50,7 +56,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return [
             'email_verified_at' => 'datetime',
+            'banned_at'         => 'datetime',
+            'last_login_at'     => 'datetime',
             'password' => 'hashed',
+            'is_banned'         => 'boolean',
         ];
     }
 
@@ -66,6 +75,20 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function bid()
     {
-        return $this->hasMany(Bid::class);
+        return $this->hasMany(Bid::class, 'id_user');
     }
+
+    public function strikes()
+    {
+        return $this->hasMany(StrikeActivity::class, 'id_user');
+    }
+    public function kicks()
+    {
+        return $this->hasMany(KickActivity::class, 'id_user');
+    }
+    public function deposit()
+    {
+        return $this->hasMany(Deposit::class, 'id_user');
+    }
+
 }

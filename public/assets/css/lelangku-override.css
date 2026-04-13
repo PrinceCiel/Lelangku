@@ -1,0 +1,198 @@
+/* ============================================================
+   LELANGKU OVERRIDE CSS
+   Load ini SETELAH main.css di <head>
+   ============================================================ */
+
+/* ── 1. RESET HEADER LAMA (dari template sbidu) ── */
+header {
+    position: static !important;
+    width: auto !important;
+    z-index: auto !important;
+    display: none !important;
+    /* header lama disembunyiin, diganti lk-header */
+}
+
+/* Kalau template render header lama dan baru sekaligus,
+   uncomment ini buat hide .header-bottom template lama */
+.header-bottom,
+.header-top {
+    display: none !important;
+}
+
+/* ── 2. BODY & BASE ── */
+body {
+    padding-top: 0 !important;
+    overflow-x: hidden;
+}
+
+/* ── 3. LK HEADER (header baru) ── */
+:root {
+    --lk-bg: #0c2e2b;
+    --lk-bgh: rgba(255, 255, 255, 0.07);
+    --lk-br: rgba(255, 255, 255, 0.11);
+    --lk-c: #fff;
+    --lk-cm: rgba(255, 255, 255, 0.52);
+    --lk-ac: #3ecf9a;
+    --lk-dg: #f87171;
+    --lk-ddbg: #0f3a36;
+    --lk-r: 10px;
+    --lk-rs: 7px;
+    --lk-hh: 60px;
+    --lk-z: 1000;
+    --lk-t: 0.18s ease;
+}
+
+.lk-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--lk-z);
+    background: var(--lk-bg);
+    border-bottom: 1px solid var(--lk-br);
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.22);
+}
+
+.lk-spacer {
+    height: var(--lk-hh);
+    display: block;
+}
+
+.lk-header__container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: var(--lk-hh);
+    padding: 0 24px;
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+/* ── 4. FOOTER FIX — padding-top 450px itu gila ── */
+footer.bg_img {
+    padding-top: 80px !important;
+}
+
+@media (min-width: 768px) {
+    footer.bg_img {
+        padding-top: 100px !important;
+    }
+}
+
+@media (min-width: 992px) {
+    footer.bg_img {
+        padding-top: 120px !important;
+    }
+}
+
+/* Footer top shape tetep ada tapi posisinya disesuaikan */
+.footer-top-shape {
+    opacity: 0.5;
+}
+
+/* ── 5. SECTION SPACING — konten pertama setelah header ── */
+/* Kalau section pertama langsung nempel header, kasih jarak */
+.banner-section,
+.banner-section-2,
+.banner-section-4,
+.banner-section-5,
+.hero-section,
+.browse-slider-section {
+    padding-top: calc(var(--lk-hh) + 80px) !important;
+}
+
+@media (min-width: 768px) {
+
+    .banner-section,
+    .banner-section-2,
+    .banner-section-4,
+    .banner-section-5,
+    .hero-section {
+        padding-top: calc(var(--lk-hh) + 100px) !important;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .banner-section,
+    .banner-section-2,
+    .banner-section-4,
+    .banner-section-5,
+    .hero-section {
+        padding-top: calc(var(--lk-hh) + 120px) !important;
+    }
+}
+
+/* ── 6. OVERLAYER (loading screen) z-index ── */
+#overlayer {
+    z-index: calc(var(--lk-z) + 100) !important;
+}
+
+/* ── 7. STICKY HEADER TEMPLATE LAMA — matiin ── */
+.header-bottom.active {
+    display: none !important;
+}
+
+/* ── 8. SCROLL TO TOP — posisi biar ga ketimpa overlay ── */
+.scrollToTop {
+    z-index: calc(var(--lk-z) - 1) !important;
+}
+
+/* ── 9. CART SIDEBAR — z-index lebih tinggi dari lk-header ── */
+.cart-sidebar-area {
+    z-index: calc(var(--lk-z) + 50) !important;
+}
+
+/* ── 10. OVERLAY TEMPLATE LAMA ── */
+.overlay {
+    z-index: calc(var(--lk-z) - 5) !important;
+}
+
+/* ── 11. MOBILE: adjust untuk --hh 52px ── */
+@media (max-width: 480px) {
+    :root {
+        --lk-hh: 52px;
+    }
+
+    .lk-header__container {
+        padding: 0 14px;
+    }
+
+    footer.bg_img {
+        padding-top: 60px !important;
+    }
+}
+
+/* ── 12. GENERAL CLEANUP ── */
+
+/* Hilangkan gap aneh antara header spacer dan konten pertama */
+.lk-spacer+* {
+    margin-top: 0;
+}
+
+/* Pastiin container di dalam footer ga kebanting */
+footer .container {
+    position: relative;
+    z-index: 3;
+}
+
+/* Footer anime wrapper z-index lebih rendah dari konten */
+.anime-wrapper {
+    z-index: 1 !important;
+}
+
+footer .footer-top {
+    position: relative;
+    z-index: 3;
+}
+
+footer .footer-bottom {
+    position: relative;
+    z-index: 3;
+}
+
+/* Fix logo footer biar proporsional */
+.footer-bottom-wrapper .logo img {
+    width: auto !important;
+    max-height: 48px;
+}

@@ -9,9 +9,7 @@ class Kernel extends ConsoleKernel
 {
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->call(function () {
-            app(\App\Services\LelangService::class)->handle();
-        })->everyMinute()->withoutOverlapping()->onOneServer();
+        
     }
 
     protected function commands(): void

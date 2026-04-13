@@ -53,7 +53,7 @@ class SingleController extends Controller
         $text = "Apakah anda yakin?";
         confirmDelete($title, $text);
         $sudahDeposit = false;
-        $nominalDeposit = $lelang->barang->harga * 0.10;
+        $nominalDeposit = $lelang->barang->harga * 0.30;
 
         if (Auth::check()) {
             $sudahDeposit = \App\Models\Deposit::where('id_lelang', $lelang->id)
@@ -71,7 +71,7 @@ class SingleController extends Controller
                 $lelang = Lelang::where('kode_lelang', $request->kode_lelang)->first();
                 $bidTertinggi = Bid::where('id_lelang', $lelang->id)->max('bid');
                 if($bidTertinggi){
-                    $minBid = $bidTertinggi + ($bidTertinggi * 0.1);
+                    $minBid = $bidTertinggi + ($bidTertinggi * 0.05);
                 } else {
                     $minBid = $lelang->barang->harga;
                 }
@@ -88,7 +88,7 @@ class SingleController extends Controller
                 $bid->bid = $request->bid;
                 $bid->save();
                 return redirect()->route('lelang.show', $request->kode_lelang);
-            } elseif(Auth::user()->status == 'Belum Verifikasi'){
+            } else{
                 return redirect()->route('verifikasi.index');
             }
         } else {

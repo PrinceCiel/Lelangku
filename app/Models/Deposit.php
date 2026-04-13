@@ -18,6 +18,10 @@ class Deposit extends Model
         'order_id',
         'tgl_trx',
         'paid_at',
+        'payment_type',
+        'masked_account',
+        'bank',
+        'refunded_at',
     ];
 
     protected $casts = [

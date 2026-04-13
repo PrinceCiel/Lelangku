@@ -22,6 +22,8 @@ return new class extends Migration
             $table->enum('status', ['Belum Verifikasi', 'Terverifikasi', 'diajukan'])->default('Belum Verifikasi');
             $table->string('google_id')->nullable()->unique();
             $table->boolean('is_banned')->default(false);
+            $table->integer('strike_count')->default(0);
+            $table->timestamp('last_login_at')->nullable();
             $table->boolean('is_suspicious')->default(false);
             $table->timestamp('banned_at')->nullable();
             $table->string('banned_reason')->nullable();

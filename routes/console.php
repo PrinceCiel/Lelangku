@@ -5,19 +5,11 @@ use Illuminate\Support\Facades\Artisan;
 
 use Illuminate\Support\Facades\Schedule;
 use App\Services\LelangService;
-
+use Illuminate\Support\Facades\Log;
+// routes/console.php
 Schedule::call(function () {
-    for ($i = 0; $i < 5; $i++) {
-        app(LelangService::class)->handle();
-        \Log::info('SCHEDULER MASUK ke-' . ($i + 1) . ' ' . now());
-        if ($i < 4) { // jangan sleep di iterasi terakhir
-            sleep(60);
-        }
-    }
-})->everyFiveMinutes();
-// Schedule::call(function () {
-//     \Log::info('SCHEDULER MASUK ' . now());
-// })->everyMinute();
+    app(LelangService::class)->handle();
+})->everyMinute()->name('lelang-service')->withoutOverlapping();
 
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());

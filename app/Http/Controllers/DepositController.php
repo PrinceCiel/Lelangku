@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Services\MidtransService;
 use App\Models\Deposit;
 use App\Models\Lelang;
@@ -11,45 +9,63 @@ use Illuminate\Support\Str;
 use Midtrans\Config;
 use Midtrans\Snap;
 use Illuminate\Support\Facades\Log;
-
 class DepositController extends Controller
 {
     protected $midtrans;
-
     public function __construct(MidtransService $midtrans)
     {
         $this->midtrans = $midtrans;
-
-        // Set Midtrans configuration
         Config::$serverKey = config('services.midtrans.server_key');
         Config::$clientKey = config('services.midtrans.client_key');
         Config::$isProduction = config('services.midtrans.is_production', false);
         Config::$isSanitized = true;
         Config::$is3ds = true;
     }
-
     public function create(Request $request)
     {
         $request->validate([
             'kode_lelang' => 'required|exists:lelangs,kode_lelang',
         ]);
-
         $lelang = Lelang::where('kode_lelang', $request->kode_lelang)->firstOrFail();
-
-        // Cek sudah deposit belum
+        // Cek sudah deposit belum (termasuk 'belum dibayar' supaya back+create ulang tidak duplikat)
         $existing = Deposit::where('id_lelang', $lelang->id)
                             ->where('id_user', Auth::id())
-                            ->whereIn('status', ['berhasil', 'pending'])
+                            ->whereIn('status', ['berhasil', 'pending', 'belum dibayar'])
                             ->first();
-
         if ($existing) {
-            return redirect()->back()->with('info', 'Anda sudah memiliki deposit aktif untuk lelang ini.');
+            // Refresh snap token kalau kosong
+            if (!$existing->snap_token) {
+                $params = [
+                    'transaction_details' => [
+                        'order_id'     => $existing->order_id,
+                        'gross_amount' => (int) $existing->total,
+                    ],
+                    'customer_details' => [
+                        'first_name' => Auth::user()->nama_lengkap,
+                        'email'      => Auth::user()->email,
+                    ],
+                    'item_details' => [
+                        [
+                            'id'       => $existing->kode_deposit,
+                            'price'    => (int) $existing->total,
+                            'quantity' => 1,
+                            'name'     => 'Deposit Lelang: ' . $lelang->barang->nama,
+                        ],
+                    ],
+                ];
+                try {
+                    $snapToken = Snap::getSnapToken($params);
+                    $existing->update(['snap_token' => $snapToken]);
+                } catch (\Exception $e) {
+                    Log::error('Snap token refresh failed: ' . $e->getMessage());
+                }
+            }
+            return redirect()->route('deposit.show', $existing->kode_deposit)
+                             ->with('info', 'Lanjutkan pembayaran deposit Anda.');
         }
-
-        $nominal    = $lelang->barang->harga * 0.10;
+        $nominal     = $lelang->barang->harga * 0.30;
         $kodeDeposit = 'DEP-' . strtoupper(Str::random(8)) . '-' . time();
-        $orderId     = $kodeDeposit; // prefix DEP- sudah cukup buat bedain di callback
-
+        $orderId     = $kodeDeposit;
         $deposit = Deposit::create([
             'id_lelang'    => $lelang->id,
             'id_user'      => Auth::id(),
@@ -59,8 +75,6 @@ class DepositController extends Controller
             'order_id'     => $orderId,
             'tgl_trx'      => now(),
         ]);
-
-        // Buat snap token Midtrans
         $params = [
             'transaction_details' => [
                 'order_id'     => $orderId,
@@ -79,12 +93,14 @@ class DepositController extends Controller
                 ],
             ],
         ];
-
-        $snapToken = Snap::getSnapToken($params);
-
-        $deposit->update(['snap_token' => $snapToken]);
-
-        // Redirect ke halaman pembayaran deposit
+        try {
+            $snapToken = $this->generateDepositSnapToken($deposit);
+            $deposit->update(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            Log::error('Snap token creation failed: ' . $e->getMessage());
+            $deposit->delete();
+            return redirect()->back()->with('error', 'Gagal membuat sesi pembayaran. Silakan coba lagi.');
+        }
         return redirect()->route('deposit.show', $kodeDeposit);
     }
 
@@ -94,8 +110,39 @@ class DepositController extends Controller
                           ->where('kode_deposit', $kodeDeposit)
                           ->where('id_user', Auth::id())
                           ->firstOrFail();
-
         return view('deposit.show', compact('deposit'));
     }
 
+    protected function generateDepositSnapToken(Deposit $deposit): string
+    {
+        $amount = $deposit->total;
+
+        $safeMethods = [
+            'bca_va', 'bni_va', 'bri_va', 'mandiri_va',
+            'permata_va', 'other_va', 'credit_card',
+        ];
+
+        $smallMethods = ['gopay', 'shopeepay', 'qris', 'indomaret', 'alfamart'];
+
+        // Di bawah 20jt: semua metode. 20jt ke atas: hanya yang aman
+        $enabledPayments = $amount >= 20_000_000
+            ? $safeMethods
+            : array_merge($safeMethods, $smallMethods);
+
+        $params = [
+            'transaction_details' => [
+                'order_id'     => $deposit->order_id,
+                'gross_amount' => (int) $amount,
+            ],
+            'enabled_payments' => $enabledPayments,
+            // ... customer_details, dll
+        ];
+        Log::info('Generating Snap token for deposit', [
+            'order_id' => $deposit->order_id,
+            'deposit' => $deposit,
+            'amount' => $amount,
+            'enabled_payments' => $enabledPayments,
+        ]);
+        return Snap::getSnapToken($params);
+    }
 }

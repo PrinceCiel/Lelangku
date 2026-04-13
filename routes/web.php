@@ -18,6 +18,8 @@ use App\Http\Controllers\SingleController;
 use App\Http\Controllers\AjuanController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\GagalbayarController;
+use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\ItemSubmissionController;
 use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Middleware\IsAdmin;
@@ -51,14 +53,15 @@ Route::get('/search', [FrontController::class, 'search'])->name('search');
 Route::get('kategori/{slug}', [FrontController::class, 'show'])->name('kategori.show');
 
 // Lelang
+Route::resource('lelang', SingleController::class);
 Route::get('/lelang/{kode}/poll', [SingleController::class, 'poll']);
 Route::get('/lelang/{kode}/history', [SingleController::class, 'bidHistory']);
-Route::resource('lelang', SingleController::class);
 
 
 // Profile
 Route::get('/profile/dashboard', [FrontController::class, 'dashboard'])->name('dashboard.user');
 Route::get('/profile/personal', [FrontController::class, 'personal'])->name('personal.user');
+
 
 // ============================================
 // MIDTRANS ROUTES
@@ -132,6 +135,12 @@ Route::group([
     Route::post('verifikasi/{id}/approve', [DatadiriController::class, 'approve'])->name('verifikasi.approve');
     Route::post('verifikasi/{id}/reject', [DatadiriController::class, 'reject'])->name('verifikasi.reject');
 
+    Route::get('users', [UserManagementController::class, 'index'])->name('users.index');
+    Route::post('users/{id}/ban', [UserManagementController::class, 'ban'])->name('users.ban');
+    Route::post('users/{id}/unban', [UserManagementController::class, 'unban'])->name('users.unban');
+    Route::post('users/{id}/suspicious', [UserManagementController::class, 'suspicious'])->name('users.suspicious');
+    Route::post('users/{id}/strike', [UserManagementController::class, 'tambahStrike'])->name('users.strike');
+
     // Master Data
     Route::resource('kategori', KategoriController::class);
     Route::resource('barang', BarangController::class);
@@ -164,6 +173,22 @@ Route::group([
         ->name('struk.batal');
     // Pemenang
     Route::get('pemenang', [PemenangController::class, 'index'])->name('pemenang');
+
+
+    // Gagal Bayar — Riwayat
+    Route::get('gagal-bayar/riwayat', [GagalbayarController::class, 'riwayat'])
+        ->name('gagalbayar.riwayat');
+    Route::delete('gagal-bayar/riwayat/{kode}', [GagalBayarController::class, 'hapusStruk'])
+        ->name('gagalbayar.hapus');
+
+    // Gagal Bayar — Penyelesaian
+    Route::get('gagal-bayar/penyelesaian', [GagalBayarController::class, 'penyelesaian'])
+        ->name('gagalbayar.penyelesaian');
+    Route::post('gagal-bayar/jadwal-ulang/{kode}', [GagalBayarController::class, 'jadwalUlang'])
+        ->name('gagalbayar.jadwal-ulang');
+    Route::post('gagal-bayar/alih/{kode}', [GagalBayarController::class, 'alihPemenang'])
+        ->name('gagalbayar.alih');
+
 
     // Route untuk AJAX DataTables
     Route::get('/barang/data', [BarangController::class, 'getData'])->name('barang.data');

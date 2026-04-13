@@ -132,19 +132,19 @@
                 <div data-i18n="Menunggu Bayar">Menunggu Bayar</div>
             </a>
         </li>
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('backend.gagalbayar.riwayat') ? 'active open' : '' }}{{ request()->routeIs('backend.gagalbayar.penyelesaian') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon icon-base ri ri-user-unfollow-line"></i>
                 <div data-i18n="Gagal Bayar">Gagal Bayar</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="layouts-collapsed-menu.html" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('backend.gagalbayar.riwayat') ? 'active' : '' }}">
+                    <a href="{{ route('backend.gagalbayar.riwayat') }}" class="menu-link">
                         <div data-i18n="Riwayat Gagal">Riwayat Gagal</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="layouts-content-navbar.html" class="menu-link">
+                <li class="menu-item {{ request()->routeIs('backend.gagalbayar.penyelesaian') ? 'active' : '' }}">
+                    <a href="{{ route('backend.gagalbayar.penyelesaian') }}" class="menu-link">
                         <div data-i18n="Penyelesaian">Penyelesaian</div>
                     </a>
                 </li>
@@ -175,14 +175,14 @@
         <li class="menu-header small mt-5">
             <span class="menu-header-text" data-i18n="User & Akun">User & Akun</span>
         </li>
-        <li class="menu-item">
-            <a href="icons-ri.html" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('backend.users.index') ? 'active' : '' }} ">
+            <a href="{{ route('backend.users.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ri ri-group-line"></i>
                 <div data-i18n="Daftar Pengguna">Daftar Pengguna</div>
             </a>
         </li>
-        <li class="menu-item">
-            <a href="icons-ri.html" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('backend.verifikasi.index') ? 'active' : '' }} ">
+            <a href="{{ route('backend.verifikasi.index') }}" class="menu-link">
                 <i class="menu-icon icon-base ri ri-shield-user-line"></i>
                 <div data-i18n="Verifikasi Identitas">Verifikasi Identitas</div>
             </a>

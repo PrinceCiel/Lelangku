@@ -47,7 +47,7 @@ class MidtransCallbackController extends Controller
         // ── Route ke handler yang sesuai berdasarkan prefix order_id ──────
         // Deposit pakai prefix DEP-, Struk pakai prefix ORDER-
         if (str_starts_with($orderId, 'DEP-')) {
-            return $this->handleDeposit($orderId, $transactionStatus, $fraudStatus);
+            return $this->handleDeposit($orderId, $transactionStatus, $fraudStatus, $request->all());
         }
 
         if (str_starts_with($orderId, 'ORDER-')) {
@@ -115,7 +115,7 @@ class MidtransCallbackController extends Controller
     // (dipindah ke sini biar satu endpoint, DepositController bisa dihapus
     //  notificationHandler-nya atau tetap dibiarkan sebagai fallback)
     // =========================================================================
-    private function handleDeposit(string $orderId, string $transactionStatus, ?string $fraudStatus)
+    private function handleDeposit(string $orderId, string $transactionStatus, ?string $fraudStatus, array $payload = [])
     {
         $deposit = Deposit::where('order_id', $orderId)->first();
 
@@ -130,9 +130,14 @@ class MidtransCallbackController extends Controller
 
         if ($transactionStatus === 'settlement' ||
             ($transactionStatus === 'capture' && $fraudStatus === 'accept')) {
-            $deposit->update(['status' => 'berhasil', 'paid_at' => now()]);
-            Log::info('Midtrans Deposit: berhasil', ['order_id' => $orderId]);
 
+            $deposit->update([
+                'status'         => 'berhasil',
+                'paid_at'        => now(),
+                'payment_type'   => $payload['payment_type'] ?? null,
+                'masked_account' => $payload['va_numbers'][0]['va_number'] ?? $payload['payment_code'] ?? null,
+                'bank'           => $payload['va_numbers'][0]['bank'] ?? null,
+            ]);
         } elseif ($transactionStatus === 'pending') {
             $deposit->update(['status' => 'pending']);
             Log::info('Midtrans Deposit: pending', ['order_id' => $orderId]);

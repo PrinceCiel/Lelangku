@@ -435,8 +435,8 @@
                     lengthMenu:     'Tampilkan _MENU_ data',
                     info:           'Menampilkan _START_ - _END_ dari _TOTAL_ data',
                     paginate: {
-                        previous: 'Sebelumnya',
-                        next:     'Selanjutnya'
+                        previous: '<',
+                        next:     '>'
                     },
                     emptyTable: 'Tidak ada data pembayaran yang belum lunas 🎉'
                 },

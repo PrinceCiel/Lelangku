@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_user');
             $table->integer('bid');
             $table->integer('urutan')->default(1); // 1 = utama, 2 = cadangan
-            $table->enum('status_kandidat', ['aktif', 'menang', 'gugur'])->default('aktif');
+            $table->enum('status_kandidat', ['aktif', 'menang', 'gugur', 'standby'])->default('aktif');
             $table->foreign('id_lelang')->references('id')->on('lelangs');
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();

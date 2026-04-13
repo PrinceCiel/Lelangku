@@ -1,21 +1,22 @@
 @extends('layouts.kerangkafrontend')
 
 @section('content')
-<div class="hero-section style-2">
+    <div class="hero-section style-2">
         <div class="container">
             <ul class="breadcrumb">
                 <li>
-                    <a href="{{ route('home.user')}}">Home</a>
+                    <a href="{{ route('home.user') }}">Home</a>
                 </li>
                 <li>
-                    <a href="#0">{{$lelang->barang->kategori->nama}}</a>
+                    <a href="#0">{{ $lelang->barang->kategori->nama }}</a>
                 </li>a
                 <li>
-                    <span>{{$lelang->barang->nama}}</span>
+                    <span>{{ $lelang->barang->nama }}</span>
                 </li>
             </ul>
         </div>
-        <div class="bg_img hero-bg bottom_center" data-background="{{ asset('sbidu/assets/images/banner/hero-bg.png') }}"></div>
+        <div class="bg_img hero-bg bottom_center" data-background="{{ asset('sbidu/assets/images/banner/hero-bg.png') }}">
+        </div>
     </div>
     <!--============= Hero Section Ends Here =============-->
 
@@ -27,32 +28,38 @@
                 <div class="product-details-slider owl-theme owl-carousel" id="sync1">
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px"
+                                style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px"
+                                style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px"
+                                style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px"
+                                style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px"
+                                style="object-fit: contain;">
                         </div>
                     </div>
                     <div class="slide-top-item">
                         <div class="slide-inner">
-                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px" style="object-fit: contain;">
+                            <img src="{{ Storage::url($lelang->barang->foto) }}" alt="product" height="400px"
+                                style="object-fit: contain;">
                         </div>
                     </div>
                 </div>
@@ -101,32 +108,33 @@
                 <div class="col-lg-8">
                     <div class="product-details-content">
                         <div class="product-details-header">
-                            <h2 class="title">{{$lelang->barang->nama}}</h2>
+                            <h2 class="title">{{ $lelang->barang->nama }}</h2>
                             <ul>
                                 <li>Listing ID: 14076242</li>
                                 <li>Item #: 7300-3356862</li>
                             </ul>
                         </div>
                         <ul class="price-table mb-30">
-                            @if($lelang->status === 'selesai')
-                            <li class="header">
-                                <h5 class="current">Tawaran Pemenang</h5>
-                                <h3 class="price">Rp{{ number_format($lelang->pemenang->bid, 0, ',', '.') }}</h3>
-                            </li>
+                            @if ($lelang->status === 'selesai')
+                                <li class="header">
+                                    <h5 class="current">Tawaran Pemenang</h5>
+                                    <h3 class="price">Rp{{ number_format($lelang->pemenang->bid, 0, ',', '.') }}</h3>
+                                </li>
                             @else
-                            <li class="header">
-                                <h5 class="current">Tawaran Tertinggi Sementara</h5>
-                                <h3 class="price" id="currentBid">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}</h3>
-                            </li>
-                            <li>
-                                <span class="details">Kenaikan Tawaran (IDR)</span>
-                                <h5 class="info">10%</h5>
-                            </li>
+                                <li class="header">
+                                    <h5 class="current">Tawaran Tertinggi Sementara</h5>
+                                    <h3 class="price" id="currentBid">Rp{{ number_format($bidtertinggi, 0, ',', '.') }}
+                                    </h3>
+                                </li>
+                                <li>
+                                    <span class="details">Minimum Kenaikan Tawaran (IDR)</span>
+                                    <h5 class="info">5%</h5>
+                                </li>
                             @endif
                         </ul>
-                        @if($lelang->status === 'dibuka')
+                        @if ($lelang->status === 'dibuka')
                             @php
-                                $increment = $bidtertinggi * 0.10;
+                                $increment = $bidtertinggi * 0.1;
                                 $min = $increment + $bidtertinggi;
                             @endphp
                             <div class="product-bid-area">
@@ -140,7 +148,7 @@
                                     </div>
                                 @endif
 
-                                @if($sudahDeposit)
+                                @if ($sudahDeposit)
                                     {{-- Sudah deposit, bisa bid --}}
                                     <div class="alert alert-success mb-3">
                                         ✅ Anda sudah melakukan deposit untuk lelang ini.
@@ -148,13 +156,14 @@
                                     <form class="product-bid-form" action="{{ route('lelang.store') }}" method="post">
                                         @csrf
                                         <div class="search-icon">
-                                            <img src="{{ asset('sbidu/assets/images/product/search-icon.png') }}" alt="product">
+                                            <img src="{{ asset('sbidu/assets/images/product/search-icon.png') }}"
+                                                alt="product">
                                         </div>
-                                        <input type="hidden" name="kode_lelang" value="{{$lelang->kode_lelang}}">
-                                        <input type="integer" placeholder="Masukkan Tawaran anda" name="bid" min={{$min}} id="bidInput">
+                                        <input type="hidden" name="kode_lelang" value="{{ $lelang->kode_lelang }}">
+                                        <input type="integer" placeholder="Masukkan Tawaran anda" name="bid"
+                                            min={{ $min }} id="bidInput">
                                         <button type="submit" class="custom-button">Ajukan Tawaran</button>
                                     </form>
-
                                 @else
                                     {{-- Belum deposit --}}
                                     <div class="alert alert-warning mb-3">
@@ -166,65 +175,132 @@
                                 @endif
                             </div>
 
-                            {{-- Modal Deposit --}}
-                            @if(!$sudahDeposit)
-                            <div class="modal fade" id="modalDeposit" tabindex="-1" role="dialog">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Detail Deposit</h5>
-                                            <button type="button" class="close" data-dismiss="modal">
-                                                <span>&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <table class="table table-borderless">
-                                                <tr>
-                                                    <td>Lelang</td>
-                                                    <td><strong>{{ $lelang->kode_lelang }} - {{ $lelang->barang->nama }}</strong></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Harga Awal</td>
-                                                    <td>Rp{{ number_format($lelang->harga_awal, 0, ',', '.') }}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Deposit (10%)</td>
-                                                    <td><strong>Rp{{ number_format($nominalDeposit, 0, ',', '.') }}</strong></td>
-                                                </tr>
-                                            </table>
-                                            <p class="text-muted" style="font-size: 13px;">
-                                                * Deposit akan dikembalikan jika Anda tidak memenangkan lelang ini.
-                                            </p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                                            <form action="{{ route('deposit.create') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="kode_lelang" value="{{ $lelang->kode_lelang }}">
-                                                <button type="submit" class="btn btn-success" id="btn-deposit">
-                                                    Bayar Sekarang via Midtrans
-                                                </button>
-                                            </form>
+                            @if (!$sudahDeposit)
+                                <div class="modal fade" id="modalDeposit" tabindex="-1" role="dialog">
+                                    <div class="modal-dialog modal-dialog-centered" role="document"
+                                        style="font-size: 14px;">
+                                        <div class="modal-content" style="font-size: 14px; line-height: 1.5;">
+
+                                            <div class="modal-header" style="padding: 14px 20px;">
+                                                <div class="row w-100 align-items-center" style="margin: 0;">
+                                                    <div class="col" style="padding: 0;">
+                                                        <h5 class="modal-title" style="font-size: 15px; margin: 0;">
+                                                            <i class="fas fa-credit-card mr-2"></i> Bayar Deposit
+                                                        </h5>
+                                                    </div>
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button type="button" data-dismiss="modal"
+                                                            style="background: none; border: none; font-size: 18px; line-height: 1; color: #999; cursor: pointer; padding: 0; margin: 0;">
+                                                            &times;
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            {{-- Body --}}
+                                            <div class="modal-body" style="padding: 20px;">
+
+                                                <div class="alert alert-info d-flex align-items-center mb-3"
+                                                    style="border-radius: 8px; padding: 10px 14px; font-size: 13px;">
+                                                    <i class="fas fa-info-circle mr-2"
+                                                        style="font-size: 15px; flex-shrink: 0; margin-right: 10px"></i>
+                                                    <span>Deposit akan <strong>dikembalikan</strong> jika Anda tidak
+                                                        memenangkan lelang ini.</span>
+                                                </div>
+
+                                                <p
+                                                    style="font-size: 11px; letter-spacing: .08em; color: #999; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                                                    <i class="fas fa-gavel mr-1"></i> Informasi Lelang
+                                                </p>
+                                                <table
+                                                    style="width: 100%; font-size: 13px; margin-bottom: 16px; border-collapse: collapse;">
+                                                    <tr>
+                                                        <td style="color: #999; padding: 4px 0; width: 40%;">Kode Lelang
+                                                        </td>
+                                                        <td style="padding: 4px 0;">
+                                                            <strong>{{ $lelang->kode_lelang }}</strong></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="color: #999; padding: 4px 0;">Nama Barang</td>
+                                                        <td style="padding: 4px 0;">
+                                                            <strong>{{ $lelang->barang->nama }}</strong></td>
+                                                    </tr>
+                                                </table>
+
+                                                <hr style="margin: 12px 0; border-color: #eee;" />
+
+                                                <p
+                                                    style="font-size: 11px; letter-spacing: .08em; color: #999; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">
+                                                    <i class="fas fa-dollar-sign mr-1"></i> Rincian Deposit
+                                                </p>
+                                                <table
+                                                    style="width: 100%; font-size: 13px; margin-bottom: 16px; border-collapse: collapse;">
+                                                    <tr>
+                                                        <td style="color: #999; padding: 4px 0; width: 40%;">Harga Awal
+                                                        </td>
+                                                        <td style="padding: 4px 0;">
+                                                            Rp{{ number_format($lelang->barang->harga, 0, ',', '.') }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td style="color: #999; padding: 4px 0;">Deposit (30%)</td>
+                                                        <td style="padding: 4px 0;">
+                                                            <strong style="color: #28a745; font-size: 15px;">
+                                                                Rp{{ number_format($nominalDeposit, 0, ',', '.') }}
+                                                            </strong>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                <div class="alert alert-success d-flex align-items-center mb-0"
+                                                    style="border-radius: 8px; padding: 10px 14px; font-size: 13px;">
+                                                    <i class="fas fa-shield-alt mr-2"
+                                                        style="font-size: 15px; flex-shrink: 0; margin-right: 10px"></i>
+                                                    <span> Pembayaran diproses aman melalui <strong>Midtrans</strong>. Kamu
+                                                        akan diarahkan ke halaman pembayaran.</span>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-footer" style="padding: 12px 20px;">
+                                                <div class="row w-100 justify-content-end align-items-center" style="margin: 0; gap: 8px;">
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <button type="button" data-dismiss="modal"
+                                                            style="background: none; border: 1px solid #ccc; border-radius: 5px; padding: 6px 14px; font-size: 13px; color: #666; cursor: pointer; line-height: 1.5;">
+                                                            <i class="fas fa-times mr-1"></i> Batal
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-auto" style="padding: 0;">
+                                                        <form action="{{ route('deposit.create') }}" method="POST" style="margin: 0;">
+                                                            @csrf
+                                                            <input type="hidden" name="kode_lelang" value="{{ $lelang->kode_lelang }}">
+                                                            <button type="submit" id="btn-deposit"
+                                                                style="background: #28a745; border: none; border-radius: 5px; padding: 6px 14px; font-size: 13px; color: #fff; cursor: pointer; line-height: 1.5;">
+                                                                <i class="fas fa-credit-card mr-1"></i> Bayar
+                                                            </button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             @endif
                         @endif
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="product-sidebar-area">
-                        @if($lelang->status == 'selesai')
-                        <div class="product-single-sidebar mb-3">
-                            <h4 class="title">Lelang Berakhir</h4>
-                            <h6 class="title">Pemenang : {{$lelang->pemenang->user->nama_lengkap}}</h6>
-                        </div>
+                        @if ($lelang->status == 'selesai')
+                            <div class="product-single-sidebar mb-3">
+                                <h4 class="title">Lelang Berakhir</h4>
+                                <h6 class="title">Pemenang : {{ $lelang->pemenang->user->nama_lengkap }}</h6>
+                            </div>
                         @else
-                        <div class="product-single-sidebar mb-3">
-                            <h6 class="title">Lelang ini berakhir pada :</h6>
-                            <div id="countdown" class="countdown-timer"></div>
-                        </div>
+                            <div class="product-single-sidebar mb-3">
+                                <h6 class="title">Lelang ini berakhir pada :</h6>
+                                <div id="countdown" class="countdown-timer"></div>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -246,7 +322,7 @@
                             <div class="thumb">
                                 <img src="{{ asset('sbidu/assets/images/product/tab3.png') }}" alt="product">
                             </div>
-                            <div class="content">Riwayat Tawaran ({{$countBid}})</div>
+                            <div class="content">Riwayat Tawaran ({{ $countBid }})</div>
                         </a>
                     </li>
                 </ul>
@@ -257,7 +333,7 @@
                 <div class="tab-pane fade show active" id="details">
                     <div class="tab-details-content">
                         <div class="header-area">
-                            <h3 class="title">{{$lelang->barang->nama}}</h3>
+                            <h3 class="title">{{ $lelang->barang->nama }}</h3>
                             <div class="item">
                                 <table class="product-info-table">
                                     <tbody>
@@ -274,7 +350,7 @@
                             </div>
                             <div class="item">
                                 <h5 class="subtitle">Deskripsi Barang</h5>
-                                <p>{{$lelang->barang->deskripsi}}</p>
+                                <p>{{ $lelang->barang->deskripsi }}</p>
                             </div>
                         </div>
                     </div>
@@ -294,7 +370,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="bidHistoryBody">
-                                        @foreach($bid as $item)
+                                        @foreach ($bid as $item)
                                             <tr>
                                                 <td>
                                                     <div class="user-info">
@@ -321,7 +397,8 @@
         </div>
     </section>
     <script>
-        const endTime = new Date("{{ \Carbon\Carbon::parse($lelang->jadwal_berakhir)->format('Y-m-d\TH:i:s') }}").getTime();
+        const endTime = new Date("{{ \Carbon\Carbon::parse($lelang->jadwal_berakhir)->format('Y-m-d\TH:i:s') }}")
+            .getTime();
 
         const countdown = setInterval(() => {
             const now = new Date().getTime();
@@ -343,7 +420,7 @@
     </script>
     <script>
         const bidInput = document.getElementById('bidInput');
-        bidInput.addEventListener('input', function (e) {
+        bidInput.addEventListener('input', function(e) {
             // Remove semua selain angka
             let value = this.value.replace(/[^,\d]/g, '').toString();
 
@@ -364,7 +441,7 @@
         });
 
         // Convert ke angka sebelum submit
-        document.querySelector('form.product-bid-form').addEventListener('submit', function (e) {
+        document.querySelector('form.product-bid-form').addEventListener('submit', function(e) {
             const cleaned = bidInput.value.replace(/[^\d]/g, '');
             bidInput.value = cleaned;
         });
@@ -383,6 +460,7 @@
                     }
                 });
         }, 5000);
+
         function loadBidHistory() {
             fetch('/lelang/{{ $lelang->kode_lelang }}/history')
                 .then(res => res.json())
@@ -417,5 +495,4 @@
 
 @endsection
 @section('scripts')
-
 @endsection

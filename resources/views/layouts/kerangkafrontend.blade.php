@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/jquery-ui.min.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/aos.css') }}">
     <link rel="stylesheet" href="{{ asset('sbidu/assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/lelangku-override.css') }}">
     @stack('style')
 
     <link rel="shortcut icon" href="{{ asset('sbidu/assets/images/favicon.png') }}" type="image/x-icon">
