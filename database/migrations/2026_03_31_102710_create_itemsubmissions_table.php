@@ -18,7 +18,7 @@ return new class extends Migration
             // Info Barang
             $table->string('nama_barang');
             $table->text('deskripsi');
-            $table->integer('id_kategori'); // kategori dari user (wajib)
+            $table->foreignId('id_kategori')->constrained('kategoris')->cascadeOnDelete();
             $table->decimal('harga_ditawarkan', 15, 2); // harga dari user (wajib)
             $table->json('foto_barang'); // array of paths, max 5
 
@@ -49,8 +49,6 @@ return new class extends Migration
 
             // Relasi ke items (setelah di-convert jadi item lelang)
             $table->foreignId('converted_barang_id')->nullable()->constrained('barangs')->nullOnDelete();
-            $table->foreign('id_kategori')->references('id')->on('kategoris');
-
             $table->timestamps();
             $table->softDeletes();
         });
