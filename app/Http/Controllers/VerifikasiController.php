@@ -6,7 +6,7 @@ use App\Models\Datadiri;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Str;
+use Illuminate\Support\Str;
 use Storage;
 class VerifikasiController extends Controller
 {

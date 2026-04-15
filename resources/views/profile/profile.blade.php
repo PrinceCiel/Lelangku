@@ -5,7 +5,7 @@
     <div class="container">
         <ul class="breadcrumb">
             <li>
-                <a href="./index.html">Home</a>
+                <a href="{{ route('home.user') }}">Home</a>
             </li>
             <li>
                 <a href="#0">My Account</a>
@@ -47,19 +47,7 @@
                             <a href="#0" class="active"><i class="flaticon-settings"></i>Personal Profile </a>
                         </li>
                         <li>
-                            <a href="my-bid.html"><i class="flaticon-auction"></i>My Bids</a>
-                        </li>
-                        <li>
-                            <a href="winning-bids.html"><i class="flaticon-best-seller"></i>Winning Bids</a>
-                        </li>
-                        <li>
-                            <a href="notifications.html"><i class="flaticon-alarm"></i>My Alerts</a>
-                        </li>
-                        <li>
-                            <a href="my-favorites.html"><i class="flaticon-star"></i>My Favorites</a>
-                        </li>
-                        <li>
-                            <a href="referral.html"><i class="flaticon-shake-hand"></i>Referrals</a>
+                            <a href="{{ route('refund.user') }}"><i class="flaticon-shake-hand"></i>Refund History</a>
                         </li>
                     </ul>
                 </div>
@@ -85,6 +73,24 @@
                                     <div class="info-name">Address</div>
                                     <div class="info-value">{{ $userdata->datadiri->alamat ?? 'Not set' }}</div>
                                 </li>
+                                @if($userdata->datadiri == null)
+                                <li class="verification-warning">
+                                    <div class="warning-content">
+                                        <div class="warning-icon">
+                                            <i class="flaticon-alarm"></i>
+                                        </div>
+                                        <div class="warning-text">
+                                            <h6>Verifikasi data anda!</h6>
+                                            <p>Mohon untuk verifikasi data diri anda agar dapat mengikuti kegiatan menawar.</p>
+                                        </div>
+                                        <div class="warning-action">
+                                            <a href="{{ route('verifikasi.index') }}" class="verify-btn">
+                                                <i class="flaticon-right-arrow"></i> Verifikasi Data Diri
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                @endif
                             </ul>
                         </div>
                     </div>

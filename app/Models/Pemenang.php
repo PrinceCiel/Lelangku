@@ -22,9 +22,9 @@ class Pemenang extends Model
     {
         return $this->belongsTo(User::class, 'id_user');
     }
-    public function lelangRelation()
-    {
-        return $this->belongsTo(Lelang::class, 'id_lelang');
-    }
+    // public function lelangRelation()
+    // {
+    //     return $this->belongsTo(Lelang::class, 'id_lelang');
+    // }
 
 }

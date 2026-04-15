@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckBanned;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -15,7 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'midtrans/notification',
         ]);
+        $middleware->alias([
+            'check.banned' => CheckBanned::class,
+        ]);
+        $middleware->statefulApi();
     })
+
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

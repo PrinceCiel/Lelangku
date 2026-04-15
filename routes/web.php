@@ -18,10 +18,13 @@ use App\Http\Controllers\SingleController;
 use App\Http\Controllers\AjuanController;
 use App\Http\Controllers\VerifikasiController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Backend\RefundController;
 use App\Http\Controllers\GagalbayarController;
 use App\Http\Controllers\Backend\UserManagementController;
 use App\Http\Controllers\ItemSubmissionController;
 use App\Http\Controllers\MidtransCallbackController;
+use App\Http\Controllers\RefundUserController;
+use App\Http\Middleware\CheckBanned;
 use App\Http\Middleware\IsAdmin;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -30,89 +33,82 @@ use Illuminate\Support\Facades\Route;
 // FRONTEND ROUTES
 // ============================================
 
-// Homepage
-Route::get('/', [FrontController::class, 'index'])->name('awal');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.user');
+    // Midtrans
+    Route::post('/midtrans/notification', [MidtransCallbackController::class, 'notificationHandler'])
+        ->name('midtrans.notification');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    Route::get('/midtrans/finish', [MidtransCallbackController::class, 'handleRedirect'])
+        ->name('midtrans.finish');
+    Route::get('storage/{path}', function ($path) {
+        $fullPath = storage_path('app/public/' . $path);
 
-// Ajuan
-Route::middleware('auth')->prefix('ajukan-barang')->name('submissions.')->group(function () {
-    Route::get('/',        [ItemSubmissionController::class, 'index'])->name('index');   // Pengajuan Saya
-    Route::get('/buat',    [ItemSubmissionController::class, 'create'])->name('create'); // Form ajukan
-    Route::post('/',       [ItemSubmissionController::class, 'store'])->name('store');   // Simpan
-    Route::get('/{submission}', [ItemSubmissionController::class, 'show'])->name('show'); // Detail
-});
+        if (!file_exists($fullPath)) {
+            abort(404);
+        }
 
-// Search
-Route::get('/search', [FrontController::class, 'search'])->name('search');
+        return response()->file($fullPath, [
+            'Access-Control-Allow-Origin' => '*',
+            'Cache-Control' => 'public, max-age=86400',
+        ]);
+    })->where('path', '.*');
+    Route::middleware(['check.banned', CheckBanned::class])->group(function () {
+        // Homepage
+        Route::get('/', [FrontController::class, 'index'])->name('awal');
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home.user');
 
-// Kategori
-Route::get('kategori/{slug}', [FrontController::class, 'show'])->name('kategori.show');
+        Route::get('/dashboard', function () {
+            return view('dashboard');
+        })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Lelang
-Route::resource('lelang', SingleController::class);
-Route::get('/lelang/{kode}/poll', [SingleController::class, 'poll']);
-Route::get('/lelang/{kode}/history', [SingleController::class, 'bidHistory']);
+        // Ajuan
+        Route::middleware('auth')->prefix('ajukan-barang')->name('submissions.')->group(function () {
+            Route::get('/', [ItemSubmissionController::class, 'index'])->name('index');
+            Route::get('/buat', [ItemSubmissionController::class, 'create'])->name('create');
+            Route::post('/', [ItemSubmissionController::class, 'store'])->name('store');
+            Route::get('/{submission}', [ItemSubmissionController::class, 'show'])->name('show');
+        });
 
+        // Search
+        Route::get('/search', [FrontController::class, 'search'])->name('search');
 
-// Profile
-Route::get('/profile/dashboard', [FrontController::class, 'dashboard'])->name('dashboard.user');
-Route::get('/profile/personal', [FrontController::class, 'personal'])->name('personal.user');
+        // Kategori
+        Route::get('kategori/{slug}', [FrontController::class, 'show'])->name('kategori.show');
 
+        // Lelang
+        Route::resource('lelang', SingleController::class);
+        Route::get('/lelang/{kode}/poll', [SingleController::class, 'poll']);
+        Route::get('/lelang/{kode}/history', [SingleController::class, 'bidHistory']);
 
-// ============================================
-// MIDTRANS ROUTES
-// ============================================
+        // Profile
+        Route::get('/profile/dashboard', [FrontController::class, 'dashboard'])->name('dashboard.user');
+        Route::get('/profile/personal', [FrontController::class, 'personal'])->name('personal.user');
 
-Route::post('/midtrans/notification', [MidtransCallbackController::class, 'notificationHandler'])
-    ->name('midtrans.notification');
+        // Refund User
+        Route::get('refund', [RefundUserController::class, 'index'])->name('refund.user');
+        Route::post('refund/{id}/rekening', [RefundUserController::class, 'isiRekening'])->name('refund.isi-rekening');
 
-// Midtrans Redirect Handler (After Payment)
-Route::get('/midtrans/finish', [MidtransCallbackController::class, 'handleRedirect'])
-    ->name('midtrans.finish');
+        // Auth Google
+        Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
+        Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
-// Hapus route duplikat
-// Route::get('/midtrans/redirect', [MidtransController::class, 'handleRedirect'])->name('midtrans.redirect');
+        // Verifikasi & daftar
+        Route::resource('verifikasi', VerifikasiController::class);
+        Route::resource('daftar', RegisterController::class);
 
-// ============================================
-// AUTHENTICATION ROUTES
-// ============================================
-Route::get('/auth/google', [GoogleController::class, 'redirectToGoogle'])->name('google.login');
-Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+        // Auth user routes
+        Route::middleware(['auth'])->group(function () {
+            Route::post('/deposit/create', [DepositController::class, 'create'])->name('deposit.create');
+            Route::get('/deposit/{kodeDeposit}', [DepositController::class, 'show'])->name('deposit.show');
 
-// Registration & Verification
-Route::resource('verifikasi', VerifikasiController::class);
-Route::resource('daftar', RegisterController::class);
+            Route::get('struk', [SingleController::class, 'index'])->name('struk.index');
 
-// ============================================
-// USER ROUTES (Authenticated)
-// ============================================
-Route::middleware(['auth'])->group(function () {
-    // Deposit
-    Route::post('/deposit/create', [DepositController::class, 'create'])->name('deposit.create');
-    Route::get('/deposit/{kodeDeposit}', [DepositController::class, 'show'])->name('deposit.show');
+            Route::get('struk/{kodestruk}', [StrukController::class, 'struk'])->name('struk.detail');
 
-    // Midtrans webhook deposit (tanpa auth, Midtrans yang hit ini)
+            Route::post('/struk/check-status/{kode}', [StrukController::class, 'checkStatus'])->name('check.status');
+            // Route::post('/fcm-token', [FcmTokenController::class, 'store'])->name('fcm.token.store');
+        });
 
-    // Struk Resource
-    Route::get('struk', [SingleController::class, 'index'])
-        ->name('struk.index'); // Ubah name agar konsisten
-    // ============================================
-    // STRUK & PAYMENT ROUTES
-    // =========4===================================
-
-    // Struk Detail (Frontend)
-    Route::get('struk/{kodestruk}', [StrukController::class, 'struk'])
-        ->name('struk.detail'); // Ubah name agar konsisten
-
-    // Check Status Pembayaran Manual
-    Route::post('/struk/check-status/{kode}', [StrukController::class, 'checkStatus'])
-        ->name('check.status'); // Pindahkan ke StrukController
-
-});
+    });
 // ============================================
 // ADMIN ROUTES
 // ============================================
@@ -130,11 +126,21 @@ Route::group([
         Route::post('/{submission}/status',         [SubmissionAdminController::class, 'updateStatus'])->name('updateStatus');
         Route::post('/{submission}/mark-purchased', [SubmissionAdminController::class, 'markAsPurchased'])->name('markAsPurchased');
     });
+
+    // Refund
+    Route::get('refund', [RefundController::class, 'index'])->name('refund.index');
+    Route::post('refund/{id}/mulai', [RefundController::class, 'mulaiProses'])->name('refund.mulai');
+    Route::post('refund/{id}/proses', [RefundController::class, 'proses'])->name('refund.proses');
+    Route::post('refund/{id}/tolak', [RefundController::class, 'tolak'])->name('refund.tolak');
+    Route::post('refund/{id}/retry', [RefundController::class, 'retryMidtrans'])->name('refund.retry');
+
+
     // Verifikasi User
     Route::get('verifikasi', [DatadiriController::class, 'index'])->name('verifikasi.index');
     Route::post('verifikasi/{id}/approve', [DatadiriController::class, 'approve'])->name('verifikasi.approve');
     Route::post('verifikasi/{id}/reject', [DatadiriController::class, 'reject'])->name('verifikasi.reject');
 
+    // User Management
     Route::get('users', [UserManagementController::class, 'index'])->name('users.index');
     Route::post('users/{id}/ban', [UserManagementController::class, 'ban'])->name('users.ban');
     Route::post('users/{id}/unban', [UserManagementController::class, 'unban'])->name('users.unban');
@@ -192,6 +198,7 @@ Route::group([
 
     // Route untuk AJAX DataTables
     Route::get('/barang/data', [BarangController::class, 'getData'])->name('barang.data');
+    Route::get('/api/search-data', [BackendController::class, 'getSearchData'])->name('backend.search.api');
 });
 
 require __DIR__.'/auth.php';

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_lelang');
             $table->unsignedBigInteger('id_user');
             $table->integer('total');
-            $table->enum('status', ['belum dibayar', 'pending', 'berhasil', 'gagal']);
+            $table->enum('status', ['belum dibayar', 'pending', 'berhasil', 'gagal', 'refunded', 'dipakai']);
             $table->string('kode_deposit')->unique();
             $table->string('snap_token')->nullable();
             $table->string('order_id')->unique()->nullable(); // format: DEP-{kode_deposit}

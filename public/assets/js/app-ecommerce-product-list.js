@@ -95,7 +95,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     render: function (data, type, full, meta) {
                         let name = full["nama"];
                         let id = full["id"];
-                        let jenis_barang = full["jenis_barang"];
                         let image = full["foto"];
 
                         let output;
@@ -130,7 +129,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
                                 </div>
                                 <div class="d-flex flex-column">
                                 <h6 class="text-nowrap mb-0">${name}</h6>
-                                <small class="text-truncate d-none d-sm-block">${jenis_barang}</small>
                                 </div>
                             </div>
                             `;
@@ -667,9 +665,6 @@ $(document).on('click', '.edit-record', function () {
     setHargaEdit(barang.harga); // Fungsi khusus untuk format harga
     document.getElementById('editJumlahBarang').value   = barang.jumlah;
     document.getElementById('editDeskripsiBarang').value = barang.deskripsi ?? '';
-
-    // Jenis barang
-    document.getElementById('editJenisBarang').value = barang.jenis_barang;
 
     // Kategori
     document.getElementById('editKategoriBarang').value = barang.id_kategori;

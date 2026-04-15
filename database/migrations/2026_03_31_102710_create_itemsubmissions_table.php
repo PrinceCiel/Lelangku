@@ -49,6 +49,7 @@ return new class extends Migration
 
             // Relasi ke items (setelah di-convert jadi item lelang)
             $table->foreignId('converted_barang_id')->nullable()->constrained('barangs')->nullOnDelete();
+            $table->foreign('id_kategori')->references('id')->on('kategoris');
 
             $table->timestamps();
             $table->softDeletes();

@@ -27,16 +27,9 @@
                               id="basic-icon-default-fullname"
                               placeholder="Nama Barang"
                               aria-label="John Doe"
-                              aria-describedby="basic-icon-default-fullname2" 
+                              aria-describedby="basic-icon-default-fullname2"
                               name="nama"/>
                           </div>
-                        </div>
-                        <div class="mb-6">
-                          <label for="exampleFormControlSelect1" class="form-label">Jenis Barang</label>
-                          <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="jenis_barang">
-                            <option value="Bekas Sekolah">Bekas Sekolah</option>
-                            <option value="Sumbangan Sekolah">Sumbangan Sekolah</option>
-                          </select>
                         </div>
                         <div class="mb-6">
                           <label for="exampleFormControlSelect1" class="form-label">Kategori Barang</label>

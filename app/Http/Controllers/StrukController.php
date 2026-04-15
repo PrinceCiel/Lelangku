@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Deposit;
+use App\Models\Lelang;
 use App\Models\Pemenang;
 use App\Services\MidtransService;
 use App\Models\Struk;
@@ -90,11 +92,11 @@ class StrukController extends Controller
         try {
             $struk = Struk::where('kode_struk', $kodestruk)->firstOrFail();
             $pemenang = Pemenang::findOrFail($struk->id_pemenang);
-
+            $deposit = Deposit::where('id_lelang', $pemenang->id_lelang)->where('id_user', $pemenang->id_user)->first();
             // Hitung total
             $bidakhir = $pemenang->bid;
-            $adminfee = $bidakhir * 0.05;
-            $total = $adminfee + $bidakhir;
+            $adminfee = $struk->total * 0.05;
+            $total = $adminfee + $struk->total;
 
             // Generate order_id jika belum ada
             if (!$struk->order_id) {
@@ -145,7 +147,7 @@ class StrukController extends Controller
                 $snapToken = $struk->snap_token;
             }
 
-            return view('struk', compact('struk', 'pemenang', 'snapToken'));
+            return view('struk', compact('struk', 'pemenang', 'snapToken', 'deposit'));
 
         } catch (\Exception $e) {
             throw $e;

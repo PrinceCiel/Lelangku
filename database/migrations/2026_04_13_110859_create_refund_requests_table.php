@@ -33,7 +33,7 @@ return new class extends Migration
             $table->text('catatan_admin')->nullable();
             $table->timestamp('processed_at')->nullable();
 
-            $table->enum('alasan_manual', ['payment_type_va', 'refund_api_gagal']);
+            $table->string('alasan_manual');
             $table->timestamps();
         });
     }

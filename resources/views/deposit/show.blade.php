@@ -197,7 +197,7 @@
                                 <div class="info-grid">
                                     <div class="info-row">
                                         <span class="info-key">Harga Awal</span>
-                                        <span class="info-val">Rp{{ number_format($deposit->lelang->harga_awal, 0, ',', '.') }}</span>
+                                        <span class="info-val">Rp{{ number_format($deposit->lelang->barang->harga, 0, ',', '.') }}</span>
                                     </div>
                                     <div class="info-row">
                                         <span class="info-key">Dibayar Pada</span>
@@ -205,7 +205,7 @@
                                     </div>
                                 </div>
                                 <div class="total-row">
-                                    <span>Nominal Deposit</span>
+                                    <span>Nominal Deposit (30%)</span>
                                     <span class="total-amount">Rp{{ number_format($deposit->total, 0, ',', '.') }}</span>
                                 </div>
                             </div>

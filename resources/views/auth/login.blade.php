@@ -77,8 +77,13 @@
                             @csrf
                             <div class="mb-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email" name="email"
                                     placeholder="Enter your email" autofocus />
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             <div class="mb-6 form-password-toggle">
                                 <label class="form-label" for="password">Password</label>

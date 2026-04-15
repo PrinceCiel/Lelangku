@@ -47,19 +47,7 @@
                             <a href="{{ route('personal.user') }}"><i class="flaticon-settings"></i>Personal Profile </a>
                         </li>
                         <li>
-                            <a href="my-bid.html"><i class="flaticon-auction"></i>My Bids</a>
-                        </li>
-                        <li>
-                            <a href="winning-bids.html"><i class="flaticon-best-seller"></i>Winning Bids</a>
-                        </li>
-                        <li>
-                            <a href="notifications.html"><i class="flaticon-alarm"></i>My Alerts</a>
-                        </li>
-                        <li>
-                            <a href="my-favorites.html"><i class="flaticon-star"></i>My Favorites</a>
-                        </li>
-                        <li>
-                            <a href="referral.html"><i class="flaticon-shake-hand"></i>Referrals</a>
+                            <a href="{{ route('refund.user') }}"><i class="flaticon-shake-hand"></i>Refund History</a>
                         </li>
                     </ul>
                 </div>
@@ -112,14 +100,14 @@
                             <li>
                                 <a href="#current" class="active" data-toggle="tab">Current</a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="#pending" data-toggle="tab">Pending</a>
                             </li>
                             <li>
                                 <a href="#history" data-toggle="tab">History</a>
-                            </li>
+                            </li> --}}
                         </ul>
-                        <div class="tab-content">
+                        {{-- <div class="tab-content">
                             <div class="tab-pane show active fade" id="current">
                                 <table class="purchasing-table">
                                     <thead>
@@ -327,7 +315,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -28,17 +28,10 @@
                               id="basic-icon-default-fullname"
                               placeholder="Nama Barang"
                               aria-label="John Doe"
-                              aria-describedby="basic-icon-default-fullname2" 
+                              aria-describedby="basic-icon-default-fullname2"
                               name="nama"
                               value="{{ $barang->nama }}"/>
                           </div>
-                        </div>
-                        <div class="mb-6">
-                          <label for="exampleFormControlSelect1" class="form-label">Jenis Barang</label>
-                          <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example" name="jenis_barang">
-                            <option value="Bekas Sekolah" {{ $barang->jenis_barang == 'Bekas Sekolah' ? 'selected' :''}}>Bekas Sekolah</option>
-                            <option value="Sumbangan Sekolah"{{ $barang->jenis_barang == 'Sumbangan Sekolah' ? 'selected' :''}}>Sumbangan Sekolah</option>
-                          </select>
                         </div>
                         <div class="mb-6">
                           <label for="exampleFormControlSelect1" class="form-label">Kategori Barang</label>
@@ -61,7 +54,7 @@
                               placeholder="Harga Awal"
                               aria-label="ACME Inc."
                               aria-describedby="basic-icon-default-company2"
-                              name="harga" 
+                              name="harga"
                               value="{{ $barang->harga}}"/>
                           </div>
                         </div>
@@ -78,7 +71,7 @@
                               placeholder="Jumlah Barang"
                               aria-label="ACME Inc."
                               aria-describedby="basic-icon-default-company2"
-                              name="jumlah" 
+                              name="jumlah"
                               value="{{ $barang->jumlah}}"/>
                           </div>
                         </div>

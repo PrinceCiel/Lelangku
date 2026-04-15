@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_lelang');
             $table->unsignedBigInteger('id_user');
             $table->integer('bid');
+            $table->boolean('is_active')->default(true);
             $table->foreign('id_lelang')->references('id')->on('lelangs')->onDelete('cascade');
             $table->foreign('id_user')->references('id')->on('users');
             $table->timestamps();

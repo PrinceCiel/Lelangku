@@ -6,6 +6,7 @@ use App\Models\Bid;
 use App\Models\Deposit;
 use App\Models\Lelang;
 use App\Models\Pemenang;
+use App\Models\RefundRequest;
 use App\Models\StrikeActivity;
 use App\Models\Struk;
 use App\Models\User;
@@ -17,7 +18,8 @@ use Midtrans\Transaction;
 
 class LelangService
 {
-    private const STRIKE_LIMIT = 3;
+    private const STRIKE_LIMIT        = 3;
+    private const AUTO_REFUND_METHODS = ['gopay', 'shopeepay'];
 
     public function __construct()
     {
@@ -66,6 +68,7 @@ class LelangService
 
     // =========================================================================
     // 2. Generate kandidat 1 & 2 saat lelang selesai
+    //    Kandidat 2 = bid tertinggi dari USER BERBEDA
     // =========================================================================
     public function generateKandidat($now): void
     {
@@ -184,12 +187,14 @@ class LelangService
             ]);
         }
 
+        // Kedua kandidat gugur → draft
         $gugurDua = Lelang::where('status', 'selesai')
             ->whereNotIn('id', $lelangNaikIds)
             ->whereHas('pemenang', fn($q) => $q->where('urutan', 1)->where('status_kandidat', 'gugur'))
             ->whereHas('pemenang', fn($q) => $q->where('urutan', 2)->where('status_kandidat', 'gugur'))
             ->get();
 
+        // Hanya 1 kandidat dan gugur → draft
         $gugurSatu = Lelang::where('status', 'selesai')
             ->whereNotIn('id', $lelangNaikIds)
             ->whereHas('pemenang', fn($q) => $q->where('urutan', 1)->where('status_kandidat', 'gugur'))
@@ -217,7 +222,7 @@ class LelangService
             $struk = $kandidat->struk;
             if (!$struk) continue;
 
-            // Cek apakah strike untuk struk ini sudah ada — prevent double strike
+            // Prevent double strike — cek by id_struk
             $alreadyStruck = StrikeActivity::where('id_user', $kandidat->id_user)
                 ->where('id_struk', $struk->id)
                 ->exists();
@@ -247,11 +252,6 @@ class LelangService
 
     // =========================================================================
     // 7. Handle blacklist — user yang strike >= STRIKE_LIMIT
-    //    Flow:
-    //    - Kandidat aktif → gugur + expire struk + naik kandidat 2
-    //    - Kandidat standby → cari pengganti dari bid ke-3
-    //    - Bid di lelang aktif → hapus
-    //    - Blacklist user
     // =========================================================================
     public function handleBlacklist(): void
     {
@@ -311,7 +311,6 @@ class LelangService
                     ->where('urutan', 1)
                     ->first();
 
-                // Cari bid pengganti — beda dari kandidat 1 dan user ini
                 $bidPengganti = $lelang->bid()
                     ->orderByDesc('bid')
                     ->orderByDesc('created_at')
@@ -341,17 +340,20 @@ class LelangService
                 }
             }
 
-            // ── Hapus bid di lelang yang masih dibuka ─────────────────────
+            // ── Hapus bid + refund deposit di lelang aktif ────────────────
             $lelangAktifIds = Lelang::where('status', 'dibuka')->pluck('id');
+
             Bid::where('id_user', $user->id)
                 ->whereIn('id_lelang', $lelangAktifIds)
                 ->delete();
+
             Deposit::where('id_user', $user->id)
                 ->whereIn('id_lelang', $lelangAktifIds)
                 ->where('status', 'berhasil')
                 ->whereNull('refunded_at')
                 ->get()
                 ->each(fn($deposit) => $this->prosesRefundDeposit($deposit, 'user_diblacklist'));
+
             // ── Blacklist ─────────────────────────────────────────────────
             $user->update([
                 'is_banned'     => true,
@@ -367,116 +369,10 @@ class LelangService
     }
 
     // =========================================================================
-    // Helper: Buat struk + snap token
+    // 8. Cleanup struk gagal yang sudah tercatat di strike_activities
     // =========================================================================
-    public function buatStruk(Lelang $lelang, Pemenang $kandidat): void
-    {
-        $existing = Struk::where('id_pemenang', $kandidat->id)
-            ->whereIn('status', ['belum dibayar', 'pending'])
-            ->exists();
-
-        if ($existing) return;
-
-        $kodeStruk = 'STRL-' . Str::upper(Str::random(10));
-        while (Struk::where('kode_struk', $kodeStruk)->exists()) {
-            $kodeStruk = 'STRL-' . Str::upper(Str::random(10));
-        }
-
-        $orderId  = 'ORDER-' . time() . '-' . $kandidat->id;
-        $bid      = $kandidat->bid;
-        $adminfee = $bid * 0.05;
-        $total    = $bid + $adminfee;
-
-        $struk = Struk::create([
-            'id_lelang'   => $lelang->id,
-            'id_barang'   => $lelang->id_barang,
-            'id_pemenang' => $kandidat->id,
-            'total'       => $total,
-            'status'      => 'belum dibayar',
-            'kode_unik'   => null,
-            'tgl_trx'     => now(),
-            'kode_struk'  => $kodeStruk,
-            'order_id'    => $orderId,
-        ]);
-
-        try {
-            $snapToken = $this->generateSnapToken($struk, $kandidat, $lelang, $bid, $adminfee);
-            $struk->update(['snap_token' => $snapToken]);
-        } catch (\Exception $e) {
-            Log::error('Gagal generate snap token', ['error' => $e->getMessage()]);
-        }
-
-        Log::info('Struk generated kandidat ' . $kandidat->urutan, [
-            'kode_struk' => $kodeStruk,
-            'id_user'    => $kandidat->id_user,
-        ]);
-    }
-
-    // =========================================================================
-    // Helper: Generate snap token
-    // =========================================================================
-    protected function generateSnapToken(Struk $struk, Pemenang $kandidat, Lelang $lelang, $bid, $adminfee): string
-    {
-        $params = [
-            'transaction_details' => [
-                'order_id'     => $struk->order_id,
-                'gross_amount' => (int) ($bid + $adminfee),
-            ],
-            'customer_details' => [
-                'first_name' => $kandidat->user->nama_lengkap ?? 'Customer',
-                'email'      => $kandidat->user->email ?? 'customer@example.com',
-                'phone'      => $kandidat->user->phone ?? '08123456789',
-            ],
-            'item_details' => [
-                [
-                    'id'       => $lelang->id_barang,
-                    'price'    => (int) $bid,
-                    'quantity' => 1,
-                    'name'     => $lelang->barang->nama ?? 'Produk Lelang',
-                ],
-                [
-                    'id'       => 'ADMIN_FEE',
-                    'price'    => (int) $adminfee,
-                    'quantity' => 1,
-                    'name'     => 'Biaya Admin (5%)',
-                ],
-            ],
-            'callbacks' => [
-                'finish' => route('midtrans.finish'),
-            ],
-            'expiry' => [
-                'start_time' => date('Y-m-d H:i:s O'),
-                'unit'       => 'hours',
-                'duration'   => 24,
-            ],
-        ];
-
-        return Snap::getSnapToken($params);
-    }
-
-    // =========================================================================
-    // Helper: Expire order di Midtrans
-    // =========================================================================
-    public function expireOrder(Struk $struk): void
-    {
-        if (!$struk->order_id || !$struk->snap_token) return;
-
-        try {
-            Transaction::expire($struk->order_id);
-            $struk->snap_token = null;
-            $struk->save();
-        } catch (\Exception $e) {
-            Log::warning('Gagal expire Midtrans order', [
-                'order_id' => $struk->order_id,
-                'error'    => $e->getMessage(),
-            ]);
-        }
-    }
-
     public function cleanupStrukGagal(): void
     {
-        // Hapus struk gagal yang kandidatnya sudah gugur
-        // dan strike-nya sudah tercatat (ada di strike_activities)
         Struk::where('status', 'gagal')
             ->whereHas('pemenang', fn($q) => $q->where('status_kandidat', 'gugur'))
             ->whereHas('pemenang.user', fn($q) =>
@@ -492,64 +388,82 @@ class LelangService
         Log::info('Cleanup struk gagal selesai');
     }
 
-    private const AUTO_REFUND_METHODS = ['gopay', 'shopeepay'];
-
-    /**
-     * Entry point — dipanggil scheduler setelah lelang selesai
-     * untuk semua peserta yang tidak menang
-     */
+    // =========================================================================
+    // 9. Refund deposit peserta yang kalah
+    //    Trigger: lelang sudah ada pemenang final (status_kandidat = menang)
+    //    Exclude: pemenang aktif yang berhasil bayar & yang gugur (hangus)
+    // =========================================================================
     public function prosesRefundDepositPesertaKalah(): void
     {
-        // Ambil lelang yang sudah selesai & sudah ada pemenang final (berhasil bayar)
+        // Lelang yang sudah ada pemenang final (kandidat menang / berhasil bayar)
         $lelangSelesai = Lelang::where('status', 'selesai')
-            ->whereHas('pemenang', fn($q) => $q->where('status_kandidat', 'aktif')
-                ->whereHas('struk', fn($s) => $s->where('status', 'berhasil'))
+            ->whereHas('pemenang', fn($q) =>
+                $q->where('status_kandidat', 'aktif')
+                  ->whereHas('struk', fn($s) => $s->where('status', 'berhasil'))
             )
             ->pluck('id');
 
-        // Deposit yang perlu di-refund: ikut lelang yang sudah ada pemenang,
-        // berstatus berhasil, belum di-refund
+        if ($lelangSelesai->isEmpty()) return;
+
         Deposit::whereIn('id_lelang', $lelangSelesai)
             ->where('status', 'berhasil')
             ->whereNull('refunded_at')
-            // Exclude pemenang aktif yang berhasil bayar
+            // Exclude pemenang aktif yang sudah bayar
             ->whereDoesntHave('user.pemenang', fn($q) =>
                 $q->whereIn('id_lelang', $lelangSelesai)
-                ->where('status_kandidat', 'aktif')
-                ->whereHas('struk', fn($s) => $s->where('status', 'berhasil'))
+                  ->where('status_kandidat', 'aktif')
+                  ->whereHas('struk', fn($s) => $s->where('status', 'berhasil'))
             )
-            // ← TAMBAH INI: Exclude yang gugur karena gagal bayar (deposit hangus)
+            // Exclude yang gugur karena gagal bayar — deposit hangus
             ->whereDoesntHave('user.pemenang', fn($q) =>
                 $q->whereIn('id_lelang', $lelangSelesai)
-                ->where('status_kandidat', 'gugur')
-            );
+                  ->where('status_kandidat', 'gugur')
+            )
+            ->chunk(50, function ($deposits) {
+                foreach ($deposits as $deposit) {
+                    $this->prosesRefundDeposit($deposit, 'kalah_lelang');
+                }
+            });
     }
 
+    // =========================================================================
+    // Helper: Proses refund deposit (auto atau manual)
+    // =========================================================================
     private function prosesRefundDeposit(Deposit $deposit, string $konteks = 'kalah_lelang'): void
     {
         $isAutoMethod = in_array($deposit->payment_type, self::AUTO_REFUND_METHODS);
+
         if ($isAutoMethod) {
             $berhasil = $this->cobaRefundMidtrans($deposit);
             if ($berhasil) return;
-            // Gagal → fallback manual
+            // API gagal → fallback manual
             $this->buatRefundManual($deposit, "refund_api_gagal_{$konteks}");
             return;
         }
-        // VA → langsung manual
+
+        // VA / transfer bank → langsung antrian manual
         $this->buatRefundManual($deposit, "payment_type_va_{$konteks}");
     }
 
+    // =========================================================================
+    // Helper: Coba refund via Midtrans API
+    // =========================================================================
     public function cobaRefundMidtrans(Deposit $deposit): bool
     {
         try {
-            $response = \Midtrans\Transaction::refund($deposit->order_id, [
+            $response = Transaction::refund($deposit->order_id, [
                 'refund_key' => 'REFUND-' . $deposit->id . '-' . time(),
-                'amount'     => (int) $deposit->jumlah,
+                'amount'     => (int) $deposit->total,
                 'reason'     => 'Deposit dikembalikan — tidak menang lelang',
             ]);
+
             $statusCode = $response->status_code ?? null;
-            if (isset($statusCode) && $statusCode == 200) {
-                $deposit->update(['refunded_at' => now(), 'status' => 'refunded']);
+
+            if ($statusCode == 200) {
+                $deposit->update([
+                    'status'      => 'refunded',
+                    'refunded_at' => now(),
+                ]);
                 Log::info('Refund otomatis berhasil', ['order_id' => $deposit->order_id]);
                 return true;
             }
@@ -559,18 +473,24 @@ class LelangService
                 'error'    => $e->getMessage(),
             ]);
         }
+
         return false;
     }
 
+    // =========================================================================
+    // Helper: Buat RefundRequest manual
+    // Public — bisa dipanggil dari ReviewBidController juga
+    // =========================================================================
     public function buatRefundManual(Deposit $deposit, string $alasan): void
     {
-        $sudahAda = \App\Models\RefundRequest::where('id_deposit', $deposit->id)->exists();
+        // Prevent duplicate
+        $sudahAda = RefundRequest::where('id_deposit', $deposit->id)->exists();
         if ($sudahAda) return;
 
-        \App\Models\RefundRequest::create([
+        RefundRequest::create([
             'id_user'        => $deposit->id_user,
             'id_deposit'     => $deposit->id,
-            'jumlah'         => $deposit->jumlah,
+            'jumlah'         => $deposit->total,
             'status'         => 'pending',
             'payment_type'   => $deposit->payment_type,
             'masked_account' => $deposit->masked_account,
@@ -582,5 +502,161 @@ class LelangService
             'id_deposit' => $deposit->id,
             'alasan'     => $alasan,
         ]);
+    }
+
+    // =========================================================================
+    // Helper: Buat struk + snap token untuk kandidat
+    //         Total = (bid + adminfee) - deposit yang sudah dibayar
+    // =========================================================================
+    public function buatStruk(Lelang $lelang, Pemenang $kandidat): void
+    {
+        // Jangan buat struk baru kalau masih ada yang aktif
+        $existing = Struk::where('id_pemenang', $kandidat->id)
+            ->whereIn('status', ['belum dibayar', 'pending'])
+            ->exists();
+
+        if ($existing) return;
+
+        $kodeStruk = 'STRL-' . Str::upper(Str::random(10));
+        while (Struk::where('kode_struk', $kodeStruk)->exists()) {
+            $kodeStruk = 'STRL-' . Str::upper(Str::random(10));
+        }
+
+        $orderId  = 'ORDER-' . time() . '-' . $kandidat->id;
+        $bid      = $kandidat->bid;
+        $adminfee = $bid * 0.05;
+
+        // Ambil deposit user di lelang ini — null safe
+        $depositAwal = Deposit::where('id_lelang', $lelang->id)
+            ->where('id_user', $kandidat->id_user)
+            ->where('status', 'berhasil')
+            ->first();
+
+        $potonganDeposit = $depositAwal?->total ?? 0;
+        $total           = ($bid + $adminfee) - $potonganDeposit;
+
+        // Pastikan total tidak negatif (edge case deposit > tagihan)
+        $total = max($total, 0);
+
+        $struk = Struk::create([
+            'id_lelang'   => $lelang->id,
+            'id_barang'   => $lelang->id_barang,
+            'id_pemenang' => $kandidat->id,
+            'total'       => $total,
+            'status'      => 'belum dibayar',
+            'kode_unik'   => null,
+            'tgl_trx'     => now(),
+            'kode_struk'  => $kodeStruk,
+            'order_id'    => $orderId,
+        ]);
+
+        // Kalau total = 0 (deposit sudah nutup semua), langsung set berhasil
+        if ($total === 0) {
+            $struk->update(['status' => 'berhasil']);
+            $kandidat->update(['status_kandidat' => 'menang']);
+            if ($depositAwal) {
+                $depositAwal->update(['status' => 'dipakai']);
+            }
+            Log::info('Struk lunas otomatis (deposit nutup semua)', [
+                'kode_struk' => $kodeStruk,
+                'id_user'    => $kandidat->id_user,
+            ]);
+            return;
+        }
+
+        try {
+            $snapToken = $this->generateSnapToken($struk, $kandidat, $lelang, $bid, $adminfee, $depositAwal);
+            $struk->update(['snap_token' => $snapToken]);
+        } catch (\Exception $e) {
+            Log::error('Gagal generate snap token', ['error' => $e->getMessage()]);
+        }
+
+        Log::info('Struk generated kandidat ' . $kandidat->urutan, [
+            'kode_struk'      => $kodeStruk,
+            'id_user'         => $kandidat->id_user,
+            'total'           => $total,
+            'potongan_deposit' => $potonganDeposit,
+        ]);
+    }
+
+    // =========================================================================
+    // Helper: Generate snap token
+    //         gross_amount = total struk (sudah dikurangi deposit)
+    //         item_details = bid + adminfee + potongan deposit (negatif)
+    // =========================================================================
+    protected function generateSnapToken(
+        Struk $struk,
+        Pemenang $kandidat,
+        Lelang $lelang,
+        $bid,
+        $adminfee,
+        ?Deposit $depositAwal = null
+    ): string {
+        $itemDetails = [
+            [
+                'id'       => (string) $lelang->id_barang,
+                'price'    => (int) $bid,
+                'quantity' => 1,
+                'name'     => $lelang->barang->nama ?? 'Produk Lelang',
+            ],
+            [
+                'id'       => 'ADMIN_FEE',
+                'price'    => (int) $adminfee,
+                'quantity' => 1,
+                'name'     => 'Biaya Admin (5%)',
+            ],
+        ];
+
+        // Tambah item potongan deposit kalau ada
+        if ($depositAwal && $depositAwal->total > 0) {
+            $itemDetails[] = [
+                'id'       => 'DEPOSIT_POTONGAN',
+                'price'    => -(int) $depositAwal->total,
+                'quantity' => 1,
+                'name'     => 'Potongan Deposit',
+            ];
+        }
+
+        $params = [
+            'transaction_details' => [
+                'order_id'     => $struk->order_id,
+                'gross_amount' => (int) $struk->total, // sudah dikurangi deposit
+            ],
+            'customer_details' => [
+                'first_name' => $kandidat->user->nama_lengkap ?? 'Customer',
+                'email'      => $kandidat->user->email ?? 'customer@example.com',
+                'phone'      => $kandidat->user->phone ?? '08123456789',
+            ],
+            'item_details' => $itemDetails,
+            'callbacks'    => [
+                'finish' => route('midtrans.finish'),
+            ],
+            'expiry' => [
+                'start_time' => date('Y-m-d H:i:s O'),
+                'unit'       => 'hours',
+                'duration'   => 24,
+            ],
+        ];
+
+        return Snap::getSnapToken($params);
+    }
+
+    // =========================================================================
+    // Helper: Expire order di Midtrans + null-in snap_token
+    // =========================================================================
+    public function expireOrder(Struk $struk): void
+    {
+        if (!$struk->order_id || !$struk->snap_token) return;
+
+        try {
+            Transaction::expire($struk->order_id);
+            $struk->snap_token = null;
+            $struk->save();
+        } catch (\Exception $e) {
+            Log::warning('Gagal expire Midtrans order', [
+                'order_id' => $struk->order_id,
+                'error'    => $e->getMessage(),
+            ]);
+        }
     }
 }

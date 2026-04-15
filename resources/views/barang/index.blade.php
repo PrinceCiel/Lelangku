@@ -199,9 +199,13 @@
                         <div class="px-5 py-4">
 
                             {{-- Foto --}}
-                            <div class="d-flex justify-content-center mb-4">
-                                <img src="{{ Storage::url($data->foto) }}" alt="Foto {{ $data->nama }}"
-                                    class="rounded-3 shadow-sm" style="width:120px; height:120px; object-fit:cover;">
+                            <div class="d-flex justify-content-center gap-2 flex-wrap mb-4">
+                                @foreach((array) $data->foto as $fotoPath)
+                                    <img src="{{ Storage::url($fotoPath) }}"
+                                        alt="Foto {{ $data->nama }}"
+                                        class="rounded-3 shadow-sm"
+                                        style="width:100px; height:100px; object-fit:cover;">
+                                @endforeach
                             </div>
 
                             {{-- Badge kondisi --}}
@@ -232,16 +236,6 @@
                                         <span class="input-group-text"><i
                                                 class="menu-icon icon-base ri ri-archive-2-line"></i></span>
                                         <input type="text" class="form-control" value="{{ $data->nama }}"
-                                            disabled />
-                                    </div>
-                                </div>
-
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-medium text-muted">Jenis Barang</label>
-                                    <div class="input-group input-group-merge">
-                                        <span class="input-group-text"><i
-                                                class="menu-icon icon-base ri ri-purchase-tag"></i></span>
-                                        <input type="text" class="form-control" value="{{ $data->jenis_barang }}"
                                             disabled />
                                     </div>
                                 </div>
@@ -307,7 +301,6 @@
                                 <i class="bx bx-edit me-1"></i> Edit Barang
                             </a> --}}
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -357,18 +350,6 @@
                                         <span class="input-group-text"><i class="bx bx-box"></i></span>
                                         <input type="text" id="namaBarang" name="nama" class="form-control"
                                             placeholder="Contoh: Meja Belajar Kayu" required />
-                                    </div>
-                                </div>
-
-                                {{-- Jenis & Kategori --}}
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-medium" for="jenisBarang">Jenis Barang</label>
-                                    <div class="input-group input-group-merge">
-                                        <span class="input-group-text"><i class="bx bx-purchase-tag"></i></span>
-                                        <select class="form-select" id="jenisBarang" name="jenis_barang">
-                                            <option value="Bekas Sekolah">Bekas Sekolah</option>
-                                            <option value="Sumbangan Sekolah">Sumbangan Sekolah</option>
-                                        </select>
                                     </div>
                                 </div>
 
@@ -489,7 +470,7 @@
                                             </small>
                                         </div>
                                         <div class="fallback">
-                                            <input name="foto" type="file" accept="image/*" />
+                                            <input name="foto[]" type="file" accept="image/*" multiple />
                                         </div>
                                     </div>
                                 </div>
@@ -556,18 +537,6 @@
                                         <span class="input-group-text"><i class="bx bx-box"></i></span>
                                         <input type="text" id="editNamaBarang" name="nama" class="form-control"
                                             placeholder="Contoh: Meja Belajar Kayu" required />
-                                    </div>
-                                </div>
-
-                                {{-- Jenis & Kategori --}}
-                                <div class="col-12 col-md-6">
-                                    <label class="form-label fw-medium" for="editJenisBarang">Jenis Barang</label>
-                                    <div class="input-group input-group-merge">
-                                        <span class="input-group-text"><i class="bx bx-purchase-tag"></i></span>
-                                        <select class="form-select" id="editJenisBarang" name="jenis_barang">
-                                            <option value="Bekas Sekolah">Bekas Sekolah</option>
-                                            <option value="Sumbangan Sekolah">Sumbangan Sekolah</option>
-                                        </select>
                                     </div>
                                 </div>
 
@@ -672,8 +641,7 @@
                                 <div class="col-12" id="editFotoPreviewWrapper" style="display:none;">
                                     <label class="form-label fw-medium">Foto Saat Ini</label>
                                     <div class="d-flex align-items-center gap-3">
-                                        <img id="editFotoPreview" src="" alt="Foto Barang" class="rounded"
-                                            style="width:64px;height:64px;object-fit:cover;">
+                                        <div id="editFotoPreview" class="d-flex flex-wrap gap-2"></div>
                                         <small class="text-muted">Upload foto baru untuk mengganti foto ini.</small>
                                     </div>
                                 </div>
@@ -695,7 +663,7 @@
                                             </small>
                                         </div>
                                         <div class="fallback">
-                                            <input name="foto" type="file" accept="image/*" />
+                                            <input name="foto[]" type="file" accept="image/*" multiple />
                                         </div>
                                     </div>
                                 </div>

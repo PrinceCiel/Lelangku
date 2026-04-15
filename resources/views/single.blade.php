@@ -341,10 +341,6 @@
                                             <th>Kondisi</th>
                                             <td>{{ $lelang->barang->kondisi }}</td>
                                         </tr>
-                                        <tr>
-                                            <th>Jenis Barang</th>
-                                            <td>{{ $lelang->barang->jenis_barang }}</td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

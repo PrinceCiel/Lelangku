@@ -171,7 +171,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 render: function (data, type, full) {
                     const nama = full.barang?.nama ?? "—";
                     const foto = full.barang?.foto ?? null;
-                    const jenis = full.barang?.jenis_barang ?? "";
                     let img = foto
                         ? `<img src="/storage/${foto}" alt="${nama}" class="rounded" style="width:38px;height:38px;object-fit:cover;">`
                         : `<span class="avatar-initial rounded-2 bg-label-primary">${nama.substring(0, 2).toUpperCase()}</span>`;
@@ -182,7 +181,6 @@ document.addEventListener("DOMContentLoaded", function () {
                             </div>
                             <div class="d-flex flex-column">
                                 <h6 class="text-nowrap mb-0">${nama}</h6>
-                                <small class="text-truncate d-none d-sm-block">${jenis}</small>
                             </div>
                         </div>`;
                 },

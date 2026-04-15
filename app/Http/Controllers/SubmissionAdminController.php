@@ -122,7 +122,6 @@ class SubmissionAdminController extends Controller
                 'foto'                 => $submission->foto_barang[0] ?? null,
                 // 'foto_barang'          => $submission->foto_barang,
                 'kondisi'              => 'Bekas',   // default, bisa diubah admin
-                'jenis_barang'         => '-',       // admin isi manual di edit barang
                 'jumlah'               => 1,
                 'slug'                 => $slug,
                 // 'source_submission_id' => $submission->id,

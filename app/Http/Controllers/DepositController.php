@@ -75,24 +75,6 @@ class DepositController extends Controller
             'order_id'     => $orderId,
             'tgl_trx'      => now(),
         ]);
-        $params = [
-            'transaction_details' => [
-                'order_id'     => $orderId,
-                'gross_amount' => (int) $nominal,
-            ],
-            'customer_details' => [
-                'first_name' => Auth::user()->nama_lengkap,
-                'email'      => Auth::user()->email,
-            ],
-            'item_details' => [
-                [
-                    'id'       => $kodeDeposit,
-                    'price'    => (int) $nominal,
-                    'quantity' => 1,
-                    'name'     => 'Deposit Lelang: ' . $lelang->barang->nama,
-                ],
-            ],
-        ];
         try {
             $snapToken = $this->generateDepositSnapToken($deposit);
             $deposit->update(['snap_token' => $snapToken]);
@@ -110,13 +92,18 @@ class DepositController extends Controller
                           ->where('kode_deposit', $kodeDeposit)
                           ->where('id_user', Auth::id())
                           ->firstOrFail();
+        if($deposit->kode_deposit !== $kodeDeposit){
+            return redirect()->back();
+        }
         return view('deposit.show', compact('deposit'));
     }
 
     protected function generateDepositSnapToken(Deposit $deposit): string
     {
         $amount = $deposit->total;
-
+        $nominal     = $deposit->lelang->barang->harga * 0.30;
+        $kodeDeposit = $deposit->kode_deposit;
+        $orderId     = $kodeDeposit;
         $safeMethods = [
             'bca_va', 'bni_va', 'bri_va', 'mandiri_va',
             'permata_va', 'other_va', 'credit_card',
@@ -130,16 +117,26 @@ class DepositController extends Controller
             : array_merge($safeMethods, $smallMethods);
 
         $params = [
+            'enabled_payments' => $enabledPayments,
             'transaction_details' => [
-                'order_id'     => $deposit->order_id,
+                'order_id'     => $orderId,
                 'gross_amount' => (int) $amount,
             ],
-            'enabled_payments' => $enabledPayments,
-            // ... customer_details, dll
+            'customer_details' => [
+                'first_name' => Auth::user()->nama_lengkap,
+                'email'      => Auth::user()->email,
+            ],
+            'item_details' => [
+                [
+                    'id'       => $kodeDeposit,
+                    'price'    => (int) $nominal,
+                    'quantity' => 1,
+                    'name'     => 'Deposit Lelang: ' . $deposit->lelang->barang->nama,
+                ],
+            ],
         ];
         Log::info('Generating Snap token for deposit', [
             'order_id' => $deposit->order_id,
-            'deposit' => $deposit,
             'amount' => $amount,
             'enabled_payments' => $enabledPayments,
         ]);

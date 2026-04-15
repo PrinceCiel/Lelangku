@@ -80,6 +80,11 @@ class ItemSubmission extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
+
     public function reviewer()
     {
         return $this->belongsTo(User::class, 'reviewed_by');

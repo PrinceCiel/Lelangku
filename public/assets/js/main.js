@@ -562,16 +562,16 @@ function isMacOS() {
 function loadSearchData() {
   const searchJson = $('#layout-menu').hasClass('menu-horizontal') ? 'search-horizontal.json' : 'search-vertical.json';
 
-  fetch(assetsPath + 'json/' + searchJson)
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to fetch data');
-      return response.json();
-    })
-    .then(json => {
-      data = json;
-      initializeAutocomplete();
-    })
-    .catch(error => console.error('Error loading JSON:', error));
+  fetch("/admin/api/search-data")
+      .then((response) => {
+          if (!response.ok) throw new Error("Gagal memuat data menu");
+          return response.json();
+      })
+      .then((json) => {
+          data = json;
+          initializeAutocomplete();
+      })
+      .catch((error) => console.error("Error loading search data:", error));
 }
 
 // Initialize autocomplete

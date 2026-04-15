@@ -42,7 +42,7 @@
                                 <div>
                                     <p class="mb-1">Sedang Dibuka</p>
                                     <h4 class="mb-1">{{ $lelangs->where('status','dibuka')->count() }}</h4>
-                                    <p class="mb-0"><span class="me-2">ntar corosel</span><span class="badge rounded-pill bg-label-success">Live</span></p>
+                                    <p class="mb-0"><span class="me-2">-</span><span class="badge rounded-pill bg-label-success">Live</span></p>
                                 </div>
                                 <div class="avatar me-lg-6">
                                     <span class="avatar-initial rounded-3 text-heading">
@@ -57,7 +57,7 @@
                                 <div>
                                     <p class="mb-1">Ditutup</p>
                                     <h4 class="mb-1">{{ $lelangs->where('status','ditutup')->count() }}</h4>
-                                    <p class="mb-0"><span class="me-2">corosel terjadwal</span><span class="badge rounded-pill bg-label-danger">Closed ini jga dnamis ntar</span></p>
+                                    <p class="mb-0"><span class="me-2">-</span><span class="badge rounded-pill bg-label-danger">Closed</span></p>
                                 </div>
                                 <div class="avatar me-sm-6">
                                     <span class="avatar-initial rounded-3 text-heading">
@@ -71,7 +71,7 @@
                                 <div>
                                     <p class="mb-1">Selesai</p>
                                     <h4 class="mb-1">{{ $lelangs->where('status','selesai')->count() }}</h4>
-                                    <p class="mb-0"><span class="me-2">corosel lelangnya</span><span class="badge rounded-pill bg-label-success">corosel blm bayar</span></p>
+                                    <p class="mb-0"><span class="me-2">-</span><span class="badge rounded-pill bg-label-success">Completed</span></p>
                                 </div>
                                 <div class="avatar">
                                     <span class="avatar-initial rounded-3 text-heading">

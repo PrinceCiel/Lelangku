@@ -20,8 +20,8 @@
 
                     @php
                         $bidakhir = $pemenang->bid;
-                        $adminfee = $bidakhir * 0.05;
-                        $total    = $bidakhir + $adminfee;
+                        $adminfee = $struk->total * 0.05;
+                        $total    = $struk->total + $adminfee;
                         $batas    = $struk->tgl_trx->addHour();
                     @endphp
 
@@ -77,6 +77,10 @@
                                     <div class="info-row">
                                         <span class="info-key">Biaya Admin (5%)</span>
                                         <span class="info-val">Rp{{ number_format($adminfee, 0, ',', '.') }}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-key">Deposit</span>
+                                        <span class="info-val" style="color: red">- Rp{{ number_format($deposit->total, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
                                 <div class="total-row">
@@ -167,6 +171,10 @@
                                         <span class="info-key">Biaya Admin (5%)</span>
                                         <span class="info-val">Rp{{ number_format($adminfee, 0, ',', '.') }}</span>
                                     </div>
+                                    <div class="info-row">
+                                        <span class="info-key">Deposit</span>
+                                        <span class="info-val" style="color: red">- Rp{{ number_format($deposit->total, 0, ',', '.') }}</span>
+                                    </div>
                                 </div>
                                 <div class="total-row">
                                     <span>Total Tagihan</span>
@@ -240,6 +248,10 @@
                                     <div class="info-row">
                                         <span class="info-key">Biaya Admin (5%)</span>
                                         <span class="info-val">Rp{{ number_format($adminfee, 0, ',', '.') }}</span>
+                                    </div>
+                                    <div class="info-row">
+                                        <span class="info-key">Deposit</span>
+                                        <span class="info-val" style="color: red">- Rp{{ number_format($deposit->total, 0, ',', '.') }}</span>
                                     </div>
                                 </div>
                                 <div class="total-row">

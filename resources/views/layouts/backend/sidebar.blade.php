@@ -126,6 +126,12 @@
         <li class="menu-header small mt-5">
             <span class="menu-header-text" data-i18n="Status Transaksi">Status Transaksi</span>
         </li>
+        {{-- <li class="menu-item {{ request()->routeIs('backend.struk.belum-bayar') ? 'active' : '' }}">
+            <a href="{{ route('backend.struk.belum-bayar') }}" class="menu-link">
+                <i class="menu-icon icon-base ri ri-money-dollar-circle-line"></i>
+                <div data-i18n="Transaksi Selesai">Transaksi Selesai</div>
+            </a>
+        </li> --}}
         <li class="menu-item {{ request()->routeIs('backend.struk.belum-bayar') ? 'active' : '' }}">
             <a href="{{ route('backend.struk.belum-bayar') }}" class="menu-link">
                 <i class="menu-icon icon-base ri ri-money-dollar-circle-line"></i>
@@ -149,6 +155,12 @@
                     </a>
                 </li>
             </ul>
+        </li>
+        <li class="menu-item {{ request()->routeIs('backend.refund.index') ? 'active' : '' }}">
+            <a href="{{ route('backend.refund.index') }}" class="menu-link">
+                <i class="menu-icon icon-base ri ri-money-dollar-circle-line"></i>
+                <div data-i18n="Refund Deposit">Refund Deposit</div>
+            </a>
         </li>
 
         <li class="menu-header small mt-5">

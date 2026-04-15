@@ -1,904 +1,623 @@
 @extends('layouts.kerangkabackend')
+
 @section('content')
-    <!-- Content wrapper -->
-    <div class="content-wrapper">
-        <!-- Content -->
-        <div class="container-xxl flex-grow-1 container-p-y">
-            <div class="row g-6">
-                <!-- Gamification Card -->
-                <div class="col-md-12 col-xxl-8">
-                    <div class="card">
-                        <div class="d-flex align-items-end row">
-                            <div class="col-md-6 order-2 order-md-1">
-                                <div class="card-body">
-                                    <h4 class="card-title mb-4">Congratulations <span class="fw-bold">John!</span> 🎉</h4>
-                                    <p class="mb-0">You have done 68% 😎 more sales today.</p>
-                                    <p>Check your new badge in your profile.</p>
-                                    <a href="javascript:;" class="btn btn-primary">View Profile</a>
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-center text-md-end order-1 order-md-2">
-                                <div class="card-body pb-0 px-0 pt-2">
-                                    <img src="../../assets/img/illustrations/illustration-john-light.png" height="186"
-                                        class="scaleX-n1-rtl" alt="View Profile"
-                                        data-app-light-img="illustrations/illustration-john-light.png"
-                                        data-app-dark-img="illustrations/illustration-john-dark.png" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Gamification Card -->
+<div class="content-wrapper">
+    <div class="container-xxl flex-grow-1 container-p-y">
 
-                <!-- Statistics Total Order -->
-                <div class="col-xxl-2 col-sm-6">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-                                <div class="avatar">
-                                    <div class="avatar-initial bg-label-primary rounded-3">
-                                        <i class="icon-base ri ri-shopping-cart-2-line icon-24px"></i>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                    <p class="mb-0 text-success me-1">+22%</p>
-                                    <i class="icon-base ri ri-arrow-up-s-line text-success"></i>
-                                </div>
-                            </div>
-                            <div class="card-info mt-5">
-                                <h5 class="mb-1">155k</h5>
-                                <p>Total Orders</p>
-                                <div class="badge bg-label-secondary rounded-pill">Last 4 Month</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Statistics Total Order -->
-
-                <!-- Sessions line chart -->
-                <div class="col-xxl-2 col-sm-6">
-                    <div class="card h-100">
-                        <div class="card-header pb-0">
-                            <div class="d-flex align-items-center mb-1 flex-wrap">
-                                <h5 class="mb-0 me-1">$38.5k</h5>
-                                <p class="mb-0 text-success">+62%</p>
-                            </div>
-                            <span class="d-block card-subtitle">Sessions</span>
-                        </div>
-                        <div class="card-body">
-                            <div id="sessions"></div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Sessions line chart -->
-
-                <!-- Total Transactions & Report Chart -->
-                <div class="col-12 col-xxl-8">
-                    <div class="card h-100">
-                        <div class="row row-bordered g-0 h-100">
-                            <div class="col-md-7 col-12 order-2 order-md-0">
-                                <div class="card-header">
-                                    <h5 class="mb-0">Total Transactions</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div id="totalTransactionChart"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 col-12">
-                                <div class="card-header">
-                                    <div class="d-flex justify-content-between">
-                                        <h5 class="mb-1">Report</h5>
-                                        <div class="dropdown">
-                                            <button
-                                                class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1"
-                                                type="button" id="totalTransaction" data-bs-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                <i class="icon-base ri ri-more-2-line"></i>
-                                            </button>
-                                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="totalTransaction">
-                                                <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                                <a class="dropdown-item" href="javascript:void(0);">Update</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <p class="mb-0 card-subtitle">Last month transactions $234.40k</p>
-                                </div>
-                                <div class="card-body pt-6">
-                                    <div class="row">
-                                        <div class="col-6 border-end">
-                                            <div class="d-flex flex-column align-items-center">
-                                                <div class="avatar">
-                                                    <div class="avatar-initial bg-label-success rounded-3">
-                                                        <div class="icon-base ri ri-pie-chart-2-line icon-24px"></div>
-                                                    </div>
-                                                </div>
-                                                <p class="mt-3 mb-1">This Week</p>
-                                                <h6 class="mb-0">+82.45%</h6>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="d-flex flex-column align-items-center">
-                                                <div class="avatar">
-                                                    <div class="avatar-initial bg-label-primary rounded-3">
-                                                        <div class="icon-base ri ri-money-dollar-circle-line icon-24px">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <p class="mt-3 mb-1">This Week</p>
-                                                <h6 class="mb-0">-24.86%</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr class="my-5" />
-                                    <div class="d-flex justify-content-around align-items-center flex-wrap gap-2">
-                                        <div>
-                                            <p class="mb-1">Performance</p>
-                                            <h6 class="mb-0">+94.15%</h6>
-                                        </div>
-                                        <div>
-                                            <button class="btn btn-primary" type="button">view report</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Total Transactions & Report Chart -->
-
-                <!-- Performance Chart -->
-                <div class="col-12 col-xxl-4 col-md-6">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">Performance</h5>
-                                <div class="dropdown">
-                                    <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1"
-                                        type="button" id="performanceDropdown" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="icon-base ri ri-more-2-line"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="performanceDropdown">
-                                        <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div id="performanceChart"></div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Performance Chart -->
-
-                <!-- Project Statistics -->
-                <div class="col-md-6 col-xxl-4">
-                    <div class="card h-100">
-                        <div class="card-header d-flex align-items-center justify-content-between">
-                            <h5 class="card-title m-0 me-2">Project Statistics</h5>
-                            <div class="dropdown">
-                                <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1"
-                                    type="button" id="projectStatus" data-bs-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    <i class="icon-base ri ri-more-2-line"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="projectStatus">
-                                    <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between p-4 border-bottom">
-                            <p class="mb-0 fs-xsmall">NAME</p>
-                            <p class="mb-0 fs-xsmall">BUDGET</p>
-                        </div>
-                        <div class="card-body">
-                            <ul class="p-0 m-0">
-                                <li class="d-flex align-items-center mb-6">
-                                    <div class="avatar avatar-md flex-shrink-0 me-4">
-                                        <div class="avatar-initial bg-lightest rounded-3">
-                                            <div>
-                                                <img src="../../assets/img/icons/misc/3d-illustration.png" alt="User"
-                                                    class="h-25" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                        <div class="me-2">
-                                            <h6 class="mb-1">3D Illustration</h6>
-                                            <small>Blender Illustration</small>
-                                        </div>
-                                        <div class="badge bg-label-primary rounded-pill">$6,500</div>
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center mb-6">
-                                    <div class="avatar avatar-md flex-shrink-0 me-4">
-                                        <div class="avatar-initial bg-lightest rounded-3">
-                                            <div>
-                                                <img src="../../assets/img/icons/misc/finance-app-design.png"
-                                                    alt="User" class="h-25" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                        <div class="me-2">
-                                            <h6 class="mb-1">Finance App Design</h6>
-                                            <small>Figma UI Kit</small>
-                                        </div>
-                                        <div class="badge bg-label-primary rounded-pill">$4,290</div>
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center mb-6">
-                                    <div class="avatar avatar-md flex-shrink-0 me-4">
-                                        <div class="avatar-initial bg-lightest rounded-3">
-                                            <div>
-                                                <img src="../../assets/img/icons/misc/4-square.png" alt="User"
-                                                    class="h-25" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                        <div class="me-2">
-                                            <h6 class="mb-1">4 Square</h6>
-                                            <small>Android Application</small>
-                                        </div>
-                                        <div class="badge bg-label-primary rounded-pill">$44,500</div>
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center mb-6">
-                                    <div class="avatar avatar-md flex-shrink-0 me-4">
-                                        <div class="avatar-initial bg-lightest rounded-3">
-                                            <div>
-                                                <img src="../../assets/img/icons/misc/delta-web-app.png" alt="User"
-                                                    class="h-25" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                        <div class="me-2">
-                                            <h6 class="mb-1">Delta Web App</h6>
-                                            <small>React Dashboard</small>
-                                        </div>
-                                        <div class="badge bg-label-primary rounded-pill">$12,690</div>
-                                    </div>
-                                </li>
-                                <li class="d-flex align-items-center">
-                                    <div class="avatar avatar-md flex-shrink-0 me-4">
-                                        <div class="avatar-initial bg-lightest rounded-3">
-                                            <div>
-                                                <img src="../../assets/img/icons/misc/ecommerce-website.png"
-                                                    alt="User" class="h-25" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                        <div class="me-2">
-                                            <h6 class="mb-1">eCommerce Website</h6>
-                                            <small>Vue + Laravel</small>
-                                        </div>
-                                        <div class="badge bg-label-primary rounded-pill">$10,850</div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Project Statistics -->
-
-                <!-- Multiple widgets -->
-                <div class="col-md-6 col-xxl-4">
-                    <div class="row g-4">
-                        <!-- Total Revenue chart -->
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card h-100">
-                                <div class="card-header pb-xl-8">
-                                    <div class="d-flex align-items-center mb-1 flex-wrap">
-                                        <h5 class="mb-0 me-1">$42.5k</h5>
-                                        <p class="mb-0 text-danger">-22%</p>
-                                    </div>
-                                    <span class="d-block card-subtitle">Total Revenue</span>
-                                </div>
-                                <div class="card-body">
-                                    <div id="totalRevenue"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ Total Revenue chart -->
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-                                        <div class="avatar">
-                                            <div class="avatar-initial bg-label-success rounded-3">
-                                                <i class="icon-base ri ri-handbag-line icon-24px"></i>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <p class="mb-0 text-success me-1">+38%</p>
-                                            <i class="icon-base ri ri-arrow-up-s-line text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="card-info mt-5 mt-xl-8">
-                                        <h5 class="mb-1">$13.4k</h5>
-                                        <p>Total Sales</p>
-                                        <div class="badge bg-label-secondary rounded-pill">Last Six Month</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
-                                        <div class="avatar">
-                                            <div class="avatar-initial bg-label-info rounded-3">
-                                                <i class="icon-base ri ri-links-line icon-24px"></i>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex align-items-center">
-                                            <p class="mb-0 text-success me-1">+62%</p>
-                                            <i class="icon-base ri ri-arrow-up-s-line text-success"></i>
-                                        </div>
-                                    </div>
-                                    <div class="card-info mt-5 mt-xl-8">
-                                        <h5 class="mb-1">142.8k</h5>
-                                        <p>Total Impression</p>
-                                        <div class="badge bg-label-secondary rounded-pill">Last One Year</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- overview Radial chart -->
-                        <div class="col-md-6 col-sm-6">
-                            <div class="card h-100">
-                                <div class="card-header pb-xl-7">
-                                    <div class="d-flex align-items-center mb-1 flex-wrap">
-                                        <h5 class="mb-0 me-1">$67.1k</h5>
-                                        <p class="mb-0 text-success">+49%</p>
-                                    </div>
-                                    <span class="d-block card-subtitle">Overview</span>
-                                </div>
-                                <div class="card-body pb-xl-8">
-                                    <div id="overviewChart" class="d-flex align-items-center"></div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--/ overview Radial chart -->
-                    </div>
-                </div>
-                <!--/ Multiple widgets -->
-
-                <!-- Sales Country Chart -->
-                <div class="col-12 col-xxl-4 col-md-6">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">Sales Country</h5>
-                                <div class="dropdown">
-                                    <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1"
-                                        type="button" id="salesCountryDropdown" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="icon-base ri ri-more-2-line"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="salesCountryDropdown">
-                                        <a class="dropdown-item" href="javascript:void(0);">Last 28 Days</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Last Month</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Last Year</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mb-0 card-subtitle">Total $42,580 Sales</p>
-                        </div>
-                        <div class="card-body pb-1 px-0">
-                            <div id="salesCountryChart"></div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Sales Country Chart -->
-
-                <!-- Top Referral Source  -->
-                <div class="col-12 col-xxl-8">
-                    <div class="card h-100">
-                        <div class="card-header d-flex justify-content-between">
-                            <div>
-                                <h5 class="card-title mb-1">Top Referral Sources</h5>
-                                <p class="card-subtitle mb-0">Number of Sales</p>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1"
-                                    type="button" id="earningReportsTabsId" data-bs-toggle="dropdown"
-                                    aria-haspopup="true" aria-expanded="false">
-                                    <i class="icon-base ri ri-more-2-line"></i>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="earningReportsTabsId">
-                                    <a class="dropdown-item" href="javascript:void(0);">View More</a>
-                                    <a class="dropdown-item" href="javascript:void(0);">Delete</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body pb-0">
-                            <ul class="nav nav-tabs nav-tabs-widget pb-6 gap-4 mx-1 d-flex flex-nowrap" role="tablist">
-                                <li class="nav-item">
-                                    <a href="javascript:void(0);"
-                                        class="nav-link btn active d-flex flex-column align-items-center justify-content-center"
-                                        role="tab" data-bs-toggle="tab" data-bs-target="#navs-orders-id"
-                                        aria-controls="navs-orders-id" aria-selected="true">
-                                        <div class="avatar avatar-sm">
-                                            <img src="../../assets/img/icons/brands/google.png" alt="User" />
-                                        </div>
+        {{-- ===================== --}}
+        {{-- HEADER --}}
+        {{-- ===================== --}}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card bg-primary" style="border: none;">
+                    <div class="d-flex align-items-end row">
+                        <div class="col-md-8 order-2 order-md-1">
+                            <div class="card-body py-5">
+                                <h4 class="card-title mb-2 text-white fw-bold fs-3">
+                                    Selamat Datang, Admin! 👋
+                                </h4>
+                                <p class="mb-1 text-white opacity-75">
+                                    Berikut ringkasan aktivitas platform lelang hari ini.
+                                </p>
+                                <p class="mb-4 text-white opacity-75">
+                                    {{ now()->translatedFormat('l, d F Y') }}
+                                </p>
+                                <div class="d-flex gap-3 flex-wrap">
+                                    <a href="{{ route('lelang.index') }}" class="btn btn-light btn-sm fw-semibold">
+                                        <i class="ri ri-auction-line me-1"></i> Kelola Lelang
                                     </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="javascript:void(0);"
-                                        class="nav-link btn d-flex flex-column align-items-center justify-content-center"
-                                        role="tab" data-bs-toggle="tab" data-bs-target="#navs-sales-id"
-                                        aria-controls="navs-sales-id" aria-selected="false">
-                                        <div class="avatar avatar-sm">
-                                            <img src="../../assets/img/icons/brands/facebook-rounded.png"
-                                                alt="User" />
-                                        </div>
+                                    <a href="{{ route('backend.barang.index') }}" class="btn btn-outline-light btn-sm fw-semibold">
+                                        <i class="ri ri-box-3-line me-1"></i> Kelola Barang
                                     </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="javascript:void(0);"
-                                        class="nav-link btn d-flex flex-column align-items-center justify-content-center"
-                                        role="tab" data-bs-toggle="tab" data-bs-target="#navs-profit-id"
-                                        aria-controls="navs-profit-id" aria-selected="false">
-                                        <div class="avatar avatar-sm">
-                                            <img src="../../assets/img/icons/brands/instagram-rounded.png"
-                                                alt="User" />
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="javascript:void(0);"
-                                        class="nav-link btn d-flex flex-column align-items-center justify-content-center"
-                                        role="tab" data-bs-toggle="tab" data-bs-target="#navs-income-id"
-                                        aria-controls="navs-income-id" aria-selected="false">
-                                        <div class="avatar avatar-sm">
-                                            <img src="../../assets/img/icons/brands/reddit-rounded.png" alt="User" />
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="javascript:void(0);"
-                                        class="nav-link btn d-flex align-items-center justify-content-center disabled"
-                                        role="tab" data-bs-toggle="tab" aria-selected="false">
-                                        <div class="avatar avatar-sm">
-                                            <div class="avatar-initial bg-label-secondary text-body rounded">
-                                                <i class="icon-base ri ri-add-line icon-22px"></i>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-content p-0">
-                            <div class="tab-pane fade show active" id="navs-orders-id" role="tabpanel">
-                                <div class="table-responsive text-nowrap">
-                                    <table class="table border-top">
-                                        <thead>
-                                            <tr>
-                                                <th class="bg-transparent border-bottom">Product Name</th>
-                                                <th class="bg-transparent border-bottom">STATUS</th>
-                                                <th class="text-end bg-transparent border-bottom">Profit</th>
-                                                <th class="text-end bg-transparent border-bottom">REVENUE</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-border-bottom-0">
-                                            <tr>
-                                                <td>Email Marketing Campaign</td>
-                                                <td>
-                                                    <div class="badge bg-label-primary rounded-pill">Active</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+24%</td>
-                                                <td class="text-end fw-medium">$42,857</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Google Workspace</td>
-                                                <td>
-                                                    <div class="badge bg-label-success rounded-pill">Completed</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-12%</td>
-                                                <td class="text-end fw-medium">$850</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Affiliation Program</td>
-                                                <td>
-                                                    <div class="badge bg-label-primary rounded-pill">Active</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+24%</td>
-                                                <td class="text-end fw-medium">$5,576</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Google Adsense</td>
-                                                <td>
-                                                    <div class="badge bg-label-info rounded-pill">In Draft</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+0%</td>
-                                                <td class="text-end fw-medium">0</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="navs-sales-id" role="tabpanel">
-                                <div class="table-responsive text-nowrap">
-                                    <table class="table border-top">
-                                        <thead>
-                                            <tr>
-                                                <th class="bg-transparent border-bottom">Product Name</th>
-                                                <th class="bg-transparent border-bottom">STATUS</th>
-                                                <th class="text-end bg-transparent border-bottom">Profit</th>
-                                                <th class="text-end bg-transparent border-bottom">REVENUE</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-border-bottom-0">
-                                            <tr>
-                                                <td>facebook Adsense</td>
-                                                <td>
-                                                    <div class="badge bg-label-info rounded-pill">In Draft</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+5%</td>
-                                                <td class="text-end fw-medium">$5</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Affiliation Program</td>
-                                                <td>
-                                                    <div class="badge bg-label-primary rounded-pill">Active</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-24%</td>
-                                                <td class="text-end fw-medium">$5,576</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email Marketing Campaign</td>
-                                                <td>
-                                                    <div class="badge bg-label-warning rounded-pill">warning</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+5%</td>
-                                                <td class="text-end fw-medium">$2,857</td>
-                                            </tr>
-                                            <tr>
-                                                <td>facebook Workspace</td>
-                                                <td>
-                                                    <div class="badge bg-label-success rounded-pill">Completed</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-12%</td>
-                                                <td class="text-end fw-medium">$850</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="navs-profit-id" role="tabpanel">
-                                <div class="table-responsive text-nowrap">
-                                    <table class="table border-top">
-                                        <thead>
-                                            <tr>
-                                                <th class="bg-transparent border-bottom">Product Name</th>
-                                                <th class="bg-transparent border-bottom">STATUS</th>
-                                                <th class="text-end bg-transparent border-bottom">Profit</th>
-                                                <th class="text-end bg-transparent border-bottom">REVENUE</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-border-bottom-0">
-                                            <tr>
-                                                <td>Affiliation Program</td>
-                                                <td>
-                                                    <div class="badge bg-label-primary rounded-pill">Active</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-24%</td>
-                                                <td class="text-end fw-medium">$5,576</td>
-                                            </tr>
-                                            <tr>
-                                                <td>instagram Adsense</td>
-                                                <td>
-                                                    <div class="badge bg-label-info rounded-pill">In Draft</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+5%</td>
-                                                <td class="text-end fw-medium">$5</td>
-                                            </tr>
-                                            <tr>
-                                                <td>instagram Workspace</td>
-                                                <td>
-                                                    <div class="badge bg-label-success rounded-pill">Completed</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-12%</td>
-                                                <td class="text-end fw-medium">$850</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email Marketing Campaign</td>
-                                                <td>
-                                                    <div class="badge bg-label-danger rounded-pill">warning</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-5%</td>
-                                                <td class="text-end fw-medium">$857</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="navs-income-id" role="tabpanel">
-                                <div class="table-responsive text-nowrap">
-                                    <table class="table border-top">
-                                        <thead>
-                                            <tr>
-                                                <th class="bg-transparent border-bottom">Product Name</th>
-                                                <th class="bg-transparent border-bottom">STATUS</th>
-                                                <th class="text-end bg-transparent border-bottom">Profit</th>
-                                                <th class="text-end bg-transparent border-bottom">REVENUE</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="table-border-bottom-0">
-                                            <tr>
-                                                <td>reddit Workspace</td>
-                                                <td>
-                                                    <div class="badge bg-label-warning rounded-pill">process</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-12%</td>
-                                                <td class="text-end fw-medium">$850</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Affiliation Program</td>
-                                                <td>
-                                                    <div class="badge bg-label-primary rounded-pill">Active</div>
-                                                </td>
-                                                <td class="text-danger fw-medium text-end">-24%</td>
-                                                <td class="text-end fw-medium">$5,576</td>
-                                            </tr>
-                                            <tr>
-                                                <td>reddit Adsense</td>
-                                                <td>
-                                                    <div class="badge bg-label-info rounded-pill">In Draft</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+5%</td>
-                                                <td class="text-end fw-medium">$5</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Email Marketing Campaign</td>
-                                                <td>
-                                                    <div class="badge bg-label-success rounded-pill">Completed</div>
-                                                </td>
-                                                <td class="text-success fw-medium text-end">+50%</td>
-                                                <td class="text-end fw-medium">$857</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                        <div class="col-md-4 text-center order-1 order-md-2 d-none d-md-block">
+                            <div class="card-body pb-0">
+                                <img src="{{ asset('assets/img/illustrations/illustration-john-light.png') }}"
+                                    height="180" alt="Dashboard" class="opacity-75"
+                                    data-app-light-img="illustrations/illustration-john-light.png"
+                                    data-app-dark-img="illustrations/illustration-john-dark.png" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--/ Top Referral Source  -->
-
-                <!-- Weekly Sales Chart-->
-                <div class="col-12 col-xxl-4 col-md-6">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">Weekly Sales</h5>
-                                <div class="dropdown">
-                                    <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1"
-                                        type="button" id="weeklySalesDropdown" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="icon-base ri ri-more-2-line"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="weeklySalesDropdown">
-                                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Update</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mb-0 card-subtitle">Total 85.4k Sales</p>
-                        </div>
-                        <div class="card-body">
-                            <div class="row mb-7 mb-xl-12">
-                                <div class="col-6 d-flex align-items-center">
-                                    <div class="avatar">
-                                        <div class="avatar-initial bg-label-primary rounded">
-                                            <i class="icon-base ri ri-funds-line icon-24px"></i>
-                                        </div>
-                                    </div>
-                                    <div class="ms-3 d-flex flex-column">
-                                        <p class="mb-0">Net Income</p>
-                                        <h6 class="mb-0">$438.5K</h6>
-                                    </div>
-                                </div>
-                                <div class="col-6 d-flex align-items-center">
-                                    <div class="avatar">
-                                        <div class="avatar-initial bg-label-warning rounded">
-                                            <i class="icon-base ri ri-money-dollar-circle-line icon-24px"></i>
-                                        </div>
-                                    </div>
-                                    <div class="ms-3 d-flex flex-column">
-                                        <p class="mb-0">Expense</p>
-                                        <h6 class="mb-0">$22.4K</h6>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="weeklySalesChart"></div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ Weekly Sales Chart-->
-
-                <!-- visits By Day Chart-->
-                <div class="col-12 col-xxl-4 col-md-6">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-1">Visits by Day</h5>
-                                <div class="dropdown">
-                                    <button class="btn btn-text-secondary rounded-pill text-body-secondary border-0 p-1"
-                                        type="button" id="visitsByDayDropdown" data-bs-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="icon-base ri ri-more-2-line"></i>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="visitsByDayDropdown">
-                                        <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Update</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="mb-0 card-subtitle">Total 248.5k Visits</p>
-                        </div>
-                        <div class="card-body pt-xl-5">
-                            <div id="visitsByDayChart"></div>
-                            <div class="d-flex justify-content-between mt-6">
-                                <div>
-                                    <h6 class="mb-0">Most Visited Day</h6>
-                                    <p class="mb-0 small">Total 62.4k Visits on Thursday</p>
-                                </div>
-                                <div class="avatar">
-                                    <div class="avatar-initial bg-label-warning rounded">
-                                        <i class="icon-base ri ri-arrow-right-s-line icon-24px scaleX-n1-rtl"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!--/ visits By Day Chart-->
-
-                <!-- Activity Timeline -->
-                <div class="col-12 col-xxl-8">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-0">Activity Timeline</h5>
-                            </div>
-                        </div>
-                        <div class="card-body pt-4">
-                            <ul class="timeline card-timeline mb-0">
-                                <li class="timeline-item timeline-item-transparent">
-                                    <span class="timeline-point timeline-point-primary"></span>
-                                    <div class="timeline-event">
-                                        <div class="timeline-header mb-3">
-                                            <h6 class="mb-0">12 Invoices have been paid</h6>
-                                            <small class="text-body-secondary">12 min ago</small>
-                                        </div>
-                                        <p class="mb-2">Invoices have been paid to the company</p>
-                                        <div class="d-flex align-items-center mb-1">
-                                            <div class="badge bg-lighter rounded-3">
-                                                <img src="../../assets//img/icons/misc/pdf.png" alt="img"
-                                                    width="20" class="me-2" />
-                                                <span class="h6 mb-0">invoices.pdf</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item timeline-item-transparent">
-                                    <span class="timeline-point timeline-point-success"></span>
-                                    <div class="timeline-event">
-                                        <div class="timeline-header mb-3">
-                                            <h6 class="mb-0">Client Meeting</h6>
-                                            <small class="text-body-secondary">45 min ago</small>
-                                        </div>
-                                        <p class="mb-2">Project meeting with john @10:15am</p>
-                                        <div class="d-flex justify-content-between flex-wrap gap-2">
-                                            <div class="d-flex flex-wrap align-items-center">
-                                                <div class="avatar avatar-sm me-2">
-                                                    <img src="../../assets/img/avatars/1.png" alt="Avatar"
-                                                        class="rounded-circle" />
-                                                </div>
-                                                <div>
-                                                    <p class="mb-0 small fw-medium">Lester McCarthy (Client)</p>
-                                                    <small>CEO of ThemeSelection</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="timeline-item timeline-item-transparent">
-                                    <span class="timeline-point timeline-point-info"></span>
-                                    <div class="timeline-event">
-                                        <div class="timeline-header mb-3">
-                                            <h6 class="mb-0">Create a new project for client</h6>
-                                            <small class="text-body-secondary">2 Day Ago</small>
-                                        </div>
-                                        <p class="mb-2">6 team members in a project</p>
-                                        <ul class="list-group list-group-flush">
-                                            <li
-                                                class="list-group-item d-flex justify-content-between align-items-center flex-wrap border-top-0 p-0">
-                                                <div class="d-flex flex-wrap align-items-center">
-                                                    <ul
-                                                        class="list-unstyled users-list d-flex align-items-center avatar-group m-0 me-2">
-                                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                            data-bs-placement="top" title="Vinnie Mostowy"
-                                                            class="avatar pull-up">
-                                                            <img class="rounded-circle"
-                                                                src="../../assets/img/avatars/5.png" alt="Avatar" />
-                                                        </li>
-                                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                            data-bs-placement="top" title="Allen Rieske"
-                                                            class="avatar pull-up">
-                                                            <img class="rounded-circle"
-                                                                src="../../assets/img/avatars/12.png" alt="Avatar" />
-                                                        </li>
-                                                        <li data-bs-toggle="tooltip" data-popup="tooltip-custom"
-                                                            data-bs-placement="top" title="Julee Rossignol"
-                                                            class="avatar pull-up">
-                                                            <img class="rounded-circle"
-                                                                src="../../assets/img/avatars/6.png" alt="Avatar" />
-                                                        </li>
-                                                        <li class="avatar">
-                                                            <span
-                                                                class="avatar-initial rounded-circle pull-up text-heading"
-                                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                title="3 more">+3</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <!-- Activity Timeline -->
             </div>
         </div>
-        <!-- / Content -->
 
-        <!-- Footer -->
-        <footer class="content-footer footer bg-footer-theme">
-            <div class="container-xxl">
-                <div
-                    class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
-                    <div class="mb-2 mb-md-0">
-                        &#169;
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        , made with ❤️ by
-                        <a href="https://pixinvent.com" target="_blank" class="footer-link fw-medium">Pixinvent</a>
-                    </div>
-                    <div class="d-none d-lg-inline-block">
-                        <a href="https://themeforest.net/licenses/standard" class="footer-link me-4"
-                            target="_blank">License</a>
-
-                        <a href="https://themeforest.net/user/pixinvent/portfolio" target="_blank"
-                            class="footer-link me-4">More Themes</a>
-                        <a href="https://demos.pixinvent.com/materialize-html-admin-template/documentation/"
-                            target="_blank" class="footer-link me-4">Documentation</a>
-
-                        <a href="https://pixinvent.ticksy.com/" target="_blank"
-                            class="footer-link d-none d-sm-inline-block">Support</a>
+        {{-- ===================== --}}
+        {{-- STAT CARDS ROW 1 - INVENTORY --}}
+        {{-- ===================== --}}
+        <div class="row g-4 mb-4">
+            {{-- Total Barang --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase tracking-wide">Total Barang</p>
+                                <h4 class="mb-0 fw-bold">{{ number_format($totalbarang) }}</h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-primary rounded-3">
+                                    <i class="icon-base ri ri-box-3-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Item unik di inventori</p>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- / Footer -->
 
-        <!-- / Layout page -->
-    @endsection
+            {{-- Total Stok --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase">Total Stok</p>
+                                <h4 class="mb-0 fw-bold">{{ number_format($totalbarangready) }}</h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-info rounded-3">
+                                    <i class="icon-base ri ri-stack-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Unit tersedia siap dilelang</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Total Nilai Aset --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase">Total Nilai Aset</p>
+                                <h4 class="mb-0 fw-bold">Rp {{ number_format($totalaset, 0, ',', '.') }}</h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-warning rounded-3">
+                                    <i class="icon-base ri ri-safe-2-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Nilai modal × stok tersedia</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Total Transaksi --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase">Transaksi Berhasil</p>
+                                <h4 class="mb-0 fw-bold">{{ number_format($totaltransaksi) }}</h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-success rounded-3">
+                                    <i class="icon-base ri ri-checkbox-circle-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Total pembayaran berhasil</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ===================== --}}
+        {{-- STAT CARDS ROW 2 - LELANG --}}
+        {{-- ===================== --}}
+        <div class="row g-4 mb-4">
+            {{-- Lelang Aktif --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100" style="border-left: 4px solid #28a745;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase">Lelang Aktif</p>
+                                <h4 class="mb-0 fw-bold text-success">{{ number_format($totalaktif) }}</h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-success rounded-3">
+                                    <i class="icon-base ri ri-live-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Sedang berlangsung sekarang</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Lelang Terjadwal --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100" style="border-left: 4px solid #fd7e14;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase">Lelang Terjadwal</p>
+                                <h4 class="mb-0 fw-bold text-warning">{{ number_format($totaljadwal) }}</h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-warning rounded-3">
+                                    <i class="icon-base ri ri-calendar-schedule-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Menunggu dibuka</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Lelang Selesai --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100" style="border-left: 4px solid #6f42c1;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase">Lelang Selesai</p>
+                                <h4 class="mb-0 fw-bold">{{ number_format($totalberes) }}</h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-secondary rounded-3">
+                                    <i class="icon-base ri ri-flag-2-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Semua lelang yang telah selesai</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Rata Keuntungan --}}
+            <div class="col-sm-6 col-xxl-3">
+                <div class="card h-100" style="border-left: 4px solid #20c997;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+                            <div>
+                                <p class="mb-1 text-body-secondary small fw-semibold text-uppercase">Rata-rata Untung</p>
+                                <h4 class="mb-0 fw-bold text-success">
+                                    Rp {{ number_format($rataKeuntungan, 0, ',', '.') }}
+                                </h4>
+                            </div>
+                            <div class="avatar">
+                                <div class="avatar-initial bg-label-success rounded-3">
+                                    <i class="icon-base ri ri-bar-chart-grouped-line icon-24px"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-0 small text-body-secondary">Per transaksi berhasil</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ===================== --}}
+        {{-- KEUANGAN SUMMARY --}}
+        {{-- ===================== --}}
+        <div class="row g-4 mb-4">
+            {{-- Total Pemasukan --}}
+            <div class="col-sm-4">
+                <div class="card h-100" style="background: linear-gradient(135deg, #11998e, #38ef7d); border: none;">
+                    <div class="card-body text-white">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="mb-0 fw-semibold opacity-90 small text-uppercase">Total Pemasukan</p>
+                            <i class="icon-base ri ri-arrow-up-circle-line icon-28px opacity-75"></i>
+                        </div>
+                        <h3 class="mb-1 fw-bold">Rp {{ number_format($totalPemasukan, 0, ',', '.') }}</h3>
+                        <p class="mb-0 small opacity-75">Dari semua transaksi berhasil</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Total Modal --}}
+            <div class="col-sm-4">
+                <div class="card h-100" style="background: linear-gradient(135deg, #f7971e, #ffd200); border: none;">
+                    <div class="card-body text-white">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="mb-0 fw-semibold opacity-90 small text-uppercase">Total Modal</p>
+                            <i class="icon-base ri ri-arrow-down-circle-line icon-28px opacity-75"></i>
+                        </div>
+                        <h3 class="mb-1 fw-bold">Rp {{ number_format($totalModal, 0, ',', '.') }}</h3>
+                        <p class="mb-0 small opacity-75">Harga modal barang terjual</p>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Keuntungan Bersih --}}
+            <div class="col-sm-4">
+                <div class="card h-100" style="background: linear-gradient(135deg, #667eea, #764ba2); border: none;">
+                    <div class="card-body text-white">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <p class="mb-0 fw-semibold opacity-90 small text-uppercase">Keuntungan Bersih</p>
+                            <i class="icon-base ri ri-money-dollar-circle-line icon-28px opacity-75"></i>
+                        </div>
+                        <h3 class="mb-1 fw-bold">Rp {{ number_format($keuntungan, 0, ',', '.') }}</h3>
+                        <p class="mb-0 small opacity-75">Pemasukan - Modal</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ===================== --}}
+        {{-- CHART ROW --}}
+        {{-- ===================== --}}
+        <div class="row g-4 mb-4">
+            {{-- Chart Bulanan --}}
+            <div class="col-12 col-lg-8">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">Pemasukan vs Modal vs Keuntungan</h5>
+                            <p class="mb-0 card-subtitle">12 Bulan Terakhir</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div id="chartBulanan"></div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Donut Chart Kategori --}}
+            <div class="col-12 col-lg-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="mb-1">Distribusi Aset</h5>
+                        <p class="mb-0 card-subtitle">Per Kategori Barang</p>
+                    </div>
+                    <div class="card-body d-flex flex-column justify-content-center">
+                        <div id="chartKategori"></div>
+                        <div class="mt-3" id="legendKategori"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ===================== --}}
+        {{-- TABEL ROW --}}
+        {{-- ===================== --}}
+        <div class="row g-4 mb-4">
+            {{-- Top Barang --}}
+            <div class="col-12 col-lg-5">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title mb-1">Top Barang</h5>
+                            <p class="card-subtitle mb-0">Nilai Aset Tertinggi</p>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <ul class="p-0 m-0">
+                            @forelse($topBarang as $index => $barang)
+                            <li class="d-flex align-items-center {{ !$loop->last ? 'mb-5' : '' }}">
+                                <div class="avatar avatar-md flex-shrink-0 me-3">
+                                    <div class="avatar-initial rounded-3"
+                                        style="background: {{ ['#667eea20','#11998e20','#f7971e20','#764ba220','#e0234720'][$index % 5] }}; color: {{ ['#667eea','#11998e','#f7971e','#764ba2','#e02347'][$index % 5] }}; font-weight: 700; font-size: 1rem;">
+                                        {{ $index + 1 }}
+                                    </div>
+                                </div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div>
+                                        <h6 class="mb-0">{{ $barang->nama }}</h6>
+                                        <small class="text-body-secondary">{{ $barang->kategori->nama ?? '-' }} · Stok: {{ $barang->jumlah }}</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="badge bg-label-primary rounded-pill">
+                                            Rp {{ number_format($barang->harga * $barang->jumlah, 0, ',', '.') }}
+                                        </div>
+                                        <small class="d-block text-body-secondary mt-1">
+                                            @Rp {{ number_format($barang->harga, 0, ',', '.') }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </li>
+                            @empty
+                            <li class="text-center text-body-secondary py-4">
+                                <i class="ri ri-inbox-line icon-28px d-block mb-2"></i>
+                                Tidak ada barang tersedia
+                            </li>
+                            @endforelse
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Lelang Segera Berakhir --}}
+            <div class="col-12 col-lg-7">
+                <div class="card h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title mb-1">Lelang Segera Berakhir</h5>
+                            <p class="card-subtitle mb-0">Urut berdasarkan jadwal terdekat</p>
+                        </div>
+                        <a href="{{ route('lelang.index') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="bg-transparent">Barang</th>
+                                    <th class="bg-transparent">Kode</th>
+                                    <th class="bg-transparent">Berakhir</th>
+                                    <th class="bg-transparent text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($lelangAktif as $lelang)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="avatar avatar-sm">
+                                                <div class="avatar-initial bg-label-success rounded-2">
+                                                    <i class="ri ri-auction-line"></i>
+                                                </div>
+                                            </div>
+                                            <span class="fw-medium">{{ $lelang->barang->nama ?? '-' }}</span>
+                                        </div>
+                                    </td>
+                                    <td><code class="small">{{ $lelang->kode_lelang }}</code></td>
+                                    <td>
+                                        <span class="small">
+                                            {{ \Carbon\Carbon::parse($lelang->jadwal_berakhir)->translatedFormat('d M Y, H:i') }}
+                                        </span>
+                                        <br>
+                                        <small class="text-danger fw-semibold">
+                                            {{ \Carbon\Carbon::parse($lelang->jadwal_berakhir)->diffForHumans() }}
+                                        </small>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="badge bg-label-success rounded-pill">Aktif</div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center text-body-secondary py-4">
+                                        <i class="ri ri-calendar-check-line icon-28px d-block mb-2"></i>
+                                        Tidak ada lelang aktif
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ===================== --}}
+        {{-- TRANSAKSI TERBARU --}}
+        {{-- ===================== --}}
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="card-title mb-1">Transaksi Terbaru</h5>
+                            <p class="card-subtitle mb-0">5 transaksi terakhir</p>
+                        </div>
+                        <a href="{{ route('backend.struk.belum-bayar') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="bg-transparent">Kode Struk</th>
+                                    <th class="bg-transparent">Barang</th>
+                                    <th class="bg-transparent">Pemenang</th>
+                                    <th class="bg-transparent">Total</th>
+                                    <th class="bg-transparent">Keuntungan</th>
+                                    <th class="bg-transparent">Tanggal</th>
+                                    <th class="bg-transparent text-center">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($transaksiTerbaru as $trx)
+                                @php
+                                    $untung = $trx->total - ($trx->barang->harga ?? 0);
+                                    $statusClass = match($trx->status) {
+                                        'berhasil'     => 'bg-label-success',
+                                        'belum dibayar'=> 'bg-label-warning',
+                                        'pending'      => 'bg-label-info',
+                                        'gagal'        => 'bg-label-danger',
+                                        default        => 'bg-label-secondary',
+                                    };
+                                @endphp
+                                <tr>
+                                    <td><code class="small">{{ $trx->kode_struk }}</code></td>
+                                    <td>{{ $trx->barang->nama ?? '-' }}</td>
+                                    <td>{{ $trx->pemenang->user->name ?? '-' }}</td>
+                                    <td class="fw-semibold">Rp {{ number_format($trx->total, 0, ',', '.') }}</td>
+                                    <td class="{{ $untung >= 0 ? 'text-success' : 'text-danger' }} fw-semibold">
+                                        {{ $untung >= 0 ? '+' : '' }}Rp {{ number_format($untung, 0, ',', '.') }}
+                                    </td>
+                                    <td>
+                                        <small>{{ \Carbon\Carbon::parse($trx->tgl_trx)->translatedFormat('d M Y, H:i') }}</small>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="badge {{ $statusClass }} rounded-pill">{{ ucfirst($trx->status) }}</div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-body-secondary py-4">
+                                        <i class="ri ri-receipt-line icon-28px d-block mb-2"></i>
+                                        Belum ada transaksi
+                                    </td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    {{-- ===================== --}}
+    {{-- FOOTER --}}
+    {{-- ===================== --}}
+    <footer class="content-footer footer bg-footer-theme">
+        <div class="container-xxl">
+            <div class="footer-container d-flex align-items-center justify-content-between py-4 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                    &copy; {{ date('Y') }} Platform Lelang. All rights reserved.
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{{-- ===================== --}}
+{{-- APEXCHARTS SCRIPTS --}}
+{{-- ===================== --}}
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // ========================
+    // DATA DARI BLADE/LARAVEL
+    // ========================
+    const chartBulanan = @json($chartBulanan->values());
+    const chartKategori = @json($chartData);
+
+    const bulanLabels    = chartBulanan.map(d => d.bulan);
+    const pemasukanData  = chartBulanan.map(d => d.pemasukan);
+    const modalData      = chartBulanan.map(d => d.modal);
+    const keuntunganData = chartBulanan.map(d => d.keuntungan);
+
+    // ========================
+    // CHART BULANAN (Bar + Line)
+    // ========================
+    const optionsBulanan = {
+        series: [
+            { name: 'Pemasukan',  type: 'bar',  data: pemasukanData  },
+            { name: 'Modal',      type: 'bar',  data: modalData      },
+            { name: 'Keuntungan', type: 'line', data: keuntunganData },
+        ],
+        chart: {
+            height: 320,
+            type: 'line',
+            toolbar: { show: false },
+            zoom: { enabled: false },
+        },
+        colors: ['#28a745', '#fd7e14', '#667eea'],
+        plotOptions: {
+            bar: { borderRadius: 6, columnWidth: '50%' }
+        },
+        dataLabels: { enabled: false },
+        stroke: {
+            width: [0, 0, 3],
+            curve: 'smooth'
+        },
+        xaxis: {
+            categories: bulanLabels,
+            labels: { style: { fontSize: '11px' } }
+        },
+        yaxis: {
+            labels: {
+                formatter: val => 'Rp ' + new Intl.NumberFormat('id-ID').format(val)
+            }
+        },
+        tooltip: {
+            y: {
+                formatter: val => 'Rp ' + new Intl.NumberFormat('id-ID').format(val)
+            }
+        },
+        legend: {
+            position: 'top',
+            horizontalAlign: 'right'
+        },
+        grid: { borderColor: '#f0f0f0' },
+    };
+
+    new ApexCharts(document.querySelector('#chartBulanan'), optionsBulanan).render();
+
+    // ========================
+    // DONUT CHART KATEGORI
+    // ========================
+    const kategoriLabels = Object.keys(chartKategori);
+    const kategoriValues = Object.values(chartKategori);
+
+    const optionsKategori = {
+        series: kategoriValues,
+        chart: {
+            type: 'donut',
+            height: 220,
+        },
+        labels: kategoriLabels,
+        colors: ['#667eea','#11998e','#f7971e','#e02347','#764ba2','#20c997','#fd7e14'],
+        dataLabels: { enabled: false },
+        legend: { show: false },
+        plotOptions: {
+            pie: {
+                donut: {
+                    size: '70%',
+                    labels: {
+                        show: true,
+                        total: {
+                            show: true,
+                            label: 'Total Aset',
+                            formatter: function(w) {
+                                const total = w.globals.seriesTotals.reduce((a, b) => a + b, 0);
+                                return 'Rp ' + new Intl.NumberFormat('id-ID').format(total);
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        tooltip: {
+            y: {
+                formatter: val => 'Rp ' + new Intl.NumberFormat('id-ID').format(val)
+            }
+        }
+    };
+
+    new ApexCharts(document.querySelector('#chartKategori'), optionsKategori).render();
+
+    // ========================
+    // LEGEND KATEGORI MANUAL
+    // ========================
+    const colors = ['#667eea','#11998e','#f7971e','#e02347','#764ba2','#20c997','#fd7e14'];
+    const legendEl = document.getElementById('legendKategori');
+    if (legendEl) {
+        legendEl.innerHTML = kategoriLabels.map((label, i) => `
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex align-items-center gap-2">
+                    <div style="width:10px;height:10px;border-radius:50%;background:${colors[i % colors.length]};flex-shrink:0;"></div>
+                    <small>${label}</small>
+                </div>
+                <small class="fw-semibold">Rp ${new Intl.NumberFormat('id-ID').format(kategoriValues[i])}</small>
+            </div>
+        `).join('');
+    }
+});
+</script>
+@endpush
+@endsection

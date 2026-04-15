@@ -104,8 +104,8 @@
 <div class="lk-spacer"></div>
 
 {{-- ============================================================
-     KATEGORI SIDEBAR (desktop, slide dari kiri)
-     ============================================================ --}}
+     KATEGORI SIDEBAR
+============================================================ --}}
 <div class="lk-sidebar" id="lk-sidebar" aria-hidden="true">
     <div class="lk-sidebar__panel">
         <div class="lk-sidebar__head">
@@ -129,12 +129,10 @@
 </div>
 
 {{-- ============================================================
-     MOBILE SEARCH — FULLSCREEN (slide dari bawah ke atas)
-     ============================================================ --}}
+     MOBILE SEARCH FULLSCREEN
+============================================================ --}}
 <div class="lk-msearch" id="lk-msearch" aria-hidden="true" role="dialog" aria-label="Pencarian">
     <div class="lk-msearch__inner">
-
-        {{-- Top bar sticky: tombol back pojok kiri + input search --}}
         <div class="lk-msearch__topbar">
             <button class="lk-msearch__back" id="lk-msearch-close" aria-label="Kembali">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
@@ -142,24 +140,14 @@
             <form class="lk-msearch__form" method="get" action="{{ route('search') }}" role="search">
                 <div class="lk-msearch__inputwrap">
                     <svg class="lk-msearch__ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    <input
-                        type="text"
-                        name="search"
-                        id="lk-msi"
-                        class="lk-msearch__input"
-                        placeholder="Cari lelang, barang..."
-                        autocomplete="off"
-                        autocorrect="off"
-                        spellcheck="false"
-                    >
+                    <input type="text" name="search" id="lk-msi" class="lk-msearch__input"
+                        placeholder="Cari lelang, barang..." autocomplete="off" autocorrect="off" spellcheck="false">
                     <button type="button" class="lk-msearch__clear" id="lk-msi-clear" aria-label="Hapus" hidden>
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                     </button>
                 </div>
             </form>
         </div>
-
-        {{-- Konten: kategori chips + trending --}}
         <div class="lk-msearch__body">
             <p class="lk-msearch__label">Jelajahi Kategori</p>
             <div class="lk-msearch__chips">
@@ -170,7 +158,6 @@
                 </a>
                 @endforeach
             </div>
-
             <p class="lk-msearch__label lk-msearch__label--gap">Pencarian Populer</p>
             <div class="lk-msearch__trends">
                 <button type="button" class="lk-trend" onclick="lkFill('Elektronik')">Elektronik</button>
@@ -181,13 +168,12 @@
                 <button type="button" class="lk-trend" onclick="lkFill('Perhiasan')">Perhiasan</button>
             </div>
         </div>
-
     </div>
 </div>
 
 {{-- ============================================================
      MOBILE MENU DRAWER
-     ============================================================ --}}
+============================================================ --}}
 <div class="lk-mob-menu" id="lk-mob-menu" aria-hidden="true">
     <nav>
         @if(Auth::check())
@@ -242,7 +228,7 @@
 <style>
 /* ============================================================
    VARIABLES
-   ============================================================ */
+============================================================ */
 :root {
     --bg:     #0c2e2b;
     --bgh:    rgba(255,255,255,0.08);
@@ -264,7 +250,7 @@
 
 /* ============================================================
    HEADER
-   ============================================================ */
+============================================================ */
 .lk-header {
     position: fixed; top: 0; left: 0; right: 0;
     z-index: var(--z);
@@ -278,8 +264,9 @@
 .lk-spacer { height: var(--hh); display: block; }
 
 .lk-header__container {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center;
     height: var(--hh); padding: 0 28px;
+    gap: 10px;
     max-width: 1400px; margin: 0 auto;
 }
 
@@ -321,11 +308,24 @@
 .lk-av--lg { width: 46px; height: 46px; }
 .lk-av img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* ---- Dropdown ---- */
+/* ---- Dropdown — FIX hover gap ---- */
+.lk-nav__item--dd::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 6px; /* bridge invisible antara button dan dropdown */
+}
+
 .lk-dd {
-    position: absolute; top: calc(100% + 10px); left: 0;
-    min-width: 230px; background: var(--ddbg);
-    border: 1px solid var(--br); border-radius: var(--r);
+    position: absolute;
+    top: calc(100% + 6px); /* dikecilkan dari 10px → 6px */
+    left: 0;
+    min-width: 230px;
+    background: var(--ddbg);
+    border: 1px solid var(--br);
+    border-radius: var(--r);
     box-shadow: 0 12px 40px rgba(0,0,0,0.38);
     opacity: 0; visibility: hidden; transform: translateY(-6px);
     transition: opacity var(--t), visibility var(--t), transform var(--t);
@@ -386,7 +386,7 @@
 
 /* ============================================================
    KATEGORI SIDEBAR
-   ============================================================ */
+============================================================ */
 .lk-sidebar {
     position: fixed; inset: 0;
     z-index: calc(var(--z) + 5);
@@ -440,20 +440,16 @@
 .lk-sidebar.is-open .lk-sidebar__bd { opacity: 1; }
 
 /* ============================================================
-   MOBILE SEARCH — FULLSCREEN slide bawah ke atas
-   ============================================================ */
+   MOBILE SEARCH FULLSCREEN
+============================================================ */
 .lk-msearch {
     position: fixed; inset: 0;
     z-index: calc(var(--z) + 10);
     visibility: hidden; pointer-events: none;
     transition: visibility 0s linear 0.38s;
 }
-.lk-msearch.is-open {
-    visibility: visible; pointer-events: auto;
-    transition-delay: 0s;
-}
+.lk-msearch.is-open { visibility: visible; pointer-events: auto; transition-delay: 0s; }
 
-/* Full screen panel */
 .lk-msearch__inner {
     position: absolute; inset: 0;
     background: var(--bg);
@@ -466,7 +462,6 @@
 }
 .lk-msearch.is-open .lk-msearch__inner { transform: translateY(0); }
 
-/* ---- Top bar: back + input ---- */
 .lk-msearch__topbar {
     display: flex; align-items: center; gap: 12px;
     padding: 14px 18px;
@@ -474,11 +469,8 @@
     flex-shrink: 0;
     position: sticky; top: 0; z-index: 2;
     background: var(--bg);
-    /* safe area untuk notch */
     padding-top: max(14px, env(safe-area-inset-top, 14px));
 }
-
-/* Tombol back — pojok kiri atas */
 .lk-msearch__back {
     display: flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; flex-shrink: 0;
@@ -490,9 +482,7 @@
 }
 .lk-msearch__back:hover { background: rgba(255,255,255,0.16); }
 .lk-msearch__back:active { transform: scale(0.93); }
-
 .lk-msearch__form { flex: 1; }
-
 .lk-msearch__inputwrap {
     display: flex; align-items: center; gap: 10px;
     background: rgba(255,255,255,0.09);
@@ -522,23 +512,18 @@
 }
 .lk-msearch__clear:hover { background: rgba(255,255,255,0.22); color: var(--c); }
 
-/* ---- Body konten ---- */
 .lk-msearch__body {
     padding: 26px 20px;
     flex: 1;
-    /* safe area bawah */
     padding-bottom: max(26px, calc(env(safe-area-inset-bottom, 0px) + 26px));
 }
-
 .lk-msearch__label {
     font-size: 11px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.1em;
     color: var(--cm); margin: 0 0 12px;
 }
 .lk-msearch__label--gap { margin-top: 30px; }
-
 .lk-msearch__chips { display: flex; flex-wrap: wrap; gap: 9px; }
-
 .lk-chip {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 8px 15px; border-radius: 50px;
@@ -548,15 +533,9 @@
     white-space: nowrap;
     -webkit-tap-highlight-color: transparent;
 }
-.lk-chip:hover, .lk-chip:active {
-    background: rgba(62,207,154,0.14);
-    border-color: rgba(62,207,154,0.4);
-    color: var(--ac);
-}
+.lk-chip:hover, .lk-chip:active { background: rgba(62,207,154,0.14); border-color: rgba(62,207,154,0.4); color: var(--ac); }
 .lk-chip svg { opacity: 0.45; }
-
 .lk-msearch__trends { display: flex; flex-wrap: wrap; gap: 8px; }
-
 .lk-trend {
     display: inline-flex; align-items: center;
     padding: 7px 15px; border-radius: 50px;
@@ -566,16 +545,12 @@
     transition: background var(--t), border-color var(--t), color var(--t);
     -webkit-tap-highlight-color: transparent;
 }
-.lk-trend:hover, .lk-trend:active {
-    background: rgba(255,255,255,0.09);
-    border-color: rgba(255,255,255,0.28);
-    color: var(--c);
-}
+.lk-trend:hover, .lk-trend:active { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.28); color: var(--c); }
 .lk-trend::before { content: '#'; opacity: 0.4; margin-right: 3px; font-size: 12px; }
 
 /* ============================================================
    MOBILE MENU DRAWER
-   ============================================================ */
+============================================================ */
 .lk-mob-menu {
     position: fixed; top: var(--hh); left: 0; right: 0; bottom: 0;
     background: var(--bg); overflow-y: auto;
@@ -587,17 +562,13 @@
     -webkit-overflow-scrolling: touch;
 }
 .lk-mob-menu.is-open { transform: translateX(0); }
-
 .lk-mob-user { display: flex; align-items: center; gap: 14px; padding: 18px 22px; }
 .lk-mob-user__name { font-size: 16px; font-weight: 600; color: var(--c); margin: 0; line-height: 1.2; }
 .lk-mob-user__sub { font-size: 12.5px; color: var(--cm); margin: 2px 0 0; }
-
 .lk-mob-guest { padding: 20px 22px 12px; }
 .lk-mob-guest__title { font-size: 17px; font-weight: 600; color: var(--c); margin: 0 0 4px; }
 .lk-mob-guest__sub { font-size: 13px; color: var(--cm); margin: 0; }
-
 .lk-mob-sep { height: 1px; background: var(--br); margin: 6px 0; }
-
 .lk-mob-link {
     display: flex; align-items: center; gap: 12px;
     padding: 15px 22px; color: rgba(255,255,255,0.85); font-size: 16px;
@@ -612,7 +583,6 @@
 .lk-mob-link--danger { color: var(--dg); }
 .lk-mob-link--danger:hover { background: rgba(248,113,113,0.08); }
 
-/* Overlay */
 .lk-ov {
     display: none; position: fixed; inset: 0;
     background: rgba(0,0,0,0.5); z-index: calc(var(--z) - 2);
@@ -622,7 +592,7 @@
 
 /* ============================================================
    RESPONSIVE
-   ============================================================ */
+============================================================ */
 @media (max-width: 1023px) {
     .lk-nav, .lk-dsearch { display: none; }
     .lk-mob-ctrl { display: flex; }
@@ -632,19 +602,16 @@
     .lk-mob-menu, .lk-ov { display: none !important; }
     .lk-msearch { display: none !important; }
 }
-
-/* Tablet 600–1023 */
 @media (max-width: 1023px) and (min-width: 600px) {
     :root { --hh: 68px; }
-    .lk-header__container { padding: 0 24px; }
     .lk-logo__img { height: 38px; }
     .lk-msearch__body { padding: 30px 28px; }
 }
-
-/* Mobile < 600px */
 @media (max-width: 599px) {
-    :root { --hh: 60px; }
-    .lk-header__container { padding: 0 16px; }
+    :root { --hh: 70px; }
+    .lk-header__container { padding: 0 12px; justify-content: space-between; }
+    .lk-logo { margin-right: 0; }
+    .lk-mob-ctrl { margin-left: 0; }
     .lk-logo__img { height: 34px; }
     .lk-ibtn { width: 40px; height: 40px; }
     .lk-msearch__topbar { padding: 12px 14px; gap: 10px; }
@@ -655,8 +622,6 @@
     .lk-mob-link { font-size: 15px; padding: 13px 18px; }
     .lk-mob-user { padding: 16px 18px; }
 }
-
-/* Kecil banget < 400px */
 @media (max-width: 399px) {
     :root { --hh: 56px; }
     .lk-logo__img { height: 30px; }
@@ -720,7 +685,6 @@
     if (msBtnO) msBtnO.addEventListener('click', msOpen);
     if (msClose) msClose.addEventListener('click', msCloseF);
 
-    /* Clear button */
     if (msi && msiClear) {
         msi.addEventListener('input', function () { msiClear.hidden = !msi.value; });
         msiClear.addEventListener('click', function () { msi.value = ''; msiClear.hidden = true; msi.focus(); });
