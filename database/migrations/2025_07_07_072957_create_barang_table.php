@@ -21,6 +21,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_kategori');
             $table->integer('jumlah');
             $table->string('slug');
+            $table->unsignedBigInteger('source_submission_id')->nullable();
+            $table->string('owner_type')->default('platform');
+            $table->json('foto_barang')->nullable();
             $table->foreign('id_kategori')->references('id')->on('kategoris');
             $table->timestamps();
         });

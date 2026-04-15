@@ -54,11 +54,6 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        Schema::table('barangs', function (Blueprint $table) {
-            $table->unsignedBigInteger('source_submission_id')->nullable()->after('slug');
-            $table->string('owner_type')->default('platform')->after('source_submission_id');
-            $table->json('foto_barang')->nullable()->after('owner_type'); // semua foto dari submission
-        });
     }
 
     public function down(): void
