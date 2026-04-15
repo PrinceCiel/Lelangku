@@ -5,15 +5,25 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
 use App\Models\Lelang;
+use App\Services\MidtransService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Midtrans\Config;
 use Midtrans\Snap;
 
 class DepositController extends Controller
 {
-    // app/Http/Controllers/Api/DepositApiController.php
-
+    protected $midtrans;
+    public function __construct(MidtransService $midtrans)
+    {
+        $this->midtrans = $midtrans;
+        Config::$serverKey = config('services.midtrans.server_key');
+        Config::$clientKey = config('services.midtrans.client_key');
+        Config::$isProduction = config('services.midtrans.is_production', false);
+        Config::$isSanitized = true;
+        Config::$is3ds = true;
+    }
     public function createDeposit(Request $request)
     {
         $validator = Validator::make($request->all(), [
