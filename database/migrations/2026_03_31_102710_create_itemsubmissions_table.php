@@ -18,7 +18,7 @@ return new class extends Migration
             // Info Barang
             $table->string('nama_barang');
             $table->text('deskripsi');
-            $table->string('id_kategori'); // kategori dari user (wajib)
+            $table->integer('id_kategori'); // kategori dari user (wajib)
             $table->decimal('harga_ditawarkan', 15, 2); // harga dari user (wajib)
             $table->json('foto_barang'); // array of paths, max 5
 
